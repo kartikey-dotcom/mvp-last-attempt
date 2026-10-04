@@ -1,0 +1,91 @@
+# Problem Statement: Progressive Contextual Disambiguation
+
+## 1. Core Summary
+* **Feature:** A fallback search UI for Google Photos.
+* **Trigger:** When a user types a vague query that yields 0 results, do not dead-end.
+* **Action:** Ask 1-3 tappable, contextual questions (e.g., about weather, location, companions) to narrow down a mock photo library live.
+
+## 2. Tech Stack & Architecture
+* **Language & Framework:** Python 3.10+, Streamlit.
+* **Dependencies:** `streamlit`, `pandas` (for test logging).
+* **Database:** None. Use `st.session_state` and a deterministically generated Python dictionary array on startup.
+* **File Structure:** A single `app.py` file.
+
+## 3. Data Model (The Mock Library)
+* **Generation:** Generate exactly 72 mock photos using a fixed random seed (e.g., 11) so every app run is identical.
+* **Photo Schema (Dictionary keys):**
+  * `id`: String (IMG_1000 to IMG_1071)
+  * `scene`: Enum (beach, city, mountain, home, restaurant, wedding)
+  * `people`: Enum (Rohan, Mom, Ananya, alone)
+  * `weather`: Enum (sunny, rainy, cloudy, foggy)
+  * `time_of_day`: Enum (morning, afternoon, sunset, night)
+  * `season`: Enum (summer, monsoon, winter)
+  * `palette`: Enum (purple, orange, blue, green, red, grey)
+  * `occasion`: Enum (none, none, trip, birthday, wedding) *Note: 'none' is weighted 2x.*
+  * `activity`: Enum (walking, driving, scooter ride, shopping, relaxing)
+  * `objective`: List of strings representing standard searchable tags (e.g., if scene is beach, objective includes "beach", "sea", "sand", "sky").
+* **Demo Seeding Rule:** Force the first 10 photos to explicitly have `palette=purple` and `time_of_day=sunset`, rotating through scenes (beach, city, mountain, etc.) to guarantee the "purple sunset" demo works perfectly.
+* **Visuals:** Do not use real images. Render colored cards (using the palette color) with a large emoji representing the scene.
+
+## 4. Core Logic & Algorithms
+
+### Baseline Search (Old Way):
+1. Split query into lowercase tokens.
+2. Return photos where the objective list contains ALL tokens.
+
+### Hint Parser (AI Disambiguation Mode):
+1. Map query words to attributes (e.g., "rainy" -> `weather=rainy`; "purple" -> `palette=purple`).
+2. Include a basic synonym mapper (e.g., "dusk" -> `sunset`, "sea" -> `beach`).
+3. If query hints match 0 photos, drop the most recently parsed hint until at least 1 photo matches (Constraint Relaxation).
+
+### Question Selection (Math-based):
+1. Calculate the Shannon entropy `H = -sum(p * log2(p))` for all unasked attributes across the remaining candidate photos.
+2. Select the attribute with the highest entropy (splits the remaining photos most evenly).
+
+### Question Wording:
+* **Scene:** "Where were you?"
+* **People:** "Who was with you?"
+* **Weather:** "What was the weather like?"
+* **Time:** "What time of day was it?"
+* **Palette:** "Which colour stands out in your memory?"
+* **Activity:** "What were you doing just before?"
+
+### Stop Conditions: 
+Stop asking questions and show results if:
+* 6 or fewer photos remain.
+* 3 questions have been asked total.
+* No remaining attributes have an entropy > 0.
+
+## 5. UI Layout (Streamlit)
+
+### Sidebar:
+* Toggle Radio: "Current search (baseline)" vs "With Contextual Disambiguation".
+* "Reset session" button.
+* CSV Download button (appears only after a successful test log).
+
+### Main Canvas (Search Area):
+* Text input bar: "Search your photos".
+
+### Main Canvas (Disambiguation Mode):
+* Chat bubble stating understood parameters: *"I understood palette: purple, time of day: sunset. That leaves 13 possible photos."*
+* Bolded question text (based on entropy).
+* Row of tappable Streamlit buttons (Chips) for the top 4 attribute answers + a 5th chip for "Not sure".
+* Live 6-column photo grid below the chat bubble.
+
+### Photo Cards:
+* Each grid item shows the colored box, emoji, ID, and a "✅ This is it" button.
+
+## 6. Test Logging (Invisible Metric Tracking)
+* **Timer:** Start a timer when the user submits a search. Stop it when they click "✅ This is it".
+* **Log Data:** Append a row to a Pandas dataframe containing: `query`, `mode`, `questions_answered`, `seconds_to_success`, `photo_id`, `timestamp`.
+* **Success State:** When "✅ This is it" is clicked, show a green success banner displaying the time taken and log the result to the CSV state.
+
+## 7. Build Order Instructions
+1. Setup Streamlit page config, imports, and state initialization.
+2. Build the deterministic 72-photo generator function.
+3. Build the Baseline search logic and UI.
+4. Build the Hint Parser and Synonym mapper.
+5. Implement the Shannon Entropy math function for question selection.
+6. Build the dynamic chat bubble and row of tappable chips.
+7. Build the live photo grid with the "✅ This is it" success triggers.
+8. Implement the Pandas CSV logging and sidebar download button.
