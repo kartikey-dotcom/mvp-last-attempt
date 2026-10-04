@@ -3,17 +3,195 @@ import pandas as pd
 import random
 import math
 from collections import Counter
+import time
 
 # Phase 1: Environment Setup & Data Model
 
 # Set up basic Streamlit page config
-st.set_page_config(page_title="Progressive Contextual Disambiguation", layout="wide")
+st.set_page_config(page_title="Progressive Contextual Disambiguation", layout="wide", initial_sidebar_state="collapsed")
+
+# Inject High-Fidelity UI Styling
+st.markdown("""
+<style>
+/* 1. Mobile App Container Simulation */
+.stApp {
+    background-color: #EFEFEF;
+}
+.block-container {
+    max-width: 450px !important;
+    padding-top: 1rem !important;
+    padding-left: 0rem !important;
+    padding-right: 0rem !important;
+    padding-bottom: 0rem !important;
+    margin: 0 auto !important;
+    background-color: white;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+    min-height: 100vh;
+}
+header {visibility: hidden;}
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+
+/* Custom Search Bar adjustments */
+div[data-testid="stForm"] {
+    border: none !important;
+    padding: 0 16px !important;
+    background-color: white;
+    margin-bottom: 0px !important;
+}
+
+/* 2. The Assistant Card */
+.assistant-card-top {
+    background-color: #F0F4F9;
+    border-radius: 24px 24px 0 0;
+    padding: 24px 20px 8px 20px;
+    margin: 16px 16px 0 16px;
+}
+.assistant-header {
+    font-size: 11px;
+    font-weight: 600;
+    color: #444746;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.assistant-context {
+    font-size: 14px;
+    color: #444746;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+.assistant-question {
+    font-size: 24px;
+    font-weight: 400;
+    color: #1F1F1F;
+    margin-bottom: 8px;
+}
+.assistant-caption {
+    font-size: 13px;
+    color: #76777A;
+    margin-bottom: 0px;
+}
+
+div[data-testid="stHorizontalBlock"]:has(.chip-container-marker) {
+    background-color: #F0F4F9;
+    border-radius: 0 0 24px 24px;
+    padding: 8px 20px 24px 20px;
+    margin: 0px 16px 24px 16px;
+    width: auto !important;
+    gap: 8px !important;
+}
+
+/* 3. Interaction Chips */
+div[data-testid="stHorizontalBlock"]:has(.chip-container-marker) div[data-testid="stButton"] button {
+    border-radius: 999px !important;
+    border: 1px solid #727775 !important;
+    background-color: transparent !important;
+    color: #1F1F1F !important;
+    padding: 4px 16px !important;
+    font-weight: 500 !important;
+    min-height: 32px !important;
+}
+div[data-testid="stHorizontalBlock"]:has(.chip-container-marker) div[data-testid="stButton"] button:hover {
+    background-color: #E8DEF8 !important;
+    border-color: #1F1F1F !important;
+}
+
+/* 4. The Photo Grid */
+div[data-testid="stHorizontalBlock"]:has(.photo-grid-marker) {
+    gap: 0px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+div[data-testid="stHorizontalBlock"]:has(.photo-grid-marker) div[data-testid="column"] {
+    padding: 0 !important;
+    gap: 0 !important;
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 16px 8px 16px;
+}
+.timeline-date {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1F1F1F;
+}
+.timeline-count {
+    font-size: 13px;
+    color: #76777A;
+}
+
+div[data-testid="stHorizontalBlock"]:has(.photo-grid-marker) div[data-testid="stButton"] button {
+    border-radius: 0px !important;
+    border: none !important;
+    background-color: #F8F9FA !important;
+    color: #1F1F1F !important;
+    padding: 4px !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+}
+div[data-testid="stHorizontalBlock"]:has(.photo-grid-marker) div[data-testid="stButton"] button:hover {
+    background-color: #E0E0E0 !important;
+}
+
+/* 5. Bottom Navigation Bar */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 450px;
+    height: 80px;
+    background-color: white;
+    border-top: 1px solid #E0E0E0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 9999;
+}
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #444746;
+    width: 64px;
+}
+.nav-icon-container {
+    width: 64px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+}
+.nav-item.active .nav-icon-container {
+    background-color: #C2E7FF;
+}
+.nav-item.active {
+    color: #001D35;
+}
+.nav-icon {
+    font-size: 20px;
+}
+
+.bottom-spacer {
+    height: 100px;
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 def generate_mock_library(seed=11):
-    """
-    Generates exactly 72 mock photos using a fixed random seed.
-    Enforces the demo seeding rule for the first 10 photos.
-    """
     random.seed(seed)
     library = []
     
@@ -29,11 +207,9 @@ def generate_mock_library(seed=11):
     for i in range(72):
         photo_id = f"IMG_{1000 + i}"
         
-        # Demo seeding rule: first 10 photos explicitly have palette=purple and time_of_day=sunset
         if i < 10:
             palette = "purple"
             time_of_day = "sunset"
-            # Rotate through scenes to guarantee variety
             scene = scenes[i % len(scenes)]
         else:
             palette = random.choice(palettes)
@@ -46,12 +222,10 @@ def generate_mock_library(seed=11):
         occasion = random.choice(occasions)
         activity = random.choice(activities)
         
-        # Build objective tags
         objective = [
             scene, people, weather, time_of_day, season, palette, occasion, activity
         ]
         
-        # Standard searchable tags for specific scenes
         if scene == "beach":
             objective.extend(["sea", "sand", "sky"])
         elif scene == "city":
@@ -59,7 +233,6 @@ def generate_mock_library(seed=11):
         elif scene == "mountain":
             objective.extend(["hills", "nature", "trek"])
             
-        # Ensure all objectives are lowercase for baseline search
         objective = [str(o).lower() for o in objective]
         
         photo = {
@@ -72,45 +245,33 @@ def generate_mock_library(seed=11):
             "palette": palette,
             "occasion": occasion,
             "activity": activity,
-            "objective": list(set(objective)) # Remove duplicates
+            "objective": list(set(objective))
         }
         library.append(photo)
         
     return library
 
 def init_session_state():
-    """
-    Initializes required variables in st.session_state.
-    """
     if "mock_library" not in st.session_state:
         st.session_state.mock_library = generate_mock_library()
-    
     if "search_mode" not in st.session_state:
-        st.session_state.search_mode = "Current search (baseline)"
-        
+        st.session_state.search_mode = "With Contextual Disambiguation"
     if "current_query" not in st.session_state:
         st.session_state.current_query = ""
-        
     if "inferred_hints" not in st.session_state:
         st.session_state.inferred_hints = {}
-        
     if "asked_questions" not in st.session_state:
         st.session_state.asked_questions = []
-        
     if "candidate_photos" not in st.session_state:
         st.session_state.candidate_photos = st.session_state.mock_library
-        
     if "start_time" not in st.session_state:
         st.session_state.start_time = None
-        
     if "log_data" not in st.session_state:
         st.session_state.log_data = pd.DataFrame(columns=[
             "query", "mode", "questions_answered", "seconds_to_success", "photo_id", "timestamp"
         ])
-        
     if "search_submitted" not in st.session_state:
         st.session_state.search_submitted = False
-        
     if "success_message" not in st.session_state:
         st.session_state.success_message = None
 
@@ -174,17 +335,14 @@ def filter_by_hints(library, hints):
 def apply_constraint_relaxation(library, hints):
     current_hints = hints.copy()
     results = filter_by_hints(library, current_hints)
-    
     if len(results) > 0:
         return results, current_hints
-        
     for attr in DROP_HIERARCHY:
         if attr in current_hints:
             del current_hints[attr]
             results = filter_by_hints(library, current_hints)
             if len(results) > 0:
                 return results, current_hints
-                
     return library, current_hints
 
 QUESTION_MAP = {
@@ -201,25 +359,20 @@ QUESTION_MAP = {
 def calculate_shannon_entropy(candidate_photos, asked_questions, inferred_hints):
     attributes = ["scene", "people", "weather", "time_of_day", "season", "palette", "occasion", "activity"]
     unasked_attributes = [attr for attr in attributes if attr not in asked_questions and attr not in inferred_hints]
-    
     best_attr = None
     max_entropy = 0
     total_photos = len(candidate_photos)
-    
     if total_photos <= 1 or not unasked_attributes:
         return None, 0
-        
     for attr in unasked_attributes:
         counts = Counter([photo.get(attr) for photo in candidate_photos])
         entropy = 0
         for count in counts.values():
             p = count / total_photos
             entropy -= p * math.log2(p)
-            
         if entropy > max_entropy:
             max_entropy = entropy
             best_attr = attr
-            
     return best_attr, max_entropy
 
 def on_chip_click(attr, value):
@@ -235,7 +388,6 @@ def on_success_click(photo_id):
         seconds = time.time() - st.session_state.start_time
     else:
         seconds = 0
-        
     new_row = {
         "query": st.session_state.current_query,
         "mode": st.session_state.search_mode,
@@ -244,23 +396,16 @@ def on_success_click(photo_id):
         "photo_id": photo_id,
         "timestamp": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
     }
-    
     st.session_state.log_data = pd.concat([st.session_state.log_data, pd.DataFrame([new_row])], ignore_index=True)
     st.session_state.success_message = f"✅ Success! You found {photo_id} in {round(seconds, 2)} seconds."
-    st.session_state.start_time = None  # prevent duplicate logging on double clicks
+    st.session_state.start_time = None
 
 def baseline_search(query, library):
-    """
-    Splits query into lowercase tokens.
-    Returns photos where the objective list contains ALL tokens.
-    """
     tokens = set(query.lower().split())
     if not tokens:
         return library
-        
     results = []
     for photo in library:
-        # Check if all tokens match something in the objective tags (substring match allowed)
         match = True
         for token in tokens:
             if not any(token in obj for obj in photo['objective']):
@@ -271,18 +416,27 @@ def baseline_search(query, library):
     return results
 
 def render_photo_grid(photos):
-    """
-    Renders a 6-column photo grid. Caps at 18 photos.
-    """
     if not photos:
         st.warning("No photos found.")
         return
         
     display_photos = photos[:18]
     
-    cols = st.columns(6)
+    # Timeline Header
+    st.markdown(f'''
+        <div class="timeline-header">
+            <div class="timeline-date">Sun, 22 Sep</div>
+            <div class="timeline-count">{len(photos)} photos</div>
+        </div>
+    ''', unsafe_allow_html=True)
+    
+    cols = st.columns(3)
+    with cols[0]:
+        # Inject marker to strip column gaps
+        st.markdown('<span class="photo-grid-marker"></span>', unsafe_allow_html=True)
+        
     for idx, photo in enumerate(display_photos):
-        col = cols[idx % 6]
+        col = cols[idx % 3]
         with col:
             color = photo['palette']
             emoji = SCENE_EMOJIS.get(photo['scene'], "📷")
@@ -290,18 +444,16 @@ def render_photo_grid(photos):
                 f'''
                 <div style="background-color: {color}; width: 100%; aspect-ratio: 1; 
                             display: flex; align-items: center; justify-content: center; 
-                            border-radius: 8px; font-size: 2rem; color: white; margin-bottom: 10px;">
+                            font-size: 2rem; color: white; border: 1px solid white;">
                     {emoji}
                 </div>
                 ''', unsafe_allow_html=True
             )
-            st.caption(f"**{photo['id']}**")
-            st.button("✅ This is it", key=f"btn_success_{photo['id']}", on_click=on_success_click, args=(photo['id'],))
+            st.button("✅ This is it", key=f"btn_success_{photo['id']}", on_click=on_success_click, args=(photo['id'],), use_container_width=True)
             
     if len(photos) > 18:
-        st.info(f"+ {len(photos) - 18} more")
+        st.markdown(f'<div style="text-align: center; color: #76777A; padding: 16px;">+ {len(photos) - 18} more</div>', unsafe_allow_html=True)
 
-import time
 
 def reset_session():
     for key in list(st.session_state.keys()):
@@ -311,7 +463,6 @@ def reset_session():
 def main():
     init_session_state()
     
-    # Sidebar UI
     with st.sidebar:
         st.header("Settings")
         mode = st.radio(
@@ -319,8 +470,6 @@ def main():
             ["Current search (baseline)", "With Contextual Disambiguation"], 
             index=0 if st.session_state.search_mode == "Current search (baseline)" else 1
         )
-        
-        # Mode Switching Retention: If toggled, re-process with existing query.
         if mode != st.session_state.search_mode:
             st.session_state.search_mode = mode
             if mode == "With Contextual Disambiguation" and st.session_state.current_query:
@@ -345,19 +494,15 @@ def main():
                 mime='text/csv',
             )
             
-    st.title("Progressive Contextual Disambiguation MVP")
-    
-    # Search Input UI (Decoupled Logic using st.form)
+    # Search Input
     with st.form(key="search_form"):
-        query = st.text_input("Search your photos", value=st.session_state.current_query)
-        submit_search = st.form_submit_button("Search")
+        query = st.text_input("Search", value=st.session_state.current_query, label_visibility="collapsed", placeholder="Search your photos")
+        submit_search = st.form_submit_button("🔍 Search")
         
     if submit_search:
         st.session_state.current_query = query
         st.session_state.search_submitted = True
         st.session_state.success_message = None
-        
-        # Phase 5: New Search Reset (Clears answers, asked list, and restarts timer)
         st.session_state.asked_questions = []
         st.session_state.start_time = time.time()
         
@@ -370,32 +515,19 @@ def main():
             st.session_state.inferred_hints = {}
             st.session_state.candidate_photos = st.session_state.mock_library
         
-    # Main Canvas Display
     if st.session_state.success_message:
         st.success(st.session_state.success_message)
         
     if st.session_state.search_submitted and st.session_state.current_query:
         if st.session_state.search_mode == "Current search (baseline)":
-            st.subheader(f"Baseline Results for: '{st.session_state.current_query}'")
-            results = baseline_search(st.session_state.current_query, st.session_state.mock_library)
-            render_photo_grid(results)
+            render_photo_grid(baseline_search(st.session_state.current_query, st.session_state.mock_library))
         else:
-            st.subheader(f"Disambiguation Results for: '{st.session_state.current_query}'")
-            
-            # Show parsed hints via chat bubble if any
-            if st.session_state.inferred_hints:
-                hints_text = ", ".join([f"{k}: {v}" for k, v in st.session_state.inferred_hints.items()])
-                st.info(f"🗨️ I understood {hints_text}. That leaves {len(st.session_state.candidate_photos)} possible photos.")
-            else:
-                st.info(f"🗨️ I didn't catch any specific filters. That leaves {len(st.session_state.candidate_photos)} possible photos.")
-                
             best_attr, entropy = calculate_shannon_entropy(
                 st.session_state.candidate_photos, 
                 st.session_state.asked_questions, 
                 st.session_state.inferred_hints
             )
             
-            # Phase 5: Implementing Stop Conditions
             stop_condition_met = False
             if len(st.session_state.candidate_photos) <= 6:
                 stop_condition_met = True
@@ -405,29 +537,69 @@ def main():
                 stop_condition_met = True
                 
             if stop_condition_met:
-                st.success("Disambiguation complete!")
                 render_photo_grid(st.session_state.candidate_photos)
             else:
+                if st.session_state.inferred_hints:
+                    parts = []
+                    for k, v in st.session_state.inferred_hints.items():
+                        parts.append(f"<b>{k}: {v}</b>")
+                    understood_html = f"I understood {', '.join(parts)}. That leaves <b>{len(st.session_state.candidate_photos)}</b> possible photos."
+                else:
+                    understood_html = f"I didn't catch any specific filters. That leaves <b>{len(st.session_state.candidate_photos)}</b> possible photos."
+
                 question = QUESTION_MAP.get(best_attr, f"What about the {best_attr}?")
-                st.markdown(f"**{question}**")
-                st.caption(f"Asking so I can narrow down {len(st.session_state.candidate_photos)} photos. Tap Not sure to skip.")
+                
+                # Render the top part of the Assistant Card
+                st.markdown(f'''
+                <div class="assistant-card-top">
+                    <div class="assistant-header">✨ ASSISTANT</div>
+                    <div class="assistant-context">{understood_html}</div>
+                    <div class="assistant-question">{question}</div>
+                    <div class="assistant-caption">Asking to narrow down the results. Tap 'Not sure' to skip.</div>
+                </div>
+                ''', unsafe_allow_html=True)
                 
                 counts = Counter([p.get(best_attr) for p in st.session_state.candidate_photos])
                 top_values = [item[0] for item in counts.most_common(4)]
                 
                 cols = st.columns(len(top_values) + 1)
-                for idx, val in enumerate(top_values):
+                with cols[0]:
+                    # Inject marker to link this block's CSS
+                    st.markdown('<span class="chip-container-marker"></span>', unsafe_allow_html=True)
+                    st.button(f"{str(top_values[0]).capitalize()} ({counts[top_values[0]]})", key=f"chip_{best_attr}_{top_values[0]}_{len(st.session_state.asked_questions)}", on_click=on_chip_click, args=(best_attr, top_values[0]))
+                
+                for idx in range(1, len(top_values)):
+                    val = top_values[idx]
                     with cols[idx]:
-                        # Never-Zero Rule is fulfilled by taking from `counts` of `candidate_photos`
-                        st.button(str(val), key=f"chip_{best_attr}_{val}_{len(st.session_state.asked_questions)}", on_click=on_chip_click, args=(best_attr, val))
+                        st.button(f"{str(val).capitalize()} ({counts[val]})", key=f"chip_{best_attr}_{val}_{len(st.session_state.asked_questions)}", on_click=on_chip_click, args=(best_attr, val))
                 
                 with cols[-1]:
                     st.button("Not sure", key=f"chip_{best_attr}_notsure_{len(st.session_state.asked_questions)}", on_click=on_chip_click, args=(best_attr, "Not sure"))
                 
-                st.write("---")
                 render_photo_grid(st.session_state.candidate_photos)
-    else:
-        st.info("Enter a query and click 'Search' to begin.")
+
+    # Render Bottom Navigation Bar
+    st.markdown("""
+    <div class="bottom-spacer"></div>
+    <div class="bottom-nav">
+        <div class="nav-item">
+            <div class="nav-icon-container"><span class="nav-icon">🖼️</span></div>
+            <span>Photos</span>
+        </div>
+        <div class="nav-item active">
+            <div class="nav-icon-container"><span class="nav-icon">🔍</span></div>
+            <span>Search</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon-container"><span class="nav-icon">👥</span></div>
+            <span>Sharing</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon-container"><span class="nav-icon">📁</span></div>
+            <span>Library</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
