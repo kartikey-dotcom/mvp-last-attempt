@@ -7,185 +7,146 @@ import time
 
 # Phase 1: Environment Setup & Data Model
 
-# Set up basic Streamlit page config
-st.set_page_config(page_title="Progressive Contextual Disambiguation", layout="wide", initial_sidebar_state="collapsed")
+# Set up basic Streamlit page config for Web Interface
+st.set_page_config(page_title="Progressive Contextual Disambiguation", layout="wide", initial_sidebar_state="expanded")
 
-# Inject High-Fidelity UI Styling
+# Inject Web-Optimized, Theme-Aware CSS
 st.markdown("""
 <style>
-/* 1. Mobile App Container Simulation */
-.stApp {
-    background-color: #EFEFEF;
-}
+/* 1. Web Interface Layout */
 .block-container {
-    max-width: 450px !important;
-    padding-top: 1rem !important;
-    padding-left: 0rem !important;
-    padding-right: 0rem !important;
-    padding-bottom: 0rem !important;
-    margin: 0 auto !important;
-    background-color: white;
-    box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
-    min-height: 100vh;
+    padding-top: 2rem !important;
 }
+
 header {visibility: hidden;}
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 
 /* Custom Search Bar adjustments */
 div[data-testid="stForm"] {
-    border: none !important;
-    padding: 0 16px !important;
-    background-color: white;
-    margin-bottom: 0px !important;
+    border-radius: 12px;
+    padding: 24px !important;
 }
 
 /* 2. The Assistant Card */
 .assistant-card-top {
-    background-color: #F0F4F9;
-    border-radius: 24px 24px 0 0;
-    padding: 24px 20px 8px 20px;
-    margin: 16px 16px 0 16px;
+    background-color: var(--secondary-background-color);
+    border-radius: 16px 16px 0 0;
+    padding: 24px 32px 8px 32px;
+    margin-top: 24px;
 }
 .assistant-header {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
-    color: #444746;
+    color: var(--text-color);
+    opacity: 0.8;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 .assistant-context {
-    font-size: 14px;
-    color: #444746;
+    font-size: 16px;
+    color: var(--text-color);
+    opacity: 0.9;
     margin-bottom: 16px;
     line-height: 1.5;
 }
 .assistant-question {
-    font-size: 24px;
-    font-weight: 400;
-    color: #1F1F1F;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-color);
     margin-bottom: 8px;
 }
 .assistant-caption {
-    font-size: 13px;
-    color: #76777A;
+    font-size: 14px;
+    color: var(--text-color);
+    opacity: 0.6;
     margin-bottom: 0px;
 }
 
 div[data-testid="stHorizontalBlock"]:has(.chip-container-marker) {
-    background-color: #F0F4F9;
-    border-radius: 0 0 24px 24px;
-    padding: 8px 20px 24px 20px;
-    margin: 0px 16px 24px 16px;
-    width: auto !important;
-    gap: 8px !important;
+    background-color: var(--secondary-background-color);
+    border-radius: 0 0 16px 16px;
+    padding: 16px 32px 24px 32px;
+    margin-bottom: 32px;
+    gap: 12px !important;
 }
 
 /* 3. Interaction Chips */
 div[data-testid="stHorizontalBlock"]:has(.chip-container-marker) div[data-testid="stButton"] button {
     border-radius: 999px !important;
-    border: 1px solid #727775 !important;
+    border: 1px solid var(--text-color) !important;
     background-color: transparent !important;
-    color: #1F1F1F !important;
-    padding: 4px 16px !important;
+    color: var(--text-color) !important;
+    opacity: 0.8;
+    padding: 8px 24px !important;
+    font-size: 14px !important;
     font-weight: 500 !important;
-    min-height: 32px !important;
 }
 div[data-testid="stHorizontalBlock"]:has(.chip-container-marker) div[data-testid="stButton"] button:hover {
-    background-color: #E8DEF8 !important;
-    border-color: #1F1F1F !important;
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    border-color: var(--primary-color) !important;
+    opacity: 1;
 }
 
 /* 4. The Photo Grid */
 div[data-testid="stHorizontalBlock"]:has(.photo-grid-marker) {
-    gap: 0px !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    gap: 16px !important;
 }
 div[data-testid="stHorizontalBlock"]:has(.photo-grid-marker) div[data-testid="column"] {
-    padding: 0 !important;
-    gap: 0 !important;
+    gap: 16px !important;
 }
 
 .timeline-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 24px 16px 8px 16px;
+    padding: 32px 0px 16px 0px;
+    border-bottom: 1px solid var(--secondary-background-color);
+    margin-bottom: 24px;
 }
 .timeline-date {
-    font-size: 15px;
-    font-weight: 500;
-    color: #1F1F1F;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
 }
 .timeline-count {
-    font-size: 13px;
-    color: #76777A;
+    font-size: 14px;
+    color: var(--text-color);
+    opacity: 0.6;
 }
 
-div[data-testid="stHorizontalBlock"]:has(.photo-grid-marker) div[data-testid="stButton"] button {
-    border-radius: 0px !important;
-    border: none !important;
-    background-color: #F8F9FA !important;
-    color: #1F1F1F !important;
-    padding: 4px !important;
-    font-size: 12px !important;
-    margin: 0 !important;
-}
-div[data-testid="stHorizontalBlock"]:has(.photo-grid-marker) div[data-testid="stButton"] button:hover {
-    background-color: #E0E0E0 !important;
-}
-
-/* 5. Bottom Navigation Bar */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+/* Photo Grid images/divs */
+.photo-square {
     width: 100%;
-    max-width: 450px;
-    height: 80px;
-    background-color: white;
-    border-top: 1px solid #E0E0E0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 9999;
-}
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #444746;
-    width: 64px;
-}
-.nav-icon-container {
-    width: 64px;
-    height: 32px;
+    aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 16px;
-}
-.nav-item.active .nav-icon-container {
-    background-color: #C2E7FF;
-}
-.nav-item.active {
-    color: #001D35;
-}
-.nav-icon {
-    font-size: 20px;
+    font-size: 3rem;
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.bottom-spacer {
-    height: 100px;
+div[data-testid="stHorizontalBlock"]:has(.photo-grid-marker) div[data-testid="stButton"] button {
+    border-radius: 8px !important;
+    border: 1px solid var(--secondary-background-color) !important;
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    padding: 8px !important;
+    font-size: 14px !important;
+    margin-top: 8px !important;
+    margin-bottom: 16px !important;
+    width: 100%;
+}
+div[data-testid="stHorizontalBlock"]:has(.photo-grid-marker) div[data-testid="stButton"] button:hover {
+    background-color: var(--secondary-background-color) !important;
+    color: var(--text-color) !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -420,9 +381,8 @@ def render_photo_grid(photos):
         st.warning("No photos found.")
         return
         
-    display_photos = photos[:18]
+    display_photos = photos[:24] # Show up to 24 on web
     
-    # Timeline Header
     st.markdown(f'''
         <div class="timeline-header">
             <div class="timeline-date">Sun, 22 Sep</div>
@@ -430,29 +390,26 @@ def render_photo_grid(photos):
         </div>
     ''', unsafe_allow_html=True)
     
-    cols = st.columns(3)
+    cols = st.columns(6)
     with cols[0]:
-        # Inject marker to strip column gaps
         st.markdown('<span class="photo-grid-marker"></span>', unsafe_allow_html=True)
         
     for idx, photo in enumerate(display_photos):
-        col = cols[idx % 3]
+        col = cols[idx % 6]
         with col:
             color = photo['palette']
             emoji = SCENE_EMOJIS.get(photo['scene'], "📷")
             st.markdown(
                 f'''
-                <div style="background-color: {color}; width: 100%; aspect-ratio: 1; 
-                            display: flex; align-items: center; justify-content: center; 
-                            font-size: 2rem; color: white; border: 1px solid white;">
+                <div class="photo-square" style="background-color: {color};">
                     {emoji}
                 </div>
                 ''', unsafe_allow_html=True
             )
-            st.button("✅ This is it", key=f"btn_success_{photo['id']}", on_click=on_success_click, args=(photo['id'],), use_container_width=True)
+            st.button("✅ Select", key=f"btn_success_{photo['id']}", on_click=on_success_click, args=(photo['id'],), use_container_width=True)
             
-    if len(photos) > 18:
-        st.markdown(f'<div style="text-align: center; color: #76777A; padding: 16px;">+ {len(photos) - 18} more</div>', unsafe_allow_html=True)
+    if len(photos) > 24:
+        st.markdown(f'<div style="text-align: center; opacity: 0.6; padding: 24px;">+ {len(photos) - 24} more</div>', unsafe_allow_html=True)
 
 
 def reset_session():
@@ -577,29 +534,8 @@ def main():
                     st.button("Not sure", key=f"chip_{best_attr}_notsure_{len(st.session_state.asked_questions)}", on_click=on_chip_click, args=(best_attr, "Not sure"))
                 
                 render_photo_grid(st.session_state.candidate_photos)
-
-    # Render Bottom Navigation Bar
-    st.markdown("""
-    <div class="bottom-spacer"></div>
-    <div class="bottom-nav">
-        <div class="nav-item">
-            <div class="nav-icon-container"><span class="nav-icon">🖼️</span></div>
-            <span>Photos</span>
-        </div>
-        <div class="nav-item active">
-            <div class="nav-icon-container"><span class="nav-icon">🔍</span></div>
-            <span>Search</span>
-        </div>
-        <div class="nav-item">
-            <div class="nav-icon-container"><span class="nav-icon">👥</span></div>
-            <span>Sharing</span>
-        </div>
-        <div class="nav-item">
-            <div class="nav-icon-container"><span class="nav-icon">📁</span></div>
-            <span>Library</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    else:
+        st.info("Enter a query and click 'Search' to begin.")
 
 if __name__ == "__main__":
     main()
