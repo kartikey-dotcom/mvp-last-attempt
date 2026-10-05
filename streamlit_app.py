@@ -57,10 +57,10 @@ def get_image_base64(photo_id, category, shirt, companion):
             w, h = img.size
             if w != h:
                 min_dim = min(w, h)
-                left = (w - min_dim)/2
-                top = (h - min_dim)/2
-                right = (w + min_dim)/2
-                bottom = (h + min_dim)/2
+                left = (w - min_dim) // 2
+                top = (h - min_dim) // 2
+                right = (w + min_dim) // 2
+                bottom = (h + min_dim) // 2
                 img = img.crop((left, top, right, bottom))
             buf = io.BytesIO()
             img.save(buf, format="JPEG")
