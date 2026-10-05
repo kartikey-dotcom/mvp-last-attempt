@@ -1996,28 +1996,7 @@ with st.container(key="main_content"):
         st.rerun()
 
     q = st.session_state.query
-    if not q and not st.session_state.get("show_home", False):
-        st.markdown(f'''
-        <div style="display: flex; flex-direction: column; align-items: center; padding-top: 12vh; text-align: center;">
-            <div style="width: 96px; height: 96px; background-color: #F0F4F9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
-                {svg_icon(SEARCH_ICON, "#1A73E8", 48)}
-            </div>
-            <div style="font-size: 24px; font-weight: 500; color: #202124; margin-bottom: 8px;">Search your photos</div>
-            <div style="font-size: 14px; color: #5F6368; margin-bottom: 32px;">Try describing a moment the way you remember it.</div>
-        </div>
-        ''', unsafe_allow_html=True)
-        
-        def ex_search(q):
-            st.session_state.q_input = q
-            st.session_state.pending_query = q
-        
-        with st.container(key="examples_block"):
-            cols = st.columns([1.5, 2, 2, 2, 2, 1.5], gap="small")
-            with cols[1]: st.button("purple sunset", key="ex_1", on_click=ex_search, args=("purple sunset",))
-            with cols[2]: st.button("rainy wedding", key="ex_2", on_click=ex_search, args=("rainy wedding",))
-            with cols[3]: st.button("foggy mountain", key="ex_3", on_click=ex_search, args=("foggy mountain",))
-            with cols[4]: st.button("cozy dinner with Rohan", key="ex_4", on_click=ex_search, args=("cozy dinner with Rohan",))
-    elif not q and st.session_state.get("show_home", False):
+    if not q:
         st.markdown(f'''
         <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
             <div><span style="font-size: 16px; font-weight: 500; color: #202124;">Sun, 22 Sep</span> <span style="font-size: 12px; color: #5F6368; margin-left: 12px;">{len(library)} items</span></div>
