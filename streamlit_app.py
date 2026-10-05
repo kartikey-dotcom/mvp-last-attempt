@@ -785,16 +785,28 @@ def get_hints(query):
 def get_candidates(library, query, mode):
     if not query: return library, {}, []
     
-    query_words = set(query.lower().split())
+    import string
+    # Strip punctuation and split into words
+    query_clean = query.translate(str.maketrans('', '', string.punctuation)).lower()
+    query_words = set(query_clean.split())
+    
+    # Common stop words to ignore in keyword matching
+    stop_words = {"the", "a", "an", "is", "in", "at", "of", "on", "and", "to", "with", "for"}
+    query_words = query_words - stop_words
+    
     keyword_filtered = []
-    for p in library:
-        tags = " ".join(p.get("keyword_tags", [])).lower()
-        loc = p.get("location_name", "").lower()
-        obj = p.get("primary_object", "").lower()
-        if any(w in tags for w in query_words) or any(w in loc for w in query_words) or any(w in obj for w in query_words):
-            keyword_filtered.append(p)
+    if query_words:
+        for p in library:
+            # Flatten all string/list values in the photo dictionary into one searchable text block
+            all_text = " ".join([str(v) for v in p.values() if isinstance(v, (str, list))]).lower()
             
-    if keyword_filtered:
+            # If ANY meaningful word from the query matches the photo's text, it's a candidate
+            if any(w in all_text for w in query_words):
+                keyword_filtered.append(p)
+                
+    # If the keyword search found anything, restrict the library to those matches.
+    # Otherwise, if it found nothing (or was only stop words), it returns 0 results.
+    if query_words:
         library = keyword_filtered
     
     if mode == "Current search":
