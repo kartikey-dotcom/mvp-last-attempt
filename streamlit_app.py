@@ -2026,7 +2026,7 @@ with st.container(key="main_content"):
         ''', unsafe_allow_html=True)
         with st.container(key="photo_grid"):
             cols = st.columns(6)
-            for i, p in enumerate(library[:24]):
+            for i, p in enumerate(library):
                 with cols[i % 6]:
                     with st.container(key=f"tile_{p['id']}"):
                         render_tile(p)
@@ -2054,7 +2054,7 @@ with st.container(key="main_content"):
                 
                 with st.container(key="photo_grid"):
                     cols = st.columns(6)
-                    for i, p in enumerate(candidates[:24]):
+                    for i, p in enumerate(candidates):
                         with cols[i % 6]:
                             with st.container(key=f"tile_{p['id']}"):
                                 render_tile(p)

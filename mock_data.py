@@ -1,887 +1,1726 @@
 MOCK_PHOTOS_DATABASE = [
     {
         "photo_id": "img_001",
-        "filename": "bhagsu_waterfall_backpack.jpg",
-        "absolute_timestamp": "2024-03-16T08:00:00",
-        "location_name": "Bhagsu Waterfall",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "THE GOA BEACH SUNSET",
+        "keyword_tags": [
+            "sunset",
+            "goa",
+            "beach",
+            "baga"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Backpack"
+        "location_name": "Baga Beach, Goa",
+        "primary_object": "Sunset",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Clear / Golden Hour",
+            "clothing": "Swim trunks",
+            "foreground_vibe": "Sand and waves"
+        }
     },
     {
         "photo_id": "img_002",
-        "filename": "caf\u00e9_coffee_day_coffee_cup.jpg",
-        "absolute_timestamp": "2024-08-18T09:00:00",
-        "location_name": "Caf\u00e9 Coffee Day",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "THE GOA BEACH SUNSET",
+        "keyword_tags": [
+            "sunset",
+            "goa",
+            "beach",
+            "baga"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Coffee cup"
+        "location_name": "Baga Beach, Goa",
+        "primary_object": "Sunset",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Clear / Golden Hour",
+            "clothing": "Swim trunks",
+            "foreground_vibe": "Sand and waves"
+        }
     },
     {
         "photo_id": "img_003",
-        "filename": "curlies_shack_coffee_cup.jpg",
-        "absolute_timestamp": "2023-10-09T17:00:00",
-        "location_name": "Curlies Shack",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "THE GOA BEACH SUNSET",
+        "keyword_tags": [
+            "sunset",
+            "goa",
+            "beach",
+            "baga"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Coffee cup"
+        "location_name": "Baga Beach, Goa",
+        "primary_object": "Sunset",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Clear / Golden Hour",
+            "clothing": "Swim trunks",
+            "foreground_vibe": "Sand and waves"
+        }
     },
     {
         "photo_id": "img_004",
-        "filename": "dalai_lama_temple_bonfire.jpg",
-        "absolute_timestamp": "2024-03-22T17:00:00",
-        "location_name": "Dalai Lama Temple",
-        "companions": [
-            "Rahul"
+        "cluster_name": "THE GOA BEACH SUNSET",
+        "keyword_tags": [
+            "sunset",
+            "goa",
+            "beach",
+            "baga"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Winter jacket",
-        "primary_object": "Bonfire"
+        "location_name": "Baga Beach, Goa",
+        "primary_object": "Sunset",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Overcast / Hazy",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Sand and waves"
+        }
     },
     {
         "photo_id": "img_005",
-        "filename": "caf\u00e9_coffee_day_food.jpg",
-        "absolute_timestamp": "2024-05-10T11:00:00",
-        "location_name": "Caf\u00e9 Coffee Day",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "THE GOA BEACH SUNSET",
+        "keyword_tags": [
+            "sunset",
+            "goa",
+            "beach",
+            "baga"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Food"
+        "location_name": "Baga Beach, Goa",
+        "primary_object": "Sunset",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Overcast / Hazy",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Sand and waves"
+        }
     },
     {
         "photo_id": "img_006",
-        "filename": "curlies_shack_sunset.jpg",
-        "absolute_timestamp": "2023-10-06T17:00:00",
-        "location_name": "Curlies Shack",
-        "companions": [
-            "Rahul"
+        "cluster_name": "THE GOA BEACH SUNSET",
+        "keyword_tags": [
+            "sunset",
+            "goa",
+            "beach",
+            "baga"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Sunset"
+        "location_name": "Baga Beach, Goa",
+        "primary_object": "Sunset",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Overcast / Hazy",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Sand and waves"
+        }
     },
     {
         "photo_id": "img_007",
-        "filename": "mcleod_ganj_drinks.jpg",
-        "absolute_timestamp": "2024-03-16T16:00:00",
-        "location_name": "McLeod Ganj",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "THE GOA BEACH SUNSET",
+        "keyword_tags": [
+            "sunset",
+            "goa",
+            "beach",
+            "baga"
         ],
-        "weather_vibe": "Clear Night",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Drinks"
+        "location_name": "Baga Beach, Goa",
+        "primary_object": "Sunset",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Dusk / Darkening",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Sand and waves"
+        }
     },
     {
         "photo_id": "img_008",
-        "filename": "hauz_khas_village_sunset.jpg",
-        "absolute_timestamp": "2024-04-18T08:00:00",
-        "location_name": "Hauz Khas Village",
-        "companions": [
-            "Rahul"
+        "cluster_name": "THE GOA BEACH SUNSET",
+        "keyword_tags": [
+            "sunset",
+            "goa",
+            "beach",
+            "baga"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Sunset"
+        "location_name": "Baga Beach, Goa",
+        "primary_object": "Sunset",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Dusk / Darkening",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Sand and waves"
+        }
     },
     {
         "photo_id": "img_009",
-        "filename": "panjim_bonfire.jpg",
-        "absolute_timestamp": "2023-10-05T15:00:00",
-        "location_name": "Panjim",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "THE DHARAMSHALA CAFE / RAIN",
+        "keyword_tags": [
+            "cafe",
+            "dharamshala",
+            "coffee",
+            "food"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Bonfire"
+        "location_name": "Caf\u00e9 Blue, Dharamshala",
+        "primary_object": "Food / Coffee",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Raining outside",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Hot chocolate mug / Wooden table"
+        }
     },
     {
         "photo_id": "img_010",
-        "filename": "illiterati_cafe_drinks.jpg",
-        "absolute_timestamp": "2024-03-19T19:00:00",
-        "location_name": "Illiterati Cafe",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "THE DHARAMSHALA CAFE / RAIN",
+        "keyword_tags": [
+            "cafe",
+            "dharamshala",
+            "coffee",
+            "food"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Formal shirt",
-        "primary_object": "Drinks"
+        "location_name": "Caf\u00e9 Blue, Dharamshala",
+        "primary_object": "Food / Coffee",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Raining outside",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Hot chocolate mug / Wooden table"
+        }
     },
     {
         "photo_id": "img_011",
-        "filename": "lodhi_garden_drinks.jpg",
-        "absolute_timestamp": "2024-06-02T10:00:00",
-        "location_name": "Lodhi Garden",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "THE DHARAMSHALA CAFE / RAIN",
+        "keyword_tags": [
+            "cafe",
+            "dharamshala",
+            "coffee",
+            "food"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Drinks"
+        "location_name": "Caf\u00e9 Blue, Dharamshala",
+        "primary_object": "Food / Coffee",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Raining outside",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Hot chocolate mug / Wooden table"
+        }
     },
     {
         "photo_id": "img_012",
-        "filename": "baga_beach_food.jpg",
-        "absolute_timestamp": "2023-10-06T21:00:00",
-        "location_name": "Baga Beach",
-        "companions": [
-            "Rahul"
+        "cluster_name": "THE DHARAMSHALA CAFE / RAIN",
+        "keyword_tags": [
+            "cafe",
+            "dharamshala",
+            "coffee",
+            "food"
         ],
-        "weather_vibe": "Clear Night",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Food"
+        "location_name": "Caf\u00e9 Blue, Dharamshala",
+        "primary_object": "Food / Coffee",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Raining outside",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Hot chocolate mug / Wooden table"
+        }
     },
     {
         "photo_id": "img_013",
-        "filename": "dalai_lama_temple_coffee_cup.jpg",
-        "absolute_timestamp": "2024-03-20T11:00:00",
-        "location_name": "Dalai Lama Temple",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "THE DHARAMSHALA CAFE / RAIN",
+        "keyword_tags": [
+            "cafe",
+            "dharamshala",
+            "coffee",
+            "food"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Winter jacket",
-        "primary_object": "Coffee cup"
+        "location_name": "Caf\u00e9 Blue, Dharamshala",
+        "primary_object": "Food / Coffee",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Sunny / Clear window",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Laptop / Notebook"
+        }
     },
     {
         "photo_id": "img_014",
-        "filename": "lodhi_garden_coffee_cup.jpg",
-        "absolute_timestamp": "2024-06-03T19:00:00",
-        "location_name": "Lodhi Garden",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "THE DHARAMSHALA CAFE / RAIN",
+        "keyword_tags": [
+            "cafe",
+            "dharamshala",
+            "coffee",
+            "food"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Winter jacket",
-        "primary_object": "Coffee cup"
+        "location_name": "Caf\u00e9 Blue, Dharamshala",
+        "primary_object": "Food / Coffee",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Sunny / Clear window",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Laptop / Notebook"
+        }
     },
     {
         "photo_id": "img_015",
-        "filename": "baga_beach_food.jpg",
-        "absolute_timestamp": "2023-10-04T10:00:00",
-        "location_name": "Baga Beach",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "THE DHARAMSHALA CAFE / RAIN",
+        "keyword_tags": [
+            "cafe",
+            "dharamshala",
+            "coffee",
+            "food"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Food"
+        "location_name": "Caf\u00e9 Blue, Dharamshala",
+        "primary_object": "Food / Coffee",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Sunny / Clear window",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Laptop / Notebook"
+        }
     },
     {
         "photo_id": "img_016",
-        "filename": "illiterati_cafe_drinks.jpg",
-        "absolute_timestamp": "2024-03-16T14:00:00",
-        "location_name": "Illiterati Cafe",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "THE DHARAMSHALA CAFE / RAIN",
+        "keyword_tags": [
+            "cafe",
+            "dharamshala",
+            "coffee",
+            "food"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Drinks"
+        "location_name": "Caf\u00e9 Blue, Dharamshala",
+        "primary_object": "Food / Coffee",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Sunny / Clear window",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Laptop / Notebook"
+        }
     },
     {
         "photo_id": "img_017",
-        "filename": "connaught_place_sunset.jpg",
-        "absolute_timestamp": "2024-04-30T18:00:00",
-        "location_name": "Connaught Place",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "THE DELHI STREET FOOD NIGHT OUT",
+        "keyword_tags": [
+            "delhi",
+            "street food",
+            "night",
+            "chandni chowk"
         ],
-        "weather_vibe": "Foggy",
-        "clothing_visuals": "Winter jacket",
-        "primary_object": "Sunset"
+        "location_name": "Chandni Chowk, Delhi",
+        "primary_object": "Street Food",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Late Night",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Bright neon store signs"
+        }
     },
     {
         "photo_id": "img_018",
-        "filename": "curlies_shack_backpack.jpg",
-        "absolute_timestamp": "2023-10-07T10:00:00",
-        "location_name": "Curlies Shack",
-        "companions": [
-            "Rahul"
+        "cluster_name": "THE DELHI STREET FOOD NIGHT OUT",
+        "keyword_tags": [
+            "delhi",
+            "street food",
+            "night",
+            "chandni chowk"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Formal shirt",
-        "primary_object": "Backpack"
+        "location_name": "Chandni Chowk, Delhi",
+        "primary_object": "Street Food",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Late Night",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Bright neon store signs"
+        }
     },
     {
         "photo_id": "img_019",
-        "filename": "illiterati_cafe_food.jpg",
-        "absolute_timestamp": "2024-03-16T21:00:00",
-        "location_name": "Illiterati Cafe",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "THE DELHI STREET FOOD NIGHT OUT",
+        "keyword_tags": [
+            "delhi",
+            "street food",
+            "night",
+            "chandni chowk"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Food"
+        "location_name": "Chandni Chowk, Delhi",
+        "primary_object": "Street Food",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Late Night",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Bright neon store signs"
+        }
     },
     {
         "photo_id": "img_020",
-        "filename": "lodhi_garden_bonfire.jpg",
-        "absolute_timestamp": "2024-05-12T16:00:00",
-        "location_name": "Lodhi Garden",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "THE DELHI STREET FOOD NIGHT OUT",
+        "keyword_tags": [
+            "delhi",
+            "street food",
+            "night",
+            "chandni chowk"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Bonfire"
+        "location_name": "Chandni Chowk, Delhi",
+        "primary_object": "Street Food",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Late Night",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Bright neon store signs"
+        }
     },
     {
         "photo_id": "img_021",
-        "filename": "anjuna_food.jpg",
-        "absolute_timestamp": "2023-10-01T09:00:00",
-        "location_name": "Anjuna",
-        "companions": [
-            "Sparsh"
+        "cluster_name": "THE DELHI STREET FOOD NIGHT OUT",
+        "keyword_tags": [
+            "delhi",
+            "street food",
+            "night",
+            "chandni chowk"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Food"
+        "location_name": "Chandni Chowk, Delhi",
+        "primary_object": "Street Food",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Evening / Foggy",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Dim street lamps / Foggy"
+        }
     },
     {
         "photo_id": "img_022",
-        "filename": "illiterati_cafe_drinks.jpg",
-        "absolute_timestamp": "2024-03-16T09:00:00",
-        "location_name": "Illiterati Cafe",
-        "companions": [
-            "Solo"
+        "cluster_name": "THE DELHI STREET FOOD NIGHT OUT",
+        "keyword_tags": [
+            "delhi",
+            "street food",
+            "night",
+            "chandni chowk"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Drinks"
+        "location_name": "Chandni Chowk, Delhi",
+        "primary_object": "Street Food",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Evening / Foggy",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Dim street lamps / Foggy"
+        }
     },
     {
         "photo_id": "img_023",
-        "filename": "lodhi_garden_coffee_cup.jpg",
-        "absolute_timestamp": "2024-07-31T16:00:00",
-        "location_name": "Lodhi Garden",
-        "companions": [
-            "Rahul"
+        "cluster_name": "THE DELHI STREET FOOD NIGHT OUT",
+        "keyword_tags": [
+            "delhi",
+            "street food",
+            "night",
+            "chandni chowk"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Coffee cup"
+        "location_name": "Chandni Chowk, Delhi",
+        "primary_object": "Street Food",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Evening / Foggy",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Dim street lamps / Foggy"
+        }
     },
     {
         "photo_id": "img_024",
-        "filename": "panjim_coffee_cup.jpg",
-        "absolute_timestamp": "2023-10-09T20:00:00",
-        "location_name": "Panjim",
-        "companions": [
-            "Solo"
+        "cluster_name": "THE DELHI STREET FOOD NIGHT OUT",
+        "keyword_tags": [
+            "delhi",
+            "street food",
+            "night",
+            "chandni chowk"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Coffee cup"
+        "location_name": "Chandni Chowk, Delhi",
+        "primary_object": "Street Food",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Evening / Foggy",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Dim street lamps / Foggy"
+        }
     },
     {
         "photo_id": "img_025",
-        "filename": "triund_hill_drinks.jpg",
-        "absolute_timestamp": "2024-03-20T15:00:00",
-        "location_name": "Triund Hill",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Drinks"
+        "location_name": "Connaught Place",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Overcast",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_026",
-        "filename": "lodhi_garden_drinks.jpg",
-        "absolute_timestamp": "2024-04-06T17:00:00",
-        "location_name": "Lodhi Garden",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Drinks"
+        "location_name": "India Gate",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Sunny",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_027",
-        "filename": "anjuna_sunset.jpg",
-        "absolute_timestamp": "2023-10-02T19:00:00",
-        "location_name": "Anjuna",
-        "companions": [
-            "Solo"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Sunset"
+        "location_name": "Connaught Place",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Raining",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_028",
-        "filename": "mcleod_ganj_guitar.jpg",
-        "absolute_timestamp": "2024-03-20T09:00:00",
-        "location_name": "McLeod Ganj",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Guitar"
+        "location_name": "Chapora Fort",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Foggy",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_029",
-        "filename": "lodhi_garden_guitar.jpg",
-        "absolute_timestamp": "2024-08-17T10:00:00",
-        "location_name": "Lodhi Garden",
-        "companions": [
-            "Solo"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Clear Night",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Guitar"
+        "location_name": "India Gate",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Overcast",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_030",
-        "filename": "baga_beach_drinks.jpg",
-        "absolute_timestamp": "2023-10-08T20:00:00",
-        "location_name": "Baga Beach",
-        "companions": [
-            "Nikhil",
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Drinks"
+        "location_name": "Lodhi Garden",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Foggy",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Car window"
+        }
     },
     {
         "photo_id": "img_031",
-        "filename": "triund_hill_food.jpg",
-        "absolute_timestamp": "2024-03-22T21:00:00",
-        "location_name": "Triund Hill",
-        "companions": [
-            "Solo"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Trek pants",
-        "primary_object": "Food"
+        "location_name": "Lodhi Garden",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Sunny",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_032",
-        "filename": "lodhi_garden_guitar.jpg",
-        "absolute_timestamp": "2024-04-28T11:00:00",
-        "location_name": "Lodhi Garden",
-        "companions": [
-            "Rahul"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Guitar"
+        "location_name": "Triund Hill",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Overcast",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_033",
-        "filename": "anjuna_drinks.jpg",
-        "absolute_timestamp": "2023-10-07T10:00:00",
-        "location_name": "Anjuna",
-        "companions": [
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Drinks"
+        "location_name": "Connaught Place",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Raining",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_034",
-        "filename": "triund_hill_drinks.jpg",
-        "absolute_timestamp": "2024-03-16T08:00:00",
-        "location_name": "Triund Hill",
-        "companions": [
-            "Solo"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Winter jacket",
-        "primary_object": "Drinks"
+        "location_name": "India Gate",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Overcast",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Car window"
+        }
     },
     {
         "photo_id": "img_035",
-        "filename": "caf\u00e9_coffee_day_coffee_cup.jpg",
-        "absolute_timestamp": "2024-08-02T11:00:00",
-        "location_name": "Caf\u00e9 Coffee Day",
-        "companions": [
-            "Family"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Coffee cup"
+        "location_name": "India Gate",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Raining",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_036",
-        "filename": "chapora_fort_guitar.jpg",
-        "absolute_timestamp": "2023-10-07T12:00:00",
-        "location_name": "Chapora Fort",
-        "companions": [
-            "Family"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Guitar"
+        "location_name": "Chapora Fort",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Raining",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Restaurant table"
+        }
     },
     {
         "photo_id": "img_037",
-        "filename": "illiterati_cafe_food.jpg",
-        "absolute_timestamp": "2024-03-18T12:00:00",
-        "location_name": "Illiterati Cafe",
-        "companions": [
-            "Rahul"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Food"
+        "location_name": "Triund Hill",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Raining",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_038",
-        "filename": "caf\u00e9_coffee_day_coffee_cup.jpg",
-        "absolute_timestamp": "2024-04-15T08:00:00",
-        "location_name": "Caf\u00e9 Coffee Day",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Trek pants",
-        "primary_object": "Coffee cup"
+        "location_name": "India Gate",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Overcast",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Car window"
+        }
     },
     {
         "photo_id": "img_039",
-        "filename": "anjuna_coffee_cup.jpg",
-        "absolute_timestamp": "2023-10-02T17:00:00",
-        "location_name": "Anjuna",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Foggy",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Coffee cup"
+        "location_name": "Connaught Place",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Overcast",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Restaurant table"
+        }
     },
     {
         "photo_id": "img_040",
-        "filename": "illiterati_cafe_drinks.jpg",
-        "absolute_timestamp": "2024-03-18T17:00:00",
-        "location_name": "Illiterati Cafe",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Drinks"
+        "location_name": "Triund Hill",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Overcast",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_041",
-        "filename": "connaught_place_drinks.jpg",
-        "absolute_timestamp": "2024-08-28T17:00:00",
-        "location_name": "Connaught Place",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Drinks"
+        "location_name": "Chapora Fort",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Foggy",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Car window"
+        }
     },
     {
         "photo_id": "img_042",
-        "filename": "panjim_guitar.jpg",
-        "absolute_timestamp": "2023-10-06T11:00:00",
-        "location_name": "Panjim",
-        "companions": [
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Winter jacket",
-        "primary_object": "Guitar"
+        "location_name": "India Gate",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Foggy",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_043",
-        "filename": "illiterati_cafe_drinks.jpg",
-        "absolute_timestamp": "2024-03-16T08:00:00",
-        "location_name": "Illiterati Cafe",
-        "companions": [
-            "Nikhil",
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Drinks"
+        "location_name": "Connaught Place",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Raining",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_044",
-        "filename": "connaught_place_sunset.jpg",
-        "absolute_timestamp": "2024-05-25T16:00:00",
-        "location_name": "Connaught Place",
-        "companions": [
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Sunset"
+        "location_name": "Triund Hill",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Foggy",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_045",
-        "filename": "curlies_shack_drinks.jpg",
-        "absolute_timestamp": "2023-10-06T12:00:00",
-        "location_name": "Curlies Shack",
-        "companions": [
-            "Rahul"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Formal shirt",
-        "primary_object": "Drinks"
+        "location_name": "Connaught Place",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Overcast",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_046",
-        "filename": "triund_hill_backpack.jpg",
-        "absolute_timestamp": "2024-03-15T18:00:00",
-        "location_name": "Triund Hill",
-        "companions": [
-            "Family"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Foggy",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Backpack"
+        "location_name": "Lodhi Garden",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Foggy",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Car window"
+        }
     },
     {
         "photo_id": "img_047",
-        "filename": "lodhi_garden_drinks.jpg",
-        "absolute_timestamp": "2024-08-20T10:00:00",
-        "location_name": "Lodhi Garden",
-        "companions": [
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Drinks"
+        "location_name": "Chapora Fort",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Sunny",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_048",
-        "filename": "curlies_shack_guitar.jpg",
-        "absolute_timestamp": "2023-10-06T11:00:00",
-        "location_name": "Curlies Shack",
-        "companions": [
-            "Solo"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Winter jacket",
-        "primary_object": "Guitar"
+        "location_name": "India Gate",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Raining",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Car window"
+        }
     },
     {
         "photo_id": "img_049",
-        "filename": "mcleod_ganj_food.jpg",
-        "absolute_timestamp": "2024-03-15T09:00:00",
-        "location_name": "McLeod Ganj",
-        "companions": [
-            "Solo"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Cozy / Indoors",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Food"
+        "location_name": "Triund Hill",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Overcast",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_050",
-        "filename": "india_gate_coffee_cup.jpg",
-        "absolute_timestamp": "2024-05-04T18:00:00",
-        "location_name": "India Gate",
-        "companions": [
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Formal shirt",
-        "primary_object": "Coffee cup"
+        "location_name": "Connaught Place",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Sunny",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Restaurant table"
+        }
     },
     {
         "photo_id": "img_051",
-        "filename": "anjuna_food.jpg",
-        "absolute_timestamp": "2023-10-01T09:00:00",
-        "location_name": "Anjuna",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Foggy",
-        "clothing_visuals": "Trek pants",
-        "primary_object": "Food"
+        "location_name": "Connaught Place",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Raining",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Restaurant table"
+        }
     },
     {
         "photo_id": "img_052",
-        "filename": "dalai_lama_temple_backpack.jpg",
-        "absolute_timestamp": "2024-03-20T17:00:00",
-        "location_name": "Dalai Lama Temple",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Backpack"
+        "location_name": "Chapora Fort",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Foggy",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_053",
-        "filename": "connaught_place_drinks.jpg",
-        "absolute_timestamp": "2024-06-18T13:00:00",
-        "location_name": "Connaught Place",
-        "companions": [
-            "Family"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Drinks"
+        "location_name": "Lodhi Garden",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Overcast",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Restaurant table"
+        }
     },
     {
         "photo_id": "img_054",
-        "filename": "curlies_shack_backpack.jpg",
-        "absolute_timestamp": "2023-10-04T18:00:00",
-        "location_name": "Curlies Shack",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Backpack"
+        "location_name": "Connaught Place",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Sunny",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_055",
-        "filename": "dalai_lama_temple_food.jpg",
-        "absolute_timestamp": "2024-03-17T20:00:00",
-        "location_name": "Dalai Lama Temple",
-        "companions": [
-            "Family"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Food"
+        "location_name": "Chapora Fort",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Raining",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_056",
-        "filename": "connaught_place_backpack.jpg",
-        "absolute_timestamp": "2024-06-25T20:00:00",
-        "location_name": "Connaught Place",
-        "companions": [
-            "Nikhil",
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Trek pants",
-        "primary_object": "Backpack"
+        "location_name": "Connaught Place",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Sunny",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_057",
-        "filename": "chapora_fort_drinks.jpg",
-        "absolute_timestamp": "2023-10-02T14:00:00",
-        "location_name": "Chapora Fort",
-        "companions": [
-            "Family"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Drinks"
+        "location_name": "Chapora Fort",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Foggy",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_058",
-        "filename": "bhagsu_waterfall_food.jpg",
-        "absolute_timestamp": "2024-03-22T13:00:00",
-        "location_name": "Bhagsu Waterfall",
-        "companions": [
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Food"
+        "location_name": "Chapora Fort",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Raining",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Restaurant table"
+        }
     },
     {
         "photo_id": "img_059",
-        "filename": "connaught_place_bonfire.jpg",
-        "absolute_timestamp": "2024-06-24T12:00:00",
-        "location_name": "Connaught Place",
-        "companions": [
-            "Family"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Bonfire"
+        "location_name": "India Gate",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Foggy",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Restaurant table"
+        }
     },
     {
         "photo_id": "img_060",
-        "filename": "baga_beach_sunset.jpg",
-        "absolute_timestamp": "2023-10-09T14:00:00",
-        "location_name": "Baga Beach",
-        "companions": [
-            "Solo"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Clear Night",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Sunset"
+        "location_name": "Triund Hill",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Sunny",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_061",
-        "filename": "mcleod_ganj_coffee_cup.jpg",
-        "absolute_timestamp": "2024-03-16T17:00:00",
-        "location_name": "McLeod Ganj",
-        "companions": [
-            "Nikhil",
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Formal shirt",
-        "primary_object": "Coffee cup"
+        "location_name": "Triund Hill",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Sunny",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_062",
-        "filename": "connaught_place_food.jpg",
-        "absolute_timestamp": "2024-08-09T09:00:00",
-        "location_name": "Connaught Place",
-        "companions": [
-            "Nikhil",
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Food"
+        "location_name": "India Gate",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Raining",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_063",
-        "filename": "anjuna_bonfire.jpg",
-        "absolute_timestamp": "2023-10-07T08:00:00",
-        "location_name": "Anjuna",
-        "companions": [
-            "Rahul",
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Clear Night",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Bonfire"
+        "location_name": "Lodhi Garden",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Sunny",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_064",
-        "filename": "triund_hill_street_dog.jpg",
-        "absolute_timestamp": "2024-03-16T18:00:00",
-        "location_name": "Triund Hill",
-        "companions": [
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Winter jacket",
-        "primary_object": "Street dog"
+        "location_name": "Connaught Place",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Sunny",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_065",
-        "filename": "connaught_place_backpack.jpg",
-        "absolute_timestamp": "2024-07-14T13:00:00",
-        "location_name": "Connaught Place",
-        "companions": [
-            "Nikhil",
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Foggy",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Backpack"
+        "location_name": "India Gate",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Foggy",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Restaurant table"
+        }
     },
     {
         "photo_id": "img_066",
-        "filename": "curlies_shack_street_dog.jpg",
-        "absolute_timestamp": "2023-10-07T18:00:00",
-        "location_name": "Curlies Shack",
-        "companions": [
-            "Nikhil",
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Street dog"
+        "location_name": "Connaught Place",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Sunny",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Car window"
+        }
     },
     {
         "photo_id": "img_067",
-        "filename": "dalai_lama_temple_bonfire.jpg",
-        "absolute_timestamp": "2024-03-15T12:00:00",
-        "location_name": "Dalai Lama Temple",
-        "companions": [
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Casual tee",
-        "primary_object": "Bonfire"
+        "location_name": "Triund Hill",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Foggy",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Grass"
+        }
     },
     {
         "photo_id": "img_068",
-        "filename": "lodhi_garden_guitar.jpg",
-        "absolute_timestamp": "2024-07-23T15:00:00",
-        "location_name": "Lodhi Garden",
-        "companions": [
-            "Solo"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Trek pants",
-        "primary_object": "Guitar"
+        "location_name": "Lodhi Garden",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Sunny",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_069",
-        "filename": "curlies_shack_bonfire.jpg",
-        "absolute_timestamp": "2023-10-03T18:00:00",
-        "location_name": "Curlies Shack",
-        "companions": [
-            "Nikhil"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Overcast",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Bonfire"
+        "location_name": "Connaught Place",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Raining",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Pathway"
+        }
     },
     {
         "photo_id": "img_070",
-        "filename": "bhagsu_waterfall_backpack.jpg",
-        "absolute_timestamp": "2024-03-18T18:00:00",
-        "location_name": "Bhagsu Waterfall",
-        "companions": [
-            "Sparsh"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Foggy",
-        "clothing_visuals": "Hoodie",
-        "primary_object": "Backpack"
+        "location_name": "India Gate",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Sunny",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Restaurant table"
+        }
     },
     {
         "photo_id": "img_071",
-        "filename": "india_gate_coffee_cup.jpg",
-        "absolute_timestamp": "2024-07-31T17:00:00",
-        "location_name": "India Gate",
-        "companions": [
-            "Family"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Sunny / Beach",
-        "clothing_visuals": "Sundress",
-        "primary_object": "Coffee cup"
+        "location_name": "Connaught Place",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Sunny",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Restaurant table"
+        }
     },
     {
         "photo_id": "img_072",
-        "filename": "chapora_fort_coffee_cup.jpg",
-        "absolute_timestamp": "2023-10-10T11:00:00",
-        "location_name": "Chapora Fort",
-        "companions": [
-            "Solo"
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
         ],
-        "weather_vibe": "Raining",
-        "clothing_visuals": "Swim trunks",
-        "primary_object": "Coffee cup"
+        "location_name": "Chapora Fort",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Overcast",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Grass"
+        }
+    },
+    {
+        "photo_id": "img_073",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Lodhi Garden",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Foggy",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Car window"
+        }
+    },
+    {
+        "photo_id": "img_074",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Triund Hill",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Sunny",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Restaurant table"
+        }
+    },
+    {
+        "photo_id": "img_075",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Chapora Fort",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Sunny",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Car window"
+        }
+    },
+    {
+        "photo_id": "img_076",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "India Gate",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Raining",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Car window"
+        }
+    },
+    {
+        "photo_id": "img_077",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "India Gate",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Overcast",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Car window"
+        }
+    },
+    {
+        "photo_id": "img_078",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Connaught Place",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Sunny",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Grass"
+        }
+    },
+    {
+        "photo_id": "img_079",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Lodhi Garden",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Raining",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Grass"
+        }
+    },
+    {
+        "photo_id": "img_080",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Lodhi Garden",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Overcast",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Pathway"
+        }
+    },
+    {
+        "photo_id": "img_081",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Triund Hill",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Nikhil",
+            "weather": "Sunny",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Grass"
+        }
+    },
+    {
+        "photo_id": "img_082",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Lodhi Garden",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Foggy",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Pathway"
+        }
+    },
+    {
+        "photo_id": "img_083",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Connaught Place",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Raining",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Car window"
+        }
+    },
+    {
+        "photo_id": "img_084",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Chapora Fort",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Foggy",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Pathway"
+        }
+    },
+    {
+        "photo_id": "img_085",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Lodhi Garden",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Sunny",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Grass"
+        }
+    },
+    {
+        "photo_id": "img_086",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "India Gate",
+        "primary_object": "Monument",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Foggy",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Grass"
+        }
+    },
+    {
+        "photo_id": "img_087",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "India Gate",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Family",
+            "weather": "Sunny",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Car window"
+        }
+    },
+    {
+        "photo_id": "img_088",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Triund Hill",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Raining",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Restaurant table"
+        }
+    },
+    {
+        "photo_id": "img_089",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Connaught Place",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Raining",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Car window"
+        }
+    },
+    {
+        "photo_id": "img_090",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Lodhi Garden",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Sunny",
+            "clothing": "Winter jacket",
+            "foreground_vibe": "Restaurant table"
+        }
+    },
+    {
+        "photo_id": "img_091",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Lodhi Garden",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Sunny",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Car window"
+        }
+    },
+    {
+        "photo_id": "img_092",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Chapora Fort",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Overcast",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Pathway"
+        }
+    },
+    {
+        "photo_id": "img_093",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Lodhi Garden",
+        "primary_object": "Trees",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Overcast",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Pathway"
+        }
+    },
+    {
+        "photo_id": "img_094",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Chapora Fort",
+        "primary_object": "Group picture",
+        "episodic_discriminators": {
+            "companion": "Sparsh",
+            "weather": "Overcast",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Pathway"
+        }
+    },
+    {
+        "photo_id": "img_095",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Triund Hill",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Overcast",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Restaurant table"
+        }
+    },
+    {
+        "photo_id": "img_096",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Connaught Place",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Ananya",
+            "weather": "Raining",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Restaurant table"
+        }
+    },
+    {
+        "photo_id": "img_097",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Connaught Place",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Overcast",
+            "clothing": "Casual tee",
+            "foreground_vibe": "Car window"
+        }
+    },
+    {
+        "photo_id": "img_098",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Chapora Fort",
+        "primary_object": "Selfie",
+        "episodic_discriminators": {
+            "companion": "Solo",
+            "weather": "Foggy",
+            "clothing": "Hoodie",
+            "foreground_vibe": "Restaurant table"
+        }
+    },
+    {
+        "photo_id": "img_099",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "Lodhi Garden",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "Rahul",
+            "weather": "Raining",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Restaurant table"
+        }
+    },
+    {
+        "photo_id": "img_100",
+        "cluster_name": "GENERIC MEMORIES",
+        "keyword_tags": [
+            "generic",
+            "trip",
+            "hangout"
+        ],
+        "location_name": "India Gate",
+        "primary_object": "Clouds",
+        "episodic_discriminators": {
+            "companion": "College Friends",
+            "weather": "Overcast",
+            "clothing": "Formal shirt",
+            "foreground_vibe": "Pathway"
+        }
     }
-]
+]\n
