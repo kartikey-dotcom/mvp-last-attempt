@@ -691,6 +691,17 @@ with st.container(key="left_nav"):
     
     with st.container(key="proto"):
         st.markdown('<div style="font-size: 11px; color: #5F6368; margin-bottom: 8px;">Try an example</div>', unsafe_allow_html=True)
+        def ex_search(q):
+            st.session_state.query = q
+            st.session_state.q_input = q
+            st.session_state.answers = {}
+            st.session_state.asked = []
+            st.session_state.selected = set()
+            st.session_state.start_time = time.time()
+            st.session_state.success_msg = None
+            st.session_state.selected_anchor = None
+            st.session_state.agent_trace = []
+            
         with st.container(key="examples_block"):
             st.button("purple sunset", key="ex_1", on_click=ex_search, args=("purple sunset",))
             st.button("rainy wedding", key="ex_2", on_click=ex_search, args=("rainy wedding",))
