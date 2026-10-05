@@ -746,15 +746,6 @@ with st.container(key="topbar"):
             else:
                 st.write("")
         st.form_submit_button("submit", on_click=do_search, key="submit_btn")
-    
-    if not st.session_state.get("query"):
-        st.markdown('<div style="font-size: 13px; color: #5F6368; margin-top: 8px; margin-bottom: 8px; margin-left: 16px;">Try searching for categories:</div>', unsafe_allow_html=True)
-        sug_cols = st.columns(6)
-        suggestions = ["Mountain", "Beach", "Cafe", "Concert", "Street", "Balcony"]
-        for i, sug in enumerate(suggestions):
-            with sug_cols[i]:
-                st.button(sug, key=f"sug_btn_{sug}", on_click=set_search_suggestion, args=(sug,), use_container_width=True)
-
 
 
 with st.sidebar:
@@ -975,8 +966,15 @@ with st.container(key="main_content"):
 
     q = st.session_state.query
     if not q:
+        st.markdown('<div style="font-size: 13px; color: #5F6368; margin-bottom: 8px;">Try searching for categories:</div>', unsafe_allow_html=True)
+        sug_cols = st.columns(6)
+        suggestions = ["Mountain", "Beach", "Cafe", "Concert", "Street", "Balcony"]
+        for i, sug in enumerate(suggestions):
+            with sug_cols[i]:
+                st.button(sug, key=f"sug_btn_{sug}", on_click=set_search_suggestion, args=(sug,), use_container_width=True)
+                
         st.markdown(f'''
-        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 16px; margin-bottom: 16px;">
             <div><span style="font-size: 16px; font-weight: 500; color: #202124;">All Photos</span> <span style="font-size: 12px; color: #5F6368; margin-left: 12px;">{len(library)} items</span></div>
             <div style="font-size: 12px; color: #5F6368;">Select photos to review or share</div>
         </div>
