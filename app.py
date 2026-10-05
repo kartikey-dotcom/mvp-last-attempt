@@ -223,7 +223,7 @@ def reset_search():
     st.session_state.agent_trace = []
 
 def do_search():
-    if st.session_state.q_input:
+    if st.session_state.get("q_input"):
         st.session_state.pending_query = st.session_state.q_input
     st.session_state.answers = {}
     st.session_state.asked = []
@@ -645,7 +645,7 @@ with st.container(key="topbar"):
         with c2:
             st.text_input("Search", key="q_input", label_visibility="collapsed", placeholder="Search your photos")
         with c3:
-            if st.session_state.q_input:
+            if st.session_state.get("q_input"):
                 if st.form_submit_button("", icon=":material/close:", type="tertiary"):
                     reset_search()
                     st.rerun()
