@@ -826,104 +826,10 @@ def get_hints(query):
     return hints
 
 def get_candidates(library, query, mode):
-    if not query: return library, {}, []
-    
-    import string
-    # Strip punctuation and split into words
-    query_clean = query.translate(str.maketrans('', '', string.punctuation)).lower()
-    query_words = set(query_clean.split())
-    
-    # Common stop words to ignore in keyword matching
-    stop_words = {"the", "a", "an", "is", "in", "at", "of", "on", "and", "to", "with", "for"}
-    query_words = query_words - stop_words
-    
-    keyword_filtered = []
-    if query_words:
-        for p in library:
-            # Flatten all string/list values in the photo dictionary into one searchable text block
-            all_text = " ".join([str(v) for v in p.values() if isinstance(v, (str, list))]).lower()
-            
-            # If ANY meaningful word from the query matches the photo's text, it's a candidate
-            if any(w in all_text for w in query_words):
-                keyword_filtered.append(p)
-                
-    # If the keyword search found anything, restrict the library to those matches.
-    # Otherwise, if it found nothing (or was only stop words), it returns 0 results.
-    if query_words:
-        library = keyword_filtered
-    
     if mode == "Current search":
-        return library, {}, []
-    
-    # AI Mode
-    rule_hints = get_hints(query)
-    llm_result, latency_ms, llm_called = parse_query_with_llm(query)
-    st.session_state.last_latency = latency_ms
-    
-    hints = {}
-    ai_used = False
-    mood = None
-    
-    if llm_result and llm_result.get("hints"):
-        hints = llm_result["hints"].copy()
-        mood = llm_result.get("mood")
-        
-    for k, v in rule_hints.items():
-        if k not in hints:
-            hints[k] = v
-        elif k in hints and hints[k] != v:
-            hints[k] = v
-            
-    if llm_result and llm_result.get("hints"):
-        for k, v in llm_result["hints"].items():
-            if k not in rule_hints:
-                ai_used = True
-                
-    st.session_state.ai_used = ai_used
-    if mood:
-        st.session_state.mood_phrase = html.escape(f"It sounds like a {mood} moment.")
+        return engine.baseline_search(library, query), {}, []
     else:
-        st.session_state.mood_phrase = None
-        
-    for k, v in st.session_state.answers.items():
-        if v is not None:
-            hints[k] = v
-        elif k in hints:
-            del hints[k]
-    
-    def filter_lib(lib, h):
-        return [p for p in lib if all(p.get(k) == v or (isinstance(p.get(k), list) and v in p.get(k)) for k, v in h.items())]
-    
-    drop_order = ["foreground_vibe", "clothing_visuals", "primary_object", "location_name", "weather_vibe", "companion"]
-    current_hints = hints.copy()
-    dropped = []
-    
-    res = filter_lib(library, current_hints)
-    while len(res) == 0 and current_hints:
-        for attr in drop_order:
-            if attr in current_hints and attr not in st.session_state.answers:
-                dropped.append(attr)
-                del current_hints[attr]
-                break
-        else:
-            break
-        res = filter_lib(library, current_hints)
-        
-    anchor_id = st.session_state.get("selected_anchor")
-    if anchor_id:
-        anchor = next((p for p in library if p["id"] == anchor_id), None)
-        if anchor:
-            def sim_score(p):
-                score = 0
-                if p.get("location_name") == anchor.get("location_name"): score += 2
-                if p.get("weather_vibe") == anchor.get("weather_vibe"): score += 2
-                if p.get("clothing_visuals") == anchor.get("clothing_visuals"): score += 1
-                if p.get("companion") == anchor.get("companion"): score += 1
-                return (score, p["id"])
-            res.sort(key=lambda p: (-sim_score(p)[0], p["id"]))
-            res = [p for p in res if p["id"] == anchor["id"]] + [p for p in res if p["id"] != anchor["id"]]
-            
-    return res, current_hints, dropped
+        return engine.parse_query(query, library)
 
 def calculate_entropy(candidates, unasked_attrs):
     best_attr = None
@@ -940,11 +846,7 @@ def calculate_entropy(candidates, unasked_attrs):
     return best_attr, max_e
 
 @st.cache_data
-def get_image_base64(path):
-    if os.path.exists(path):
-        with open(path, "rb") as f:
-            return base64.b64encode(f.read()).decode()
-    return None
+
 
 
 @st.dialog("Photo Details")
