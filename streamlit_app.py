@@ -42,9 +42,7 @@ def get_library():
 
 library = get_library()
 
-@st.cache_data
 def get_image_base64(photo_id, category, shirt, companion):
-    _force_cache_invalidation_2 = True
     if isinstance(companion, list): companion = companion[0]
     if isinstance(category, list): category = category[0]
     if isinstance(shirt, list): shirt = shirt[0]
