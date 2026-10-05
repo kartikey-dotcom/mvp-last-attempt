@@ -405,7 +405,7 @@ footer,
 .stSidebarContent, [data-testid="stSidebar"] > div:first-child {
     padding-top: 72px !important;
 }
-[data-testid="stSidebarNav"], [data-testid="stSidebarHeader"], [data-testid="stSidebarCollapsedControl"] {
+[data-testid="stSidebarNav"], [data-testid="stSidebarHeader"] {
     display: none !important;
 }
 
