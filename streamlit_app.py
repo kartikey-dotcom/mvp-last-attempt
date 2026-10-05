@@ -27,7 +27,7 @@ except Exception:
     GEMINI_API_KEY = None
 
 # Setup
-st.set_page_config(layout="wide", page_title="Photos concept: Contextual Disambiguation", initial_sidebar_state="collapsed")
+st.set_page_config(layout="wide", page_title="Photos concept: Contextual Disambiguation", initial_sidebar_state="expanded")
 
 # -----------------
 # DATA MODEL
@@ -889,14 +889,51 @@ with st.container(key="main_content"):
         </div>
         """, unsafe_allow_html=True)
 
+    if st.session_state.get("pending_query"):
+        st.session_state.query = st.session_state.pending_query
+        del st.session_state.pending_query
+        
+        ph = st.empty()
+        with ph.container():
+            st.markdown(f'''
+            <div style="background: #EEF2F9; border-radius: 24px; padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; transition: opacity 0.15s ease-in;">
+                <div style="animation: pulse 1.5s infinite;">{SPARKLE_SVG}</div>
+                <div style="font-size: 16px; color: #202124;">Understanding your search...</div>
+            </div>
+            <div style="height: 4px; width: 100%; background: linear-gradient(90deg, #E8F0FE, #D3E3FD, #E8F0FE); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px;"></div>
+            <style>
+            @keyframes pulse {{ 0% {{ opacity: 0.5; }} 50% {{ opacity: 1; }} 100% {{ opacity: 0.5; }} }}
+            @keyframes shimmer {{ 0% {{ background-position: 100% 0; }} 100% {{ background-position: -100% 0; }} }}
+            </style>
+            ''', unsafe_allow_html=True)
+        
+        res, latency, used = parse_query_with_llm(st.session_state.query)
+        st.session_state.llm_res = res
+        st.session_state.last_latency = latency
+        st.session_state.ai_used = used
+        st.rerun()
+
     q = st.session_state.query
     if not q:
-        st.markdown("""
-        <div style="text-align: center; margin-top: 120px;">
-            <div style="font-size: 22px; color: #202124;">Search your photos</div>
-            <div style="font-size: 14px; color: #5F6368; margin-top: 8px;">Try an example from the bottom left, or type your own search.</div>
+        st.markdown(f'''
+        <div style="display: flex; flex-direction: column; align-items: center; padding-top: 12vh; text-align: center;">
+            <div style="width: 96px; height: 96px; background-color: #F0F4F9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+                {svg_icon(SEARCH_ICON, "#1A73E8", 48)}
+            </div>
+            <div style="font-size: 24px; font-weight: 500; color: #202124; margin-bottom: 8px;">Search your photos</div>
+            <div style="font-size: 14px; color: #5F6368; margin-bottom: 32px;">Try describing a moment the way you remember it.</div>
         </div>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
+        
+        def ex_search(q):
+            st.session_state.q_input = q
+            st.session_state.pending_query = q
+        
+        cols = st.columns(4, gap="small")
+        with cols[0]: st.button("purple sunset", key="ex_1", on_click=ex_search, args=("purple sunset",), use_container_width=True)
+        with cols[1]: st.button("rainy wedding", key="ex_2", on_click=ex_search, args=("rainy wedding",), use_container_width=True)
+        with cols[2]: st.button("foggy mountain", key="ex_3", on_click=ex_search, args=("foggy mountain",), use_container_width=True)
+        with cols[3]: st.button("cozy dinner with Rohan", key="ex_4", on_click=ex_search, args=("cozy dinner with Rohan",), use_container_width=True)
     else:
         candidates, current_hints, dropped = get_candidates(library, q, st.session_state.mode)
         
