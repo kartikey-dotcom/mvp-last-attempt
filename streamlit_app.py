@@ -976,7 +976,7 @@ with st.container(key="main_content"):
     if not q:
         st.markdown(f'''
         <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
-            <div><span style="font-size: 16px; font-weight: 500; color: #202124;">Sun, 22 Sep</span> <span style="font-size: 12px; color: #5F6368; margin-left: 12px;">{len(library)} items</span></div>
+            <div><span style="font-size: 16px; font-weight: 500; color: #202124;">All Photos</span> <span style="font-size: 12px; color: #5F6368; margin-left: 12px;">{len(library)} items</span></div>
             <div style="font-size: 12px; color: #5F6368;">Select photos to review or share</div>
         </div>
         ''', unsafe_allow_html=True)
@@ -1002,7 +1002,7 @@ with st.container(key="main_content"):
             else:
                 st.markdown(f"""
                 <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
-                    <div><span style="font-size: 16px; font-weight: 500; color: #202124;">Sun, 22 Sep</span> <span style="font-size: 12px; color: #5F6368; margin-left: 12px;">{len(candidates)} items</span></div>
+                    <div><span style="font-size: 16px; font-weight: 500; color: #202124;">All Photos</span> <span style="font-size: 12px; color: #5F6368; margin-left: 12px;">{len(candidates)} items</span></div>
                     <div style="font-size: 12px; color: #5F6368;">Select photos to review or share</div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -1087,7 +1087,7 @@ with st.container(key="main_content"):
 
             st.markdown(f"""
             <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
-                <div><span style="font-size: 16px; font-weight: 500; color: #202124;">Sun, 22 Sep</span> <span style="font-size: 12px; color: #5F6368; margin-left: 12px;">{len(candidates)} items</span></div>
+                <div><span style="font-size: 16px; font-weight: 500; color: #202124;">All Photos</span> <span style="font-size: 12px; color: #5F6368; margin-left: 12px;">{len(candidates)} items</span></div>
                 <div style="font-size: 12px; color: #5F6368;">Select photos to review or share</div>
             </div>
             """, unsafe_allow_html=True)
