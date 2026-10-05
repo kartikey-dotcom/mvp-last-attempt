@@ -530,7 +530,13 @@ div[data-baseweb="radio"] div[data-checked="true"], div[data-baseweb="checkbox"]
     align-items: center !important;
     justify-content: center !important;
 }
-.st-key-menu_btn button {
+
+.st-key-menu_btn button p {
+    font-size: 24px !important;
+    line-height: 1 !important;
+    padding-bottom: 2px !important;
+}
+\n.st-key-menu_btn button {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -701,7 +707,7 @@ SPARKLE_SVG = '<svg width="20" height="20" viewBox="0 0 24 24"><defs><linearGrad
 with st.container(key="top_header"):
     c1, c2, c3 = st.columns([1, 15, 4], vertical_alignment="center")
     with c1:
-        if st.button("☰", key="menu_btn", help="Main Menu"):
+        if st.button("☰", key="menu_btn", help="Main Menu (Home)"): 
             st.session_state.query = ""
             st.session_state.show_home = True
             if "q_input" in st.session_state: st.session_state.q_input = ""
@@ -720,7 +726,7 @@ with st.container(key="top_header"):
 
 with st.container(key="topbar"):
     with st.form(key="search_form", border=False, clear_on_submit=False):
-        c1, c2, c3 = st.columns([1.5, 12, 1.5], vertical_alignment="center", gap="small")
+        c1, c2, c3 = st.columns([1, 12, 1], vertical_alignment="center", gap="collapse")
         with c1:
             st.form_submit_button("🔍", on_click=do_search)
         with c2:
