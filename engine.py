@@ -33,14 +33,20 @@ def baseline_search(photos, query):
     
     results = []
     for p in photos:
-        tags = set(p['objective_tags'])
-        # Must contain ALL remaining tokens
-        # Wait, if tokens has "mountains", singular_tokens has "mountain". 
-        # So "ALL remaining tokens" means for each original token (or its singular), is it in tags?
+        # Build a comprehensive search string from all attributes
+        search_blob = " ".join([str(v) for v in p.values()]).lower()
+        # Add implied words to help with matching
+        search_blob += f" {p.get('shirt', '')} shirt tee t-shirt"
+        search_blob += f" {p.get('companion', '')} people person group friends"
+        search_blob += f" {p.get('category', '')} place location"
+        search_blob += f" {p.get('weather', '')} weather"
+        search_blob += f" {p.get('time_of_day', '')} time"
+        search_blob += f" {p.get('extra', '')} extra"
+        
         match = True
         for original_token in tokens:
             sing = original_token[:-1] if original_token.endswith('s') and len(original_token) > 3 else original_token
-            if original_token not in tags and sing not in tags:
+            if original_token not in search_blob and sing not in search_blob:
                 match = False
                 break
         if match:
