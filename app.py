@@ -503,8 +503,8 @@ footer,
 }
 .st-key-proto [data-testid="column"] {
     width: auto !important;
-    min-width: 0 !important;
-    flex: 0 1 auto !important;
+    min-width: max-content !important;
+    flex: 1 1 auto !important;
 }
 
 .st-key-ex_1 button, .st-key-ex_2 button, .st-key-ex_3 button {
@@ -515,24 +515,28 @@ footer,
     height: 32px !important;
     min-height: 32px !important;
 }
-.st-key-ex_1 button p, .st-key-ex_2 button p, .st-key-ex_3 button p {
+.st-key-ex_1 button p, .st-key-ex_2 button p, .st-key-ex_3 button p,
+.st-key-ex_1 button span, .st-key-ex_2 button span, .st-key-ex_3 button span {
     font-size: 12px !important;
     color: #3C4043 !important;
     white-space: nowrap !important;
     overflow: visible !important;
+    text-overflow: clip !important;
 }
 
-/* Radio buttons */
+/* Radio buttons and Toggle Text */
+.st-key-proto [data-testid="stWidgetLabel"] p,
 .st-key-proto [data-testid="stRadio"] p,
 .st-key-proto [data-testid="stRadio"] label,
 .st-key-proto [data-testid="stRadio"] div[data-testid="stMarkdownContainer"] p {
     color: #3C4043 !important;
 }
-.st-key-proto [data-testid="stRadio"] div[data-baseweb="radio"] input[type="radio"]:checked + div {
+
+/* Force Google Blue on active radio */
+.st-key-proto [data-testid="stRadio"] input[type="radio"]:checked + div,
+.st-key-proto [data-testid="stRadio"] input[type="radio"]:checked + div * {
     background-color: #1A73E8 !important;
-}
-.st-key-proto [data-testid="stRadio"] div[data-baseweb="radio"] input[type="radio"]:checked + div > div {
-    background-color: #1A73E8 !important;
+    border-color: #1A73E8 !important;
 }
 
 /* Assistant card */
