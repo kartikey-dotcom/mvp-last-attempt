@@ -182,7 +182,10 @@ def reset_search():
 
 def do_search():
     if st.session_state.get("q_input"):
-        st.session_state.pending_query = st.session_state.q_input
+        if st.session_state.get("query"):
+            st.session_state.pending_query = st.session_state.query + " " + st.session_state.q_input
+        else:
+            st.session_state.pending_query = st.session_state.q_input
     st.session_state.answers = {}
     st.session_state.asked = []
     st.session_state.selected = set()
@@ -673,14 +676,15 @@ with st.container(key="top_header"):
         ''', unsafe_allow_html=True)
 
 with st.container(key="topbar"):
-    with st.form(key="search_form", border=False, clear_on_submit=False):
+    with st.form(key="search_form", border=False, clear_on_submit=True):
         c1, c2, c3 = st.columns([1, 12, 1], vertical_alignment="center", gap="small")
         with c1:
             st.form_submit_button("🔍", on_click=do_search)
         with c2:
-            st.text_input("Search", key="q_input", label_visibility="collapsed", placeholder="Search your photos")
+            ph_text = "Add details (e.g. 'with Nikhil')..." if st.session_state.get("query") else "Search your photos"
+            st.text_input("Search", key="q_input", label_visibility="collapsed", placeholder=ph_text)
         with c3:
-            if st.session_state.get("q_input"):
+            if st.session_state.get("query"):
                 if st.form_submit_button("✕"):
                     reset_search()
                     st.rerun()
@@ -1040,6 +1044,14 @@ with st.container(key="main_content"):
                         
         else:
             with st.container(key="assistant"):
+                st.markdown(f'''
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 24px;">
+                    <div style="background: #E8F0FE; padding: 12px 16px; border-radius: 18px; border-bottom-right-radius: 4px; color: #202124; font-size: 14px; max-width: 80%; line-height: 1.4;">
+                        "{q}"
+                    </div>
+                </div>
+                ''', unsafe_allow_html=True)
+                
                 ai_label = ""
                 if st.session_state.get("ai_used"):
                     ai_label = f'<span style="background: #E8F0FE; color: #5F6368; font-size: 11px; padding: 2px 8px; border-radius: 9999px; margin-left: 8px;">{SPARKLE_SVG} AI-assisted</span>'
@@ -1050,13 +1062,27 @@ with st.container(key="main_content"):
                 </div>
                 """, unsafe_allow_html=True)
                 
+                variations = []
+                for attr in ["companions", "location_name", "weather_vibe", "clothing_visuals"]:
+                    unique_vals = set(p[attr] for p in candidates if p.get(attr))
+                    if len(unique_vals) > 1:
+                        variations.append(attr.replace('_', ' ').title())
+
                 if not current_hints:
-                    understood = "I couldn't pin anything down yet. **{}** photos to go through.".format(len(candidates))
+                    if variations:
+                        understood = f"I found **{len(candidates)}** matches. They differ by {', '.join(variations)}."
+                    else:
+                        understood = f"I found **{len(candidates)}** matches."
                 else:
                     parts = []
                     for k, v in current_hints.items():
                         parts.append(f"**{k.replace('_', ' ')}: {v}**")
-                    understood = f"I understood {', '.join(parts)}. That leaves **{len(candidates)}** possible photos."
+                    
+                    if variations:
+                        understood = f"Got it: {', '.join(parts)}. I still have **{len(candidates)}** matches that differ by {', '.join(variations)}."
+                    else:
+                        understood = f"Got it: {', '.join(parts)}. That leaves **{len(candidates)}** matches."
+                        
                     if st.session_state.get("mood_phrase"):
                         understood += f" <span style='color: #5F6368;'>{st.session_state.mood_phrase}</span>"
                     
