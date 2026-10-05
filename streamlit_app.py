@@ -44,6 +44,10 @@ library = get_library()
 
 @st.cache_data
 def get_image_base64(photo_id, category, shirt, companion):
+    if isinstance(companion, list): companion = companion[0]
+    if isinstance(category, list): category = category[0]
+    if isinstance(shirt, list): shirt = shirt[0]
+    
     path = f"assets/photos/{photo_id}.jpg"
     if os.path.exists(path):
         try:
@@ -953,7 +957,10 @@ def render_tile(p, observe=None, decide=None):
     is_anchor = p['id'] == st.session_state.get("selected_anchor")
     bg = p.get('palette', 'purple') if p.get('palette', 'purple') != 'purple' else 'rebeccapurple'
     svg = f'<svg viewBox="0 0 100 100" preserveAspectRatio="slice"><rect width="100" height="100" fill="{bg}" opacity="0.3"/><circle cx="50" cy="50" r="20" fill="white" opacity="0.5"/></svg>'
-    b64 = get_image_base64(p['id'], p['category'], p['shirt'], p['companion'])
+    c_cat = p['category'][0] if isinstance(p['category'], list) else p['category']
+    c_shirt = p['shirt'][0] if isinstance(p['shirt'], list) else p['shirt']
+    c_comp = p['companion'][0] if isinstance(p.get('companion'), list) else p.get('companion', 'alone')
+    b64 = get_image_base64(p['id'], c_cat, c_shirt, c_comp)
     bg_style = f"background-image:url('data:image/jpeg;base64,{b64}'); background-size:cover;"
 
     
