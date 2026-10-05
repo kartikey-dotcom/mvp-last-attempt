@@ -431,80 +431,91 @@ div[data-baseweb="radio"] div[data-checked="true"], div[data-baseweb="checkbox"]
 
 /* Search Bar Pill */
 .st-key-topbar {
-    position: fixed;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(720px, 46vw);
-    height: 48px;
-    z-index: 1001;
+    position: fixed !important;
+    top: 8px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: min(720px, 46vw) !important;
+    height: 48px !important;
+    z-index: 1001 !important;
 }
 .st-key-search_form [data-testid="stForm"] {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    background-color: #E9EEF6 !important;
+    background-color: #F1F3F4 !important;
     border-radius: 9999px !important;
+    border: 1px solid transparent !important;
+    padding: 0 16px !important;
     height: 48px !important;
-    padding: 0 8px !important;
-    border: none !important;
-    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
 }
 .st-key-search_form [data-testid="stForm"]:focus-within {
     background-color: #FFFFFF !important;
     border: 1px solid #DADCE0 !important;
     box-shadow: 0 1px 3px rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15) !important;
 }
-.st-key-search_form .stTextInput div[data-baseweb="input"] {
+.st-key-search_form [data-testid="stHorizontalBlock"] {
+    gap: 0 !important;
+    align-items: center !important;
+}
+.st-key-search_form [data-testid="column"] {
+    padding: 0 !important;
+    width: auto !important;
+    flex: 0 1 auto !important;
+}
+.st-key-search_form [data-testid="column"]:nth-child(2) {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+}
+.st-key-search_form input {
     background-color: transparent !important;
     border: none !important;
-    box-shadow: none !important;
-}
-.st-key-search_form .stTextInput input {
     color: #202124 !important;
     font-size: 16px !important;
+}
+.st-key-search_form input::placeholder { color: #5F6368 !important; }
+.st-key-search_form div[data-baseweb="input"], .st-key-search_form div[data-baseweb="base-input"] {
     background-color: transparent !important;
-    -webkit-text-fill-color: #202124 !important;
-}
-.st-key-search_form .stTextInput input::placeholder {
-    color: #5F6368 !important;
-    -webkit-text-fill-color: #5F6368 !important;
-}
-.st-key-search_form .stTextInput input:focus {
-    outline: none !important;
+    border: none !important;
     box-shadow: none !important;
 }
-.st-key-search_form .stButton button, .st-key-search_form .stFormSubmitButton button {
+.st-key-search_form button {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
     color: #5F6368 !important;
-    width: 40px !important;
-    height: 40px !important;
+    width: 32px !important;
+    height: 32px !important;
     border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
 }
-.st-key-search_form .stButton button:hover, .st-key-search_form .stFormSubmitButton button:hover {
+.st-key-search_form button:hover {
     background-color: rgba(32, 33, 36, 0.08) !important;
     color: #202124 !important;
 }
 /* Hide the stray submit button */
-.st-key-submit_btn,
-.st-key-submit_btn button {
+.st-key-submit_btn {
     display: none !important;
-    opacity: 0 !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    margin: 0 !important;
 }
-.st-key-topbar [data-testid="column"] { padding: 0 !important; width: auto !important; flex: 0 1 auto !important; }
-.st-key-topbar [data-testid="column"]:nth-child(2) { flex: 1 1 auto !important; }
+
+/* Center the Examples Block in the Empty State */
+.st-key-examples_block [data-testid="stVerticalBlock"] {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+}
+.st-key-examples_block [data-testid="stVerticalBlock"] > [data-testid="stHorizontalBlock"] {
+    display: flex !important;
+    justify-content: center !important;
+}
 
 /* Assistant card */
+
 .st-key-assistant {
     background: #EEF2F9;
     border-radius: 24px;
@@ -641,12 +652,12 @@ with st.container(key="topbar"):
     with st.form(key="search_form", border=False, clear_on_submit=False):
         c1, c2, c3 = st.columns([1, 12, 1], vertical_alignment="center", gap="small")
         with c1:
-            st.form_submit_button("", icon=":material/search:", type="tertiary", on_click=do_search)
+            st.form_submit_button("🔍", on_click=do_search)
         with c2:
             st.text_input("Search", key="q_input", label_visibility="collapsed", placeholder="Search your photos")
         with c3:
             if st.session_state.get("q_input"):
-                if st.form_submit_button("", icon=":material/close:", type="tertiary"):
+                if st.form_submit_button("✕"):
                     reset_search()
                     st.rerun()
             else:
@@ -929,11 +940,12 @@ with st.container(key="main_content"):
             st.session_state.q_input = q
             st.session_state.pending_query = q
         
-        cols = st.columns(4, gap="small")
-        with cols[0]: st.button("purple sunset", key="ex_1", on_click=ex_search, args=("purple sunset",), use_container_width=True)
-        with cols[1]: st.button("rainy wedding", key="ex_2", on_click=ex_search, args=("rainy wedding",), use_container_width=True)
-        with cols[2]: st.button("foggy mountain", key="ex_3", on_click=ex_search, args=("foggy mountain",), use_container_width=True)
-        with cols[3]: st.button("cozy dinner with Rohan", key="ex_4", on_click=ex_search, args=("cozy dinner with Rohan",), use_container_width=True)
+        with st.container(key="examples_block"):
+            cols = st.columns([1.5, 2, 2, 2, 2, 1.5], gap="small")
+            with cols[1]: st.button("purple sunset", key="ex_1", on_click=ex_search, args=("purple sunset",))
+            with cols[2]: st.button("rainy wedding", key="ex_2", on_click=ex_search, args=("rainy wedding",))
+            with cols[3]: st.button("foggy mountain", key="ex_3", on_click=ex_search, args=("foggy mountain",))
+            with cols[4]: st.button("cozy dinner with Rohan", key="ex_4", on_click=ex_search, args=("cozy dinner with Rohan",))
     else:
         candidates, current_hints, dropped = get_candidates(library, q, st.session_state.mode)
         
