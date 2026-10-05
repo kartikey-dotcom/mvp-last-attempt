@@ -64,7 +64,8 @@ def get_image_base64(photo_id, category, shirt, companion):
                 img = img.crop((left, top, right, bottom))
             buf = io.BytesIO()
             img.save(buf, format="JPEG")
-            return base64.b64encode(buf.getvalue()).decode()
+            b64 = base64.b64encode(buf.getvalue()).decode()
+            return f"data:image/jpeg;base64,{b64}"
         except Exception:
             pass
             
@@ -89,7 +90,8 @@ def get_image_base64(photo_id, category, shirt, companion):
         <circle cx="200" cy="240" r="30" fill="{shirt_color}" stroke="#DADCE0" stroke-width="2"/>
         <text x="50%" y="320" font-size="24" text-anchor="middle" fill="#5F6368">{"👤 " * comp_count}</text>
     </svg>'''
-    return base64.b64encode(svg.encode()).decode()
+    b64 = base64.b64encode(svg.encode()).decode()
+    return f"data:image/svg+xml;base64,{b64}"
 
 
 @st.cache_data(ttl=3600)
@@ -862,8 +864,8 @@ def render_tile(p, observe=None, decide=None):
     c_cat = p['category'][0] if isinstance(p['category'], list) else p['category']
     c_shirt = p['shirt'][0] if isinstance(p['shirt'], list) else p['shirt']
     c_comp = p['companion'][0] if isinstance(p.get('companion'), list) else p.get('companion', 'alone')
-    b64 = get_image_base64(p['id'], c_cat, c_shirt, c_comp)
-    bg_style = f"background-image:url('data:image/jpeg;base64,{b64}'); background-size:cover;"
+    data_url = get_image_base64(p['id'], c_cat, c_shirt, c_comp)
+    bg_style = f"background-image:url('{data_url}'); background-size:cover;"
 
     
     sel_html = f"""
