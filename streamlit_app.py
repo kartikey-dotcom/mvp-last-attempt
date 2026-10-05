@@ -44,6 +44,7 @@ library = get_library()
 
 @st.cache_data
 def get_image_base64(photo_id, category, shirt, companion):
+    # Cache busted on 2026-10-06 to force reload of new images
     if isinstance(companion, list): companion = companion[0]
     if isinstance(category, list): category = category[0]
     if isinstance(shirt, list): shirt = shirt[0]
