@@ -1082,9 +1082,11 @@ with st.container(key="main_content"):
         </div>
         ''', unsafe_allow_html=True)
         with st.container(key="photo_grid"):
-            for p in library[:24]:
-                with st.container(key=f"tile_{p['id']}"):
-                    render_tile(p)
+            cols = st.columns(4)
+            for i, p in enumerate(library[:24]):
+                with cols[i % 4]:
+                    with st.container(key=f"tile_{p['id']}"):
+                        render_tile(p)
             if len(library) > 24:
                 st.caption(f"+ {len(library)-24} more")
     else:
@@ -1108,9 +1110,11 @@ with st.container(key="main_content"):
                 """, unsafe_allow_html=True)
                 
                 with st.container(key="photo_grid"):
-                    for p in candidates[:24]:
-                        with st.container(key=f"tile_{p['id']}"):
-                            render_tile(p)
+                    cols = st.columns(4)
+                    for i, p in enumerate(candidates[:24]):
+                        with cols[i % 4]:
+                            with st.container(key=f"tile_{p['id']}"):
+                                render_tile(p)
                     if len(candidates) > 24:
                         st.caption(f"+ {len(candidates)-24} more")
                         
