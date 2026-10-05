@@ -785,9 +785,20 @@ def get_hints(query):
 def get_candidates(library, query, mode):
     if not query: return library, {}, []
     
+    query_words = set(query.lower().split())
+    keyword_filtered = []
+    for p in library:
+        tags = " ".join(p.get("keyword_tags", [])).lower()
+        loc = p.get("location_name", "").lower()
+        obj = p.get("primary_object", "").lower()
+        if any(w in tags for w in query_words) or any(w in loc for w in query_words) or any(w in obj for w in query_words):
+            keyword_filtered.append(p)
+            
+    if keyword_filtered:
+        library = keyword_filtered
+    
     if mode == "Current search":
-        tokens = query.lower().split()
-        return [p for p in library if all(t in p["objective"] for t in tokens)], {}, []
+        return library, {}, []
     
     # AI Mode
     rule_hints = get_hints(query)
