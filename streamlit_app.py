@@ -214,6 +214,18 @@ def do_search():
     st.session_state.selected_anchor = None
     st.session_state.agent_trace = []
 
+def set_search_suggestion(sug):
+    st.session_state.pending_query = sug
+    st.session_state.answers = {}
+    st.session_state.asked = []
+    st.session_state.selected = set()
+    st.session_state.start_time = time.time()
+    st.session_state.success_msg = None
+    st.session_state.selected_anchor = None
+    st.session_state.agent_trace = []
+    # If using Contextual Disambiguation mode, ensure it's selected
+    st.session_state.mode = "With Contextual Disambiguation"
+
 def toggle_select(photo_id):
     if photo_id in st.session_state.selected:
         st.session_state.selected.remove(photo_id)
@@ -734,6 +746,15 @@ with st.container(key="topbar"):
             else:
                 st.write("")
         st.form_submit_button("submit", on_click=do_search, key="submit_btn")
+    
+    if not st.session_state.get("query"):
+        st.markdown('<div style="font-size: 13px; color: #5F6368; margin-top: 8px; margin-bottom: 8px; margin-left: 16px;">Try searching for categories:</div>', unsafe_allow_html=True)
+        sug_cols = st.columns(6)
+        suggestions = ["Mountain", "Beach", "Cafe", "Concert", "Street", "Balcony"]
+        for i, sug in enumerate(suggestions):
+            with sug_cols[i]:
+                st.button(sug, key=f"sug_btn_{sug}", on_click=set_search_suggestion, args=(sug,), use_container_width=True)
+
 
 
 with st.sidebar:
