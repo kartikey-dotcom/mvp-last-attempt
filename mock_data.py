@@ -884,4 +884,4 @@ MOCK_PHOTOS_DATABASE = [
         "clothing_visuals": "Swim trunks",
         "primary_object": "Coffee cup"
     }
-]\n
+]
