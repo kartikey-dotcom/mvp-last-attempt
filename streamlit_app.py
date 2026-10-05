@@ -486,10 +486,7 @@ a.nav-item svg {
 
 /* Prototype controls */
 .st-key-proto {
-    position: absolute;
-    bottom: 40px;
-    left: 8px;
-    width: 240px;
+    margin-bottom: 24px;
 }
 
 .st-key-examples_block > div > [data-testid="stVerticalBlock"] {
@@ -689,32 +686,7 @@ with st.container(key="left_nav"):
     <a href="#" class="nav-item" title="Not part of this prototype">{svg_icon("M13.83 4.83l-1.42-1.42L11 4.83 13.83 7.66l1.41-1.41-1.41-1.42zM12 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z")} Utilities</a>
     """, unsafe_allow_html=True)
     
-    with st.container(key="proto"):
-        st.markdown('<div style="font-size: 11px; color: #5F6368; margin-bottom: 8px;">Try an example</div>', unsafe_allow_html=True)
-        def ex_search(q):
-            st.session_state.query = q
-            st.session_state.q_input = q
-            st.session_state.answers = {}
-            st.session_state.asked = []
-            st.session_state.selected = set()
-            st.session_state.start_time = time.time()
-            st.session_state.success_msg = None
-            st.session_state.selected_anchor = None
-            st.session_state.agent_trace = []
-            
-        with st.container(key="examples_block"):
-            st.button("purple sunset", key="ex_1", on_click=ex_search, args=("purple sunset",))
-            st.button("rainy wedding", key="ex_2", on_click=ex_search, args=("rainy wedding",))
-            st.button("foggy mountain", key="ex_3", on_click=ex_search, args=("foggy mountain",))
-        
-        st.markdown('<div style="font-size: 11px; color: #5F6368; margin-top: 16px;">Prototype mode</div>', unsafe_allow_html=True)
-        st.radio("mode", ["Current search", "With Contextual Disambiguation"], key="mode", label_visibility="collapsed")
-        
-        has_key = bool(GEMINI_API_KEY)
-        st.toggle("AI assist", value=has_key, key="ai_on", disabled=not has_key, help="Needs GEMINI_API_KEY" if not has_key else None)
-        st.markdown('<div style="font-size: 11px; color: #5F6368;">AI assist sends your search text to Google\'s Gemini API.</div>', unsafe_allow_html=True)
-        
-        st.markdown('<div style="position: fixed; bottom: 8px; right: 16px; font-size: 11px; color: #5F6368; z-index: 1000;">Concept prototype for a PM case study. Not affiliated with or endorsed by Google. All photos and data are simulated.</div>', unsafe_allow_html=True)
+    # Removed proto container from sidebar
 
 # -----------------
 # SEARCH LOGIC
@@ -1045,6 +1017,34 @@ with st.container(key="main_content"):
                             render_tile(p)
                 if len(candidates) > 24:
                     st.caption(f"+ {len(candidates)-24} more")
+
+    with st.expander("Prototype Settings (Moved from sidebar)"):
+        with st.container(key="proto"):
+            st.markdown('<div style="font-size: 11px; color: #5F6368; margin-bottom: 8px;">Try an example</div>', unsafe_allow_html=True)
+            def ex_search(q):
+                st.session_state.query = q
+                st.session_state.q_input = q
+                st.session_state.answers = {}
+                st.session_state.asked = []
+                st.session_state.selected = set()
+                st.session_state.start_time = time.time()
+                st.session_state.success_msg = None
+                st.session_state.selected_anchor = None
+                st.session_state.agent_trace = []
+                
+            with st.container(key="examples_block"):
+                st.button("purple sunset", key="ex_1", on_click=ex_search, args=("purple sunset",))
+                st.button("rainy wedding", key="ex_2", on_click=ex_search, args=("rainy wedding",))
+                st.button("foggy mountain", key="ex_3", on_click=ex_search, args=("foggy mountain",))
+            
+            st.markdown('<div style="font-size: 11px; color: #5F6368; margin-top: 16px;">Prototype mode</div>', unsafe_allow_html=True)
+            st.radio("mode", ["Current search", "With Contextual Disambiguation"], key="mode", label_visibility="collapsed")
+            
+            has_key = bool(GEMINI_API_KEY)
+            st.toggle("AI assist", value=has_key, key="ai_on", disabled=not has_key, help="Needs GEMINI_API_KEY" if not has_key else None)
+            st.markdown('<div style="font-size: 11px; color: #5F6368;">AI assist sends your search text to Google\'s Gemini API.</div>', unsafe_allow_html=True)
+            
+            st.markdown('<div style="margin-top: 16px; font-size: 11px; color: #5F6368;">Concept prototype for a PM case study. Not affiliated with or endorsed by Google. All photos and data are simulated.</div>', unsafe_allow_html=True)
 
     with st.expander("Researcher panel (test log)"):
         tags_status = "vision model" if PHOTO_TAGS else "simulated"
