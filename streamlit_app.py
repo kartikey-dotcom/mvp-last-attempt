@@ -389,7 +389,7 @@ footer,
     z-index: 90;
 }
 
-.nav-item {
+a.nav-item {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -401,18 +401,22 @@ footer,
     font-size: 14px;
     font-weight: 500;
 }
-.nav-item:hover {
-    background: #F1F3F4;
+a.nav-item:link, a.nav-item:visited, a.nav-item:hover, a.nav-item:active {
+    color: #5F6368 !important;
+    text-decoration: none !important;
 }
-.nav-item.active {
-    background: #D3E3FD;
+a.nav-item:hover {
+    background: #F1F3F4 !important;
+}
+a.nav-item.active, a.nav-item.active:link, a.nav-item.active:visited {
+    background: #D3E3FD !important;
     color: #041E49 !important;
 }
-.nav-item.active svg {
+a.nav-item.active svg {
     fill: #041E49 !important;
 }
-.nav-item svg {
-    fill: #5F6368;
+a.nav-item svg {
+    fill: #5F6368 !important;
 }
 
 /* Main Content Area */
@@ -438,7 +442,7 @@ footer,
 }
 
 .st-key-search_form [data-testid="stForm"] {
-    background: #E9EEF6 !important;
+    background: #F1F3F4 !important;
     border: none !important;
     border-radius: 9999px !important;
     height: 48px !important;
@@ -446,6 +450,14 @@ footer,
     display: flex !important;
     align-items: center !important;
     flex-direction: row !important;
+}
+
+.st-key-search_form button {
+    background-color: transparent !important;
+    border: none !important;
+    color: #5F6368 !important;
+    box-shadow: none !important;
+    padding: 0 8px !important;
 }
 
 .st-key-q_input {
@@ -457,35 +469,19 @@ footer,
     box-shadow: none !important;
 }
 .st-key-q_input input {
-    background: transparent !important;
+    background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
     font-size: 16px !important;
     color: #202124 !important;
 }
-
-.st-key-search_form [data-testid="stFormSubmitButton"] button {
-    background: transparent !important;
-    border: none !important;
+.st-key-q_input input:focus {
+    outline: none !important;
     box-shadow: none !important;
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 50% !important;
-    padding: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    color: #5F6368 !important;
-}
-.st-key-search_form [data-testid="stFormSubmitButton"] button:hover {
-    background: #DDE3EC !important;
 }
 
-.st-key-search_btn button {
-    opacity: 0 !important;
-    width: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
+.st-key-submit_btn {
+    display: none !important;
 }
 
 /* Prototype controls */
@@ -496,24 +492,22 @@ footer,
     width: 240px;
 }
 
-.st-key-proto [data-testid="stHorizontalBlock"] {
+.st-key-examples_block > div > [data-testid="stVerticalBlock"] {
     display: flex !important;
+    flex-direction: row !important;
     flex-wrap: wrap !important;
     gap: 8px !important;
 }
-.st-key-proto [data-testid="column"] {
-    width: auto !important;
-    min-width: max-content !important;
-    flex: 1 1 auto !important;
-}
 
 .st-key-ex_1 button, .st-key-ex_2 button, .st-key-ex_3 button {
-    background: #FFFFFF !important;
+    background-color: transparent !important;
     border: 1px solid #DADCE0 !important;
     border-radius: 16px !important;
-    padding: 0 12px !important;
-    height: 32px !important;
-    min-height: 32px !important;
+    padding: 4px 12px !important;
+    height: auto !important;
+    min-height: auto !important;
+    color: #3C4043 !important;
+    box-shadow: none !important;
 }
 .st-key-ex_1 button p, .st-key-ex_2 button p, .st-key-ex_3 button p,
 .st-key-ex_1 button span, .st-key-ex_2 button span, .st-key-ex_3 button span {
@@ -521,7 +515,6 @@ footer,
     color: #3C4043 !important;
     white-space: nowrap !important;
     overflow: visible !important;
-    text-overflow: clip !important;
 }
 
 /* Radio buttons and Toggle Text */
@@ -534,7 +527,9 @@ footer,
 
 /* Force Google Blue on active radio */
 .st-key-proto [data-testid="stRadio"] input[type="radio"]:checked + div,
-.st-key-proto [data-testid="stRadio"] input[type="radio"]:checked + div * {
+.st-key-proto [data-testid="stRadio"] input[type="radio"]:checked + div *,
+.st-key-proto [data-testid="stRadio"] div[data-checked="true"],
+.st-key-proto [data-testid="stRadio"] div[data-checked="true"] * {
     background-color: #1A73E8 !important;
     border-color: #1A73E8 !important;
 }
@@ -681,7 +676,7 @@ with st.container(key="topbar"):
                 reset_search()
                 st.rerun()
         
-        st.form_submit_button(label="submit", on_click=do_search)
+        st.form_submit_button(label="submit", on_click=do_search, key="submit_btn")
 
 st.markdown('<style>.st-key-search_form [data-testid="column"] {width: auto !important; min-width: 0 !important;}</style>', unsafe_allow_html=True)
 
@@ -696,21 +691,10 @@ with st.container(key="left_nav"):
     
     with st.container(key="proto"):
         st.markdown('<div style="font-size: 11px; color: #5F6368; margin-bottom: 8px;">Try an example</div>', unsafe_allow_html=True)
-        col1, col2, col3 = st.columns(3)
-        def ex_search(q):
-            st.session_state.query = q
-            st.session_state.q_input = q
-            st.session_state.answers = {}
-            st.session_state.asked = []
-            st.session_state.selected = set()
-            st.session_state.start_time = time.time()
-            st.session_state.success_msg = None
-            st.session_state.selected_anchor = None
-            st.session_state.agent_trace = []
-        
-        with col1: st.button("purple sunset", key="ex_1", on_click=ex_search, args=("purple sunset",))
-        with col2: st.button("rainy wedding", key="ex_2", on_click=ex_search, args=("rainy wedding",))
-        with col3: st.button("foggy mountain", key="ex_3", on_click=ex_search, args=("foggy mountain",))
+        with st.container(key="examples_block"):
+            st.button("purple sunset", key="ex_1", on_click=ex_search, args=("purple sunset",))
+            st.button("rainy wedding", key="ex_2", on_click=ex_search, args=("rainy wedding",))
+            st.button("foggy mountain", key="ex_3", on_click=ex_search, args=("foggy mountain",))
         
         st.markdown('<div style="font-size: 11px; color: #5F6368; margin-top: 16px;">Prototype mode</div>', unsafe_allow_html=True)
         st.radio("mode", ["Current search", "With Contextual Disambiguation"], key="mode", label_visibility="collapsed")
