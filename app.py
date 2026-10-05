@@ -441,47 +441,77 @@ a.nav-item svg {
     z-index: 101;
 }
 
-.st-key-search_form [data-testid="stForm"] {
-    background: #F1F3F4 !important;
-    border: none !important;
-    border-radius: 9999px !important;
+/* Unify the Search Container (The Pill) */
+.st-key-topbar [data-testid="stForm"], 
+.st-key-topbar [data-testid="stForm"] > div > div {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    background-color: #F1F3F4 !important;
+    border-radius: 24px !important;
     height: 48px !important;
     padding: 0 8px !important;
-    display: flex !important;
-    align-items: center !important;
-    flex-direction: row !important;
+    gap: 4px !important;
+    width: 100% !important;
+    max-width: 720px !important;
+    margin: 0 auto !important;
+    border: none !important;
 }
 
-.st-key-search_form button {
-    background-color: transparent !important;
-    border: none !important;
-    color: #5F6368 !important;
-    box-shadow: none !important;
-    padding: 0 8px !important;
-}
-
-.st-key-q_input {
-    flex-grow: 1 !important;
-}
-.st-key-q_input [data-testid="stTextInputRootElement"] {
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-}
-.st-key-q_input input {
+/* Fix the Text Input Field (Make text visible) */
+.st-key-topbar .stTextInput div[data-baseweb="input"] {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    font-size: 16px !important;
+}
+.st-key-topbar .stTextInput input {
     color: #202124 !important;
+    font-size: 16px !important;
+    background-color: transparent !important;
+    -webkit-text-fill-color: #202124 !important;
 }
-.st-key-q_input input:focus {
+.st-key-topbar .stTextInput input:focus {
     outline: none !important;
     box-shadow: none !important;
 }
 
-.st-key-submit_btn {
+/* Fix the Icon Buttons (Remove the black squares) */
+.st-key-topbar .stButton button, .st-key-topbar .stFormSubmitButton button {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #5F6368 !important;
+    padding: 8px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.st-key-topbar .stButton button:hover, .st-key-topbar .stFormSubmitButton button:hover {
+    background-color: rgba(95, 99, 104, 0.08) !important;
+    color: #202124 !important;
+}
+
+/* Hide the stray "Search" text button */
+.st-key-submit_btn,
+.st-key-submit_btn button {
     display: none !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Remove Streamlit's default column gaps */
+.st-key-topbar [data-testid="column"] {
+    padding: 0 !important;
+    width: auto !important;
+    flex: 0 1 auto !important;
+}
+.st-key-topbar [data-testid="column"]:nth-child(2) {
+    flex: 1 1 auto !important;
 }
 
 /* Prototype controls */
