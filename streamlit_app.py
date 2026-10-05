@@ -65,7 +65,8 @@ def get_image_base64(photo_id, category, shirt, companion):
             img.save(buf, format="JPEG")
             b64 = base64.b64encode(buf.getvalue()).decode()
             return f"data:image/jpeg;base64,{b64}"
-        except Exception:
+        except Exception as e:
+            print(f"Exception loading {path}: {e}", flush=True)
             pass
             
     # Inline SVG placeholder
@@ -737,9 +738,9 @@ with st.sidebar:
     st.markdown(f'''
     <div class="sidebar-logo">
         <strong class="google-colored" style="font-weight: 500;">
-            <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+            <span>G</span><span>o</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
         </strong>
-        <span style="font-weight: 400; margin-left:2px;">Photos</span>
+        <span style="font-weight: 400; margin-left:2px;">Photos (v1.1)</span>
     </div>
     
     <a href="#" class="sidebar-nav-item active">{svg_icon(PHOTOS_ICON)} Photos</a>
