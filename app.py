@@ -224,7 +224,7 @@ def reset_search():
 
 def do_search():
     if st.session_state.q_input:
-        st.session_state.query = st.session_state.q_input
+        st.session_state.pending_query = st.session_state.q_input
     st.session_state.answers = {}
     st.session_state.asked = []
     st.session_state.selected = set()
@@ -300,23 +300,31 @@ CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
 
+[data-testid="stDecoration"], 
 header[data-testid="stHeader"], 
 [data-testid="stToolbar"], 
-[data-testid="stSidebar"], 
-[data-testid="stSidebarCollapsedControl"], 
+[data-testid="stStatusWidget"], 
 footer, 
 #MainMenu {
     display: none !important;
 }
 
-.stApp {
+.stApp, .stApp p, .stApp label, .stApp span, [data-testid="stMarkdownContainer"] {
     background-color: #FFFFFF !important;
-    font-family: 'Google Sans', 'Google Sans Text', Roboto, Inter, system-ui, sans-serif !important;
+    font-family: Roboto, Inter, 'Google Sans', 'Google Sans Text', system-ui, sans-serif !important;
+    color: #202124 !important;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+[data-testid="stCaptionContainer"], .help-text {
+    color: #5F6368 !important;
 }
 
 .block-container {
-    padding: 0 !important;
-    max-width: 100% !important;
+    padding: 24px 32px 96px !important;
+    max-width: 1100px !important;
+    margin: 0 auto;
 }
 
 /* Header */
@@ -328,16 +336,16 @@ footer,
     height: 64px;
     background: #FFFFFF;
     border-bottom: 1px solid #E0E0E0;
-    z-index: 100;
+    z-index: 1000;
     display: flex;
     align-items: center;
+    padding: 0 16px;
 }
 
 .header-inner {
     display: flex;
     width: 100%;
     align-items: center;
-    padding: 0 16px;
     justify-content: space-between;
 }
 
@@ -376,123 +384,113 @@ footer,
     font-weight: 500;
 }
 
-/* Left Nav */
-.st-key-left_nav {
-    position: fixed;
-    top: 64px;
-    bottom: 0;
-    left: 0;
-    width: 256px;
-    background: #FFFFFF;
-    border-right: 1px solid #E0E0E0;
-    padding: 8px;
-    z-index: 90;
+/* Sidebar overrides */
+[data-testid="stSidebar"] {
+    width: 256px !important;
+    min-width: 256px !important;
+    max-width: 256px !important;
+    background-color: #FFFFFF !important;
+    border-right: 1px solid #E0E0E0 !important;
+}
+.stSidebarContent, [data-testid="stSidebar"] > div:first-child {
+    padding-top: 72px !important;
+}
+[data-testid="stSidebarNav"], [data-testid="stSidebarHeader"], [data-testid="stSidebarCollapsedControl"] {
+    display: none !important;
 }
 
-a.nav-item {
+/* Sidebar Nav Items HTML block */
+.sidebar-nav-item {
     display: flex;
     align-items: center;
     gap: 12px;
     height: 48px;
-    padding: 0 16px;
+    padding: 0 12px;
     border-radius: 9999px;
-    color: #5F6368 !important;
+    color: #202124 !important;
     text-decoration: none !important;
     font-size: 14px;
     font-weight: 500;
 }
-a.nav-item:link, a.nav-item:visited, a.nav-item:hover, a.nav-item:active {
-    color: #5F6368 !important;
-    text-decoration: none !important;
-}
-a.nav-item:hover {
-    background: #F1F3F4 !important;
-}
-a.nav-item.active, a.nav-item.active:link, a.nav-item.active:visited {
-    background: #D3E3FD !important;
-    color: #041E49 !important;
-}
-a.nav-item.active svg {
-    fill: #041E49 !important;
-}
-a.nav-item svg {
-    fill: #5F6368 !important;
+.sidebar-nav-item:hover { background: #F1F3F4 !important; }
+.sidebar-nav-item.active { background: #D3E3FD !important; color: #041E49 !important; }
+.sidebar-nav-item.active svg { fill: #041E49 !important; }
+.sidebar-nav-item svg { fill: #202124 !important; }
+
+/* Divider */
+.sidebar-divider { border-top: 1px solid #E1E3E1; margin: 16px 8px; }
+.sidebar-section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.6px; color: #5F6368; padding: 0 12px; margin-bottom: 12px; text-transform: uppercase; }
+
+/* Prototype Controls */
+[data-testid="stRadio"] label p { color: #202124 !important; font-size: 14px !important; }
+[data-testid="stToggle"] label p { color: #202124 !important; font-size: 14px !important; }
+div[data-baseweb="radio"] div[data-checked="true"], div[data-baseweb="checkbox"] div[data-checked="true"] {
+    background-color: #1A73E8 !important;
+    border-color: #1A73E8 !important;
 }
 
-/* Main Content Area */
-.st-key-main_content {
-    margin-left: 256px;
-    margin-top: 64px;
-    padding: 24px 32px 96px;
-}
-
-@media (max-width: 900px) {
-    .st-key-left_nav { display: none; }
-    .st-key-main_content { margin-left: 0; }
-}
-
-/* Search Bar */
+/* Search Bar Pill */
 .st-key-topbar {
     position: fixed;
     top: 8px;
     left: 50%;
     transform: translateX(-50%);
-    width: min(720px, 50vw);
-    z-index: 101;
+    width: min(720px, 46vw);
+    height: 48px;
+    z-index: 1001;
 }
-
-/* Unify the Search Container (The Pill) */
-.st-key-topbar [data-testid="stForm"], 
-.st-key-topbar [data-testid="stForm"] > div > div {
+.st-key-search_form [data-testid="stForm"] {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    background-color: #F1F3F4 !important;
-    border-radius: 24px !important;
+    background-color: #E9EEF6 !important;
+    border-radius: 9999px !important;
     height: 48px !important;
     padding: 0 8px !important;
-    gap: 4px !important;
-    width: 100% !important;
-    max-width: 720px !important;
-    margin: 0 auto !important;
     border: none !important;
+    width: 100% !important;
 }
-
-/* Fix the Text Input Field (Make text visible) */
-.st-key-topbar .stTextInput div[data-baseweb="input"] {
+.st-key-search_form [data-testid="stForm"]:focus-within {
+    background-color: #FFFFFF !important;
+    border: 1px solid #DADCE0 !important;
+    box-shadow: 0 1px 3px rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15) !important;
+}
+.st-key-search_form .stTextInput div[data-baseweb="input"] {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
-.st-key-topbar .stTextInput input {
+.st-key-search_form .stTextInput input {
     color: #202124 !important;
     font-size: 16px !important;
     background-color: transparent !important;
     -webkit-text-fill-color: #202124 !important;
 }
-.st-key-topbar .stTextInput input:focus {
+.st-key-search_form .stTextInput input::placeholder {
+    color: #5F6368 !important;
+    -webkit-text-fill-color: #5F6368 !important;
+}
+.st-key-search_form .stTextInput input:focus {
     outline: none !important;
     box-shadow: none !important;
 }
-
-/* Fix the Icon Buttons (Remove the black squares) */
-.st-key-topbar .stButton button, .st-key-topbar .stFormSubmitButton button {
+.st-key-search_form .stButton button, .st-key-search_form .stFormSubmitButton button {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
     color: #5F6368 !important;
-    padding: 8px !important;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
 }
-.st-key-topbar .stButton button:hover, .st-key-topbar .stFormSubmitButton button:hover {
-    background-color: rgba(95, 99, 104, 0.08) !important;
+.st-key-search_form .stButton button:hover, .st-key-search_form .stFormSubmitButton button:hover {
+    background-color: rgba(32, 33, 36, 0.08) !important;
     color: #202124 !important;
 }
-
-/* Hide the stray "Search" text button */
+/* Hide the stray submit button */
 .st-key-submit_btn,
 .st-key-submit_btn button {
     display: none !important;
@@ -503,63 +501,8 @@ a.nav-item svg {
     padding: 0 !important;
     margin: 0 !important;
 }
-
-/* Remove Streamlit's default column gaps */
-.st-key-topbar [data-testid="column"] {
-    padding: 0 !important;
-    width: auto !important;
-    flex: 0 1 auto !important;
-}
-.st-key-topbar [data-testid="column"]:nth-child(2) {
-    flex: 1 1 auto !important;
-}
-
-/* Prototype controls */
-.st-key-proto {
-    margin-bottom: 24px;
-}
-
-.st-key-examples_block > div > [data-testid="stVerticalBlock"] {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-}
-
-.st-key-ex_1 button, .st-key-ex_2 button, .st-key-ex_3 button {
-    background-color: transparent !important;
-    border: 1px solid #DADCE0 !important;
-    border-radius: 16px !important;
-    padding: 4px 12px !important;
-    height: auto !important;
-    min-height: auto !important;
-    color: #3C4043 !important;
-    box-shadow: none !important;
-}
-.st-key-ex_1 button p, .st-key-ex_2 button p, .st-key-ex_3 button p,
-.st-key-ex_1 button span, .st-key-ex_2 button span, .st-key-ex_3 button span {
-    font-size: 12px !important;
-    color: #3C4043 !important;
-    white-space: nowrap !important;
-    overflow: visible !important;
-}
-
-/* Radio buttons and Toggle Text */
-.st-key-proto [data-testid="stWidgetLabel"] p,
-.st-key-proto [data-testid="stRadio"] p,
-.st-key-proto [data-testid="stRadio"] label,
-.st-key-proto [data-testid="stRadio"] div[data-testid="stMarkdownContainer"] p {
-    color: #3C4043 !important;
-}
-
-/* Force Google Blue on active radio */
-.st-key-proto [data-testid="stRadio"] input[type="radio"]:checked + div,
-.st-key-proto [data-testid="stRadio"] input[type="radio"]:checked + div *,
-.st-key-proto [data-testid="stRadio"] div[data-checked="true"],
-.st-key-proto [data-testid="stRadio"] div[data-checked="true"] * {
-    background-color: #1A73E8 !important;
-    border-color: #1A73E8 !important;
-}
+.st-key-topbar [data-testid="column"] { padding: 0 !important; width: auto !important; flex: 0 1 auto !important; }
+.st-key-topbar [data-testid="column"]:nth-child(2) { flex: 1 1 auto !important; }
 
 /* Assistant card */
 .st-key-assistant {
@@ -569,9 +512,7 @@ a.nav-item svg {
     margin-bottom: 24px;
     max-width: 100%;
 }
-.st-key-assistant [data-testid="stVerticalBlock"] {
-    gap: 0 !important;
-}
+.st-key-assistant [data-testid="stVerticalBlock"] { gap: 0 !important; }
 
 /* Chips */
 div[class*="st-key-chip_"] button {
@@ -589,12 +530,8 @@ div[class*="st-key-chip_"] button:hover {
     border-color: #747775 !important;
     color: #1F1F1F !important;
 }
-div[class*="st-key-chip_"]:active button {
-    background: #D3E3FD !important;
-}
-div[class*="st-key-chip_not_sure"] button {
-    border-style: dashed !important;
-}
+div[class*="st-key-chip_"]:active button { background: #D3E3FD !important; }
+div[class*="st-key-chip_not_sure"] button { border-style: dashed !important; }
 
 /* Applied filters */
 div[class*="st-key-applied_"] button {
@@ -607,9 +544,7 @@ div[class*="st-key-applied_"] button {
     font-size: 14px !important;
     font-weight: 500 !important;
 }
-div[class*="st-key-applied_"] button:hover {
-    background: #C2D7FA !important;
-}
+div[class*="st-key-applied_"] button:hover { background: #C2D7FA !important; }
 
 /* Photo Grid */
 .st-key-photo_grid [data-testid="stVerticalBlock"] {
@@ -617,9 +552,7 @@ div[class*="st-key-applied_"] button:hover {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
     gap: 8px !important;
 }
-div[class*="st-key-tile_"] {
-    width: auto !important;
-}
+div[class*="st-key-tile_"] { width: auto !important; }
 
 /* Action Bar */
 .st-key-actionbar {
@@ -635,9 +568,7 @@ div[class*="st-key-tile_"] {
     align-items: center;
     border-bottom: 1px solid #E0E0E0;
 }
-@media (max-width: 900px) {
-    .st-key-actionbar { left: 0; }
-}
+@media (max-width: 900px) { .st-key-actionbar { left: 0; } }
 .st-key-commit_btn button {
     background: #1A73E8 !important;
     color: white !important;
@@ -647,11 +578,26 @@ div[class*="st-key-tile_"] {
     border: none !important;
     font-weight: 500 !important;
 }
-.st-key-commit_btn button:hover {
-    background: #1967D2 !important;
-}
+.st-key-commit_btn button:hover { background: #1967D2 !important; }
 
-/* Hidden elements */
+/* Light Expanders for Researcher Tools */
+[data-testid="stExpander"] {
+    background: #F8FAFD !important;
+    border: 1px solid #E1E3E1 !important;
+    border-radius: 16px !important;
+}
+[data-testid="stExpander"] summary {
+    height: 48px !important;
+    background: transparent !important;
+    color: #202124 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+[data-testid="stExpander"] summary:hover { background: #F1F3F4 !important; }
+[data-testid="stExpander"] summary svg { fill: #5F6368 !important; }
+/* Table background */
+[data-testid="stDataFrame"] { background: #FFFFFF !important; border: 1px solid #E1E3E1 !important; }
+
 .hide { display: none !important; }
 </style>
 """
@@ -675,7 +621,7 @@ SPARKLE_SVG = '<svg width="20" height="20" viewBox="0 0 24 24"><defs><linearGrad
 # HEADER & SHELL
 # -----------------
 with st.container(key="top_header"):
-    st.markdown(f"""
+    st.markdown(f'''
     <div class="header-inner">
         <div class="header-left">
             {svg_icon(MENU_ICON)}
@@ -689,40 +635,50 @@ with st.container(key="top_header"):
             <div class="avatar">A</div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    ''', unsafe_allow_html=True)
 
 with st.container(key="topbar"):
-    with st.form(key="search_form", clear_on_submit=False):
-        c1, c2, c3 = st.columns([1, 10, 1])
+    with st.form(key="search_form", border=False, clear_on_submit=False):
+        c1, c2, c3 = st.columns([1, 12, 1], vertical_alignment="center", gap="small")
         with c1:
-            st.form_submit_button(label="🔍", help="Search")
+            st.form_submit_button("", icon=":material/search:", type="tertiary", on_click=do_search)
         with c2:
             st.text_input("Search", key="q_input", label_visibility="collapsed", placeholder="Search your photos")
         with c3:
-            if st.form_submit_button(label="✕", help="Clear"):
-                reset_search()
-                st.rerun()
-        
-        st.form_submit_button(label="submit", on_click=do_search, key="submit_btn")
+            if st.session_state.q_input:
+                if st.form_submit_button("", icon=":material/close:", type="tertiary"):
+                    reset_search()
+                    st.rerun()
+            else:
+                st.write("")
+        st.form_submit_button("submit", on_click=do_search, key="submit_btn")
 
-st.markdown('<style>.st-key-search_form [data-testid="column"] {width: auto !important; min-width: 0 !important;}</style>', unsafe_allow_html=True)
 
-with st.container(key="left_nav"):
-    st.markdown(f"""
-    <a href="#" class="nav-item" title="Not part of this prototype">{svg_icon("M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z")} Photos</a>
-    <a href="#" class="nav-item active">{svg_icon(SEARCH_ICON, "#041E49")} Explore</a>
-    <a href="#" class="nav-item" title="Not part of this prototype">{svg_icon("M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z")} Sharing</a>
-    <a href="#" class="nav-item" title="Not part of this prototype">{svg_icon("M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z")} Library</a>
-    <a href="#" class="nav-item" title="Not part of this prototype">{svg_icon("M13.83 4.83l-1.42-1.42L11 4.83 13.83 7.66l1.41-1.41-1.41-1.42zM12 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z")} Utilities</a>
-    """, unsafe_allow_html=True)
+with st.sidebar:
+    st.markdown(f'''
+    <a href="#" class="sidebar-nav-item" title="Not part of this prototype">{svg_icon(MENU_ICON)} Photos</a>
+    <a href="#" class="sidebar-nav-item active">{svg_icon(SEARCH_ICON, "#041E49")} Explore</a>
+    <a href="#" class="sidebar-nav-item" title="Not part of this prototype">{svg_icon(HELP_ICON)} Sharing</a>
+    <a href="#" class="sidebar-nav-item" title="Not part of this prototype">{svg_icon(APPS_ICON)} Library</a>
+    <a href="#" class="sidebar-nav-item" title="Not part of this prototype">{svg_icon(SETTINGS_ICON)} Utilities</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">Prototype Controls</div>
+    ''', unsafe_allow_html=True)
     
-    # Removed proto container from sidebar
+    st.radio("Search mode", ["Current search", "With Contextual Disambiguation"], key="mode", label_visibility="collapsed")
+    has_key = bool(GEMINI_API_KEY)
+    st.toggle("AI assist", value=has_key, key="ai_on", disabled=not has_key)
+    st.markdown('<div class="help-text" style="font-size: 11px;">AI assist sends your search text to Google\'s Gemini API.</div>', unsafe_allow_html=True)
+    
+    st.markdown('<div class="help-text" style="margin-top: 32px; font-size: 11px;">Concept prototype for a PM case study. Not affiliated with or endorsed by Google. All photos and data are simulated.</div>', unsafe_allow_html=True)
 
 # -----------------
 # SEARCH LOGIC
 # -----------------
 def get_hints(query):
     query = query.lower()
+    import re
+    query = re.sub(r'[,\.]', '', query)
     hints = {}
     synonyms = {
         "dusk": "sunset", "evening": "sunset",
@@ -730,7 +686,13 @@ def get_hints(query):
         "rain": "rainy", "raining": "rainy",
         "fog": "foggy",
         "sea": "beach", "ocean": "beach",
-        "hills": "mountain"
+        "hills": "mountain",
+        "dinner": "restaurant", "lunch": "restaurant", "food": "restaurant",
+        "cafe": "restaurant", "café": "restaurant", "dessert": "restaurant", "desserts": "restaurant", "restaurant": "restaurant",
+        "candle": "night", "candlelight": "night", "night": "night", "evening-out": "night",
+        "marriage": "wedding", "wedding": "wedding",
+        "vacation": "trip", "holiday": "trip", "trip": "trip",
+        "birthday": "birthday"
     }
     
     vocab = {
@@ -1048,51 +1010,22 @@ with st.container(key="main_content"):
                 if len(candidates) > 24:
                     st.caption(f"+ {len(candidates)-24} more")
 
-    with st.expander("Prototype Settings (Moved from sidebar)"):
-        with st.container(key="proto"):
-            st.markdown('<div style="font-size: 11px; color: #5F6368; margin-bottom: 8px;">Try an example</div>', unsafe_allow_html=True)
-            def ex_search(q):
-                st.session_state.query = q
-                st.session_state.q_input = q
-                st.session_state.answers = {}
-                st.session_state.asked = []
-                st.session_state.selected = set()
-                st.session_state.start_time = time.time()
-                st.session_state.success_msg = None
-                st.session_state.selected_anchor = None
-                st.session_state.agent_trace = []
-                
-            with st.container(key="examples_block"):
-                st.button("purple sunset", key="ex_1", on_click=ex_search, args=("purple sunset",))
-                st.button("rainy wedding", key="ex_2", on_click=ex_search, args=("rainy wedding",))
-                st.button("foggy mountain", key="ex_3", on_click=ex_search, args=("foggy mountain",))
-            
-            st.markdown('<div style="font-size: 11px; color: #5F6368; margin-top: 16px;">Prototype mode</div>', unsafe_allow_html=True)
-            st.radio("mode", ["Current search", "With Contextual Disambiguation"], key="mode", label_visibility="collapsed")
-            
-            has_key = bool(GEMINI_API_KEY)
-            st.toggle("AI assist", value=has_key, key="ai_on", disabled=not has_key, help="Needs GEMINI_API_KEY" if not has_key else None)
-            st.markdown('<div style="font-size: 11px; color: #5F6368;">AI assist sends your search text to Google\'s Gemini API.</div>', unsafe_allow_html=True)
-            
-            st.markdown('<div style="margin-top: 16px; font-size: 11px; color: #5F6368;">Concept prototype for a PM case study. Not affiliated with or endorsed by Google. All photos and data are simulated.</div>', unsafe_allow_html=True)
-
-    with st.expander("Researcher panel (test log)"):
-        tags_status = "vision model" if PHOTO_TAGS else "simulated"
-        st.markdown(f"**Photo tags:** {tags_status}")
-        
-        if st.session_state.log_data:
-            df = pd.DataFrame(st.session_state.log_data)
-            st.dataframe(df)
-            csv = df.to_csv(index=False).encode('utf-8')
-            st.download_button("Download CSV", data=csv, file_name="test_log.csv", mime="text/csv")
-        else:
-            st.write("No data yet.")
-            
-    with st.expander("Agent trace"):
-        if st.session_state.get("agent_trace"):
-            st.markdown(f"**Step count:** {len(st.session_state.agent_trace)}")
+    with st.expander("Researcher tools", expanded=False):
+        t1, t2, t3 = st.tabs(["Test log", "Agent trace", "Data"])
+        with t1:
+            if st.session_state.log_data:
+                df = pd.DataFrame(st.session_state.log_data)
+                st.dataframe(df, use_container_width=True)
+                st.download_button("Download CSV", data=df.to_csv(index=False).encode('utf-8'), file_name="test_log.csv", mime="text/csv")
+            else:
+                st.write("No data yet.")
+        with t2:
+            if st.session_state.get("agent_trace"):
+                st.markdown(f"**Step count:** {len(st.session_state.agent_trace)}")
+                st.dataframe(pd.DataFrame(st.session_state.agent_trace), use_container_width=True)
+            else:
+                st.write("No trace yet.")
+        with t3:
+            tags_status = "vision model" if PHOTO_TAGS else "simulated"
+            st.markdown(f"**Photo tags:** {tags_status}")
             st.markdown(f"**LLM Latency:** {st.session_state.get('last_latency', 0)} ms")
-            df_trace = pd.DataFrame(st.session_state.agent_trace)
-            st.dataframe(df_trace)
-        else:
-            st.write("No trace yet.")
