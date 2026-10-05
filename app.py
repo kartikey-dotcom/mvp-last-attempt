@@ -439,7 +439,7 @@ div[data-baseweb="radio"] div[data-checked="true"], div[data-baseweb="checkbox"]
     height: 48px !important;
     z-index: 1001 !important;
 }
-.st-key-search_form [data-testid="stForm"] {
+.st-key-topbar [data-testid="stForm"] {
     background-color: #F1F3F4 !important;
     border-radius: 9999px !important;
     border: 1px solid transparent !important;
@@ -449,37 +449,37 @@ div[data-baseweb="radio"] div[data-checked="true"], div[data-baseweb="checkbox"]
     flex-direction: column !important;
     justify-content: center !important;
 }
-.st-key-search_form [data-testid="stForm"]:focus-within {
+.st-key-topbar [data-testid="stForm"]:focus-within {
     background-color: #FFFFFF !important;
     border: 1px solid #DADCE0 !important;
     box-shadow: 0 1px 3px rgba(60,64,67,.30), 0 4px 8px 3px rgba(60,64,67,.15) !important;
 }
-.st-key-search_form [data-testid="stHorizontalBlock"] {
+.st-key-topbar [data-testid="stHorizontalBlock"] {
     gap: 0 !important;
     align-items: center !important;
 }
-.st-key-search_form [data-testid="column"] {
+.st-key-topbar [data-testid="column"] {
     padding: 0 !important;
     width: auto !important;
     flex: 0 1 auto !important;
 }
-.st-key-search_form [data-testid="column"]:nth-child(2) {
+.st-key-topbar [data-testid="column"]:nth-child(2) {
     flex: 1 1 auto !important;
     width: 100% !important;
 }
-.st-key-search_form input {
+.st-key-topbar input {
     background-color: transparent !important;
     border: none !important;
     color: #202124 !important;
     font-size: 16px !important;
 }
-.st-key-search_form input::placeholder { color: #5F6368 !important; }
-.st-key-search_form div[data-baseweb="input"], .st-key-search_form div[data-baseweb="base-input"] {
+.st-key-topbar input::placeholder { color: #5F6368 !important; }
+.st-key-topbar div[data-baseweb="input"], .st-key-topbar div[data-baseweb="base-input"] {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
-.st-key-search_form button {
+.st-key-topbar button {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -491,7 +491,7 @@ div[data-baseweb="radio"] div[data-checked="true"], div[data-baseweb="checkbox"]
     align-items: center !important;
     justify-content: center !important;
 }
-.st-key-search_form button:hover {
+.st-key-topbar button:hover {
     background-color: rgba(32, 33, 36, 0.08) !important;
     color: #202124 !important;
 }
