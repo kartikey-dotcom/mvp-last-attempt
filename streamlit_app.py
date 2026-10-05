@@ -392,12 +392,12 @@ footer,
 .nav-item {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     height: 48px;
     padding: 0 16px;
     border-radius: 9999px;
-    color: #202124;
-    text-decoration: none;
+    color: #5F6368 !important;
+    text-decoration: none !important;
     font-size: 14px;
     font-weight: 500;
 }
@@ -406,10 +406,10 @@ footer,
 }
 .nav-item.active {
     background: #D3E3FD;
-    color: #041E49;
+    color: #041E49 !important;
 }
 .nav-item.active svg {
-    fill: #041E49;
+    fill: #041E49 !important;
 }
 .nav-item svg {
     fill: #5F6368;
@@ -494,6 +494,45 @@ footer,
     bottom: 40px;
     left: 8px;
     width: 240px;
+}
+
+.st-key-proto [data-testid="stHorizontalBlock"] {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+}
+.st-key-proto [data-testid="column"] {
+    width: auto !important;
+    min-width: 0 !important;
+    flex: 0 1 auto !important;
+}
+
+.st-key-ex_1 button, .st-key-ex_2 button, .st-key-ex_3 button {
+    background: #FFFFFF !important;
+    border: 1px solid #DADCE0 !important;
+    border-radius: 16px !important;
+    padding: 0 12px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+}
+.st-key-ex_1 button p, .st-key-ex_2 button p, .st-key-ex_3 button p {
+    font-size: 12px !important;
+    color: #3C4043 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+}
+
+/* Radio buttons */
+.st-key-proto [data-testid="stRadio"] p,
+.st-key-proto [data-testid="stRadio"] label,
+.st-key-proto [data-testid="stRadio"] div[data-testid="stMarkdownContainer"] p {
+    color: #3C4043 !important;
+}
+.st-key-proto [data-testid="stRadio"] div[data-baseweb="radio"] input[type="radio"]:checked + div {
+    background-color: #1A73E8 !important;
+}
+.st-key-proto [data-testid="stRadio"] div[data-baseweb="radio"] input[type="radio"]:checked + div > div {
+    background-color: #1A73E8 !important;
 }
 
 /* Assistant card */
