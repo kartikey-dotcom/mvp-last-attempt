@@ -42,6 +42,7 @@ def get_library():
 
 library = get_library()
 
+@st.cache_data
 def get_image_base64(photo_id, category, shirt, companion):
     if isinstance(companion, list): companion = companion[0]
     if isinstance(category, list): category = category[0]
@@ -853,7 +854,11 @@ def calculate_entropy(candidates, unasked_attrs):
 
 @st.dialog("Photo Details")
 def view_photo_modal(p):
-    st.markdown(f'<img src="https://picsum.photos/seed/{p["id"]}/800/600" style="width:100%; border-radius:8px;">', unsafe_allow_html=True)
+    c_cat = p['category'][0] if isinstance(p['category'], list) else p['category']
+    c_shirt = p['shirt'][0] if isinstance(p['shirt'], list) else p['shirt']
+    c_comp = p['companion'][0] if isinstance(p.get('companion'), list) else p.get('companion', 'alone')
+    data_url = get_image_base64(p['id'], c_cat, c_shirt, c_comp)
+    st.markdown(f'<img src="{data_url}" style="width:100%; border-radius:8px;">', unsafe_allow_html=True)
     st.write(f"**Location**: {p['location_name']} | **Weather**: {p.get('weather_vibe','')} | **Companions**: {', '.join(p.get('companions',[]))}")
 
 def render_tile(p, observe=None, decide=None):
