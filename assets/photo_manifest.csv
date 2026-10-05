@@ -1,0 +1,49 @@
+id,category,filename,shirt,companion,weather,time_of_day,extra,objective_tags,caption
+mtn_01,mountain,mtn_01.jpg,black,alone,sunny,afternoon,backpack,mountain|hill|sky|tree|person|backpack,A sunny afternoon in mountain
+mtn_02,mountain,mtn_02.jpg,pink,friend,sunny,morning,backpack,mountain|hill|sky|tree|person|backpack,A sunny morning in mountain
+mtn_03,mountain,mtn_03.jpg,blue,group,cloudy,afternoon,none,mountain|hill|sky|tree|person,A cloudy afternoon in mountain
+mtn_04,mountain,mtn_04.jpg,white,alone,foggy,morning,none,mountain|hill|sky|tree|person,A foggy morning in mountain
+mtn_05,mountain,mtn_05.jpg,red,friend,cloudy,afternoon,hat,mountain|hill|sky|tree|person|hat,A cloudy afternoon in mountain
+mtn_06,mountain,mtn_06.jpg,black,group,sunny,afternoon,hat,mountain|hill|sky|tree|person|hat,A sunny afternoon in mountain
+mtn_07,mountain,mtn_07.jpg,green,alone,sunny,sunset,backpack,mountain|hill|sky|tree|person|backpack|sunset,A sunny sunset in mountain
+mtn_08,mountain,mtn_08.jpg,yellow,friend,foggy,morning,none,mountain|hill|sky|tree|person,A foggy morning in mountain
+bch_01,beach,bch_01.jpg,white,alone,sunny,afternoon,sunglasses,beach|sea|sand|sky|person|sunglasses,A sunny afternoon in beach
+bch_02,beach,bch_02.jpg,blue,friend,sunny,sunset,none,beach|sea|sand|sky|person|sunset,A sunny sunset in beach
+bch_03,beach,bch_03.jpg,black,group,sunny,afternoon,hat,beach|sea|sand|sky|person|hat,A sunny afternoon in beach
+bch_04,beach,bch_04.jpg,pink,alone,cloudy,morning,none,beach|sea|sand|sky|person,A cloudy morning in beach
+bch_05,beach,bch_05.jpg,yellow,friend,sunny,afternoon,sunglasses,beach|sea|sand|sky|person|sunglasses,A sunny afternoon in beach
+bch_06,beach,bch_06.jpg,red,group,cloudy,sunset,none,beach|sea|sand|sky|person|sunset,A cloudy sunset in beach
+bch_07,beach,bch_07.jpg,green,alone,sunny,sunset,hat,beach|sea|sand|sky|person|hat|sunset,A sunny sunset in beach
+bch_08,beach,bch_08.jpg,grey,friend,cloudy,morning,sunglasses,beach|sea|sand|sky|person|sunglasses,A cloudy morning in beach
+caf_01,cafe,caf_01.jpg,black,alone,indoor,morning,coffee,cafe|table|person|coffee|drink,A indoor morning in cafe
+caf_02,cafe,caf_02.jpg,pink,friend,indoor,afternoon,dessert,cafe|table|person|dessert|food,A indoor afternoon in cafe
+caf_03,cafe,caf_03.jpg,blue,group,indoor,afternoon,coffee,cafe|table|person|coffee|drink,A indoor afternoon in cafe
+caf_04,cafe,caf_04.jpg,white,alone,rainy,afternoon,hot chocolate,cafe|table|person|drink,A rainy afternoon in cafe
+caf_05,cafe,caf_05.jpg,red,friend,rainy,afternoon,coffee,cafe|table|person|coffee|drink,A rainy afternoon in cafe
+caf_06,cafe,caf_06.jpg,grey,group,indoor,night,cocktail,cafe|table|person|drink|glass,A indoor night in cafe
+caf_07,cafe,caf_07.jpg,green,friend,indoor,night,dessert,cafe|table|person|dessert|food,A indoor night in cafe
+caf_08,cafe,caf_08.jpg,yellow,alone,rainy,morning,hot chocolate,cafe|table|person|drink,A rainy morning in cafe
+con_01,concert,con_01.jpg,black,friend,indoor,night,purple lights,concert|stage|crowd|person|lights,A indoor night in concert
+con_02,concert,con_02.jpg,black,group,indoor,night,red lights,concert|stage|crowd|person|lights,A indoor night in concert
+con_03,concert,con_03.jpg,pink,alone,indoor,night,purple lights,concert|stage|crowd|person|lights,A indoor night in concert
+con_04,concert,con_04.jpg,blue,friend,indoor,night,red lights,concert|stage|crowd|person|lights,A indoor night in concert
+con_05,concert,con_05.jpg,white,group,indoor,night,blue lights,concert|stage|crowd|person|lights,A indoor night in concert
+con_06,concert,con_06.jpg,red,alone,indoor,night,blue lights,concert|stage|crowd|person|lights,A indoor night in concert
+con_07,concert,con_07.jpg,grey,friend,indoor,night,blue lights,concert|stage|crowd|person|lights,A indoor night in concert
+con_08,concert,con_08.jpg,green,group,indoor,night,purple lights,concert|stage|crowd|person|lights,A indoor night in concert
+str_01,street,str_01.jpg,black,alone,rainy,night,umbrella,street|road|building|person|umbrella,A rainy night in street
+str_02,street,str_02.jpg,pink,friend,rainy,night,street food,street|road|building|person|food,A rainy night in street
+str_03,street,str_03.jpg,blue,group,rainy,sunset,umbrella,street|road|building|person|umbrella|sunset,A rainy sunset in street
+str_04,street,str_04.jpg,yellow,alone,rainy,sunset,none,street|road|building|person|sunset,A rainy sunset in street
+str_05,street,str_05.jpg,white,friend,cloudy,night,street food,street|road|building|person|food,A cloudy night in street
+str_06,street,str_06.jpg,red,group,rainy,night,none,street|road|building|person,A rainy night in street
+str_07,street,str_07.jpg,green,alone,cloudy,sunset,street food,street|road|building|person|food|sunset,A cloudy sunset in street
+str_08,street,str_08.jpg,grey,friend,rainy,sunset,umbrella,street|road|building|person|umbrella|sunset,A rainy sunset in street
+bal_01,balcony,bal_01.jpg,black,alone,sunny,sunset,orange sky,balcony|sky|rooftop|person|sunset,A sunny sunset in balcony
+bal_02,balcony,bal_02.jpg,pink,friend,cloudy,sunset,purple sky,balcony|sky|rooftop|person|sunset,A cloudy sunset in balcony
+bal_03,balcony,bal_03.jpg,blue,alone,cloudy,sunset,pink sky,balcony|sky|rooftop|person|sunset,A cloudy sunset in balcony
+bal_04,balcony,bal_04.jpg,white,friend,sunny,sunset,purple sky,balcony|sky|rooftop|person|sunset,A sunny sunset in balcony
+bal_05,balcony,bal_05.jpg,yellow,alone,foggy,sunset,orange sky,balcony|sky|rooftop|person|sunset,A foggy sunset in balcony
+bal_06,balcony,bal_06.jpg,red,friend,sunny,sunset,pink sky,balcony|sky|rooftop|person|sunset,A sunny sunset in balcony
+bal_07,balcony,bal_07.jpg,green,group,cloudy,sunset,orange sky,balcony|sky|rooftop|person|sunset,A cloudy sunset in balcony
+bal_08,balcony,bal_08.jpg,grey,alone,sunny,sunset,purple sky,balcony|sky|rooftop|person|sunset,A sunny sunset in balcony

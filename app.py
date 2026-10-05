@@ -1,4 +1,8 @@
 import streamlit as st
+import engine
+from PIL import Image
+import io
+import base64
 import pandas as pd
 import random
 import math
@@ -32,49 +36,57 @@ st.set_page_config(layout="wide", page_title="Photos concept: Contextual Disambi
 # -----------------
 # DATA MODEL
 # -----------------
-SCENES = ["beach", "city", "mountain", "home", "restaurant", "wedding"]
-PEOPLE = ["Rohan", "Mom", "Ananya", "alone"]
-WEATHER = ["sunny", "rainy", "cloudy", "foggy"]
-TIME_OF_DAY = ["morning", "afternoon", "sunset", "night"]
-SEASON = ["summer", "monsoon", "winter"]
-PALETTE = ["purple", "orange", "blue", "green", "red", "grey"]
-OCCASION = ["none", "none", "trip", "birthday", "wedding"]
-ACTIVITY = ["walking", "driving", "scooter ride", "shopping", "relaxing"]
+@st.cache_data
+def get_library():
+    return engine.load_manifest("assets/photo_manifest.csv")
 
-def get_objective(scene, people):
-    tags = []
-    if scene == "beach": tags.extend(["beach", "sea", "sand", "sky"])
-    elif scene == "city": tags.extend(["city", "building", "street", "sky"])
-    elif scene == "mountain": tags.extend(["mountain", "hill", "tree", "sky"])
-    elif scene == "home": tags.extend(["home", "room", "sofa"])
-    elif scene == "restaurant": tags.extend(["restaurant", "food", "table"])
-    elif scene == "wedding": tags.extend(["wedding", "stage", "crowd"])
-    if people != "alone": tags.append("person")
-    return tags
-
-def get_photo_tags():
-    try:
-        if os.path.exists("photo_tags.json"):
-            with open("photo_tags.json", "r") as f:
-                return json.load(f)
-    except Exception:
-        pass
-    return None
-
-PHOTO_TAGS = get_photo_tags()
+library = get_library()
 
 @st.cache_data
-def get_mock_library():
-    import json
-    with open("mock_photos.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
-    for p in data:
-        p["id"] = p["photo_id"]
-        p["palette"] = "blue"
-        p["companions"] = [p["companion"]] # map for UI compatibility
-    return data
+def get_image_base64(photo_id, category, shirt, companion):
+    path = f"assets/photos/{photo_id}.jpg"
+    if os.path.exists(path):
+        try:
+            img = Image.open(path)
+            img.thumbnail((480, 480))
+            # crop square
+            w, h = img.size
+            if w != h:
+                min_dim = min(w, h)
+                left = (w - min_dim)/2
+                top = (h - min_dim)/2
+                right = (w + min_dim)/2
+                bottom = (h + min_dim)/2
+                img = img.crop((left, top, right, bottom))
+            buf = io.BytesIO()
+            img.save(buf, format="JPEG")
+            return base64.b64encode(buf.getvalue()).decode()
+        except Exception:
+            pass
+            
+    # Inline SVG placeholder
+    colors = {
+        "black": "#202124", "pink": "#F43F5E", "blue": "#1A73E8", 
+        "white": "#FFFFFF", "red": "#EA4335", "yellow": "#FBBC04", 
+        "green": "#34A853", "grey": "#5F6368"
+    }
+    emojis = {
+        "mountain": "⛰️", "beach": "🏖️", "cafe": "☕", 
+        "concert": "🎤", "street": "🌧️", "balcony": "🌇"
+    }
+    comp_count = {"alone": 1, "friend": 2, "group": 4}.get(companion, 1)
+    
+    shirt_color = colors.get(shirt, "#9AA0A6")
+    emoji = emojis.get(category, "📷")
+    
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+        <rect width="400" height="400" fill="#F8F9FA"/>
+        <text x="50%" y="40%" font-size="80" text-anchor="middle" dominant-baseline="middle">{emoji}</text>
+        <circle cx="200" cy="240" r="30" fill="{shirt_color}" stroke="#DADCE0" stroke-width="2"/>
+        <text x="50%" y="320" font-size="24" text-anchor="middle" fill="#5F6368">{"👤 " * comp_count}</text>
+    </svg>'''
+    return base64.b64encode(svg.encode()).decode()
 
-library = get_mock_library()
 
 @st.cache_data(ttl=3600)
 def parse_query_with_llm_cached(query_norm, key):
@@ -207,7 +219,14 @@ def commit_selection():
     if not st.session_state.selected: return
     end_time = time.time()
     elapsed = round(end_time - st.session_state.start_time, 1) if st.session_state.start_time else 0.0
-    questions_answered = len([k for k, v in st.session_state.answers.items() if v is not None])
+    
+    ans_list = st.session_state.get("answers_list", [])
+    questions_asked = len(ans_list)
+    yes_count = sum(1 for a in ans_list if a["val"] is True)
+    no_count = sum(1 for a in ans_list if a["val"] is False)
+    not_sure_count = sum(1 for a in ans_list if a["val"] is None)
+    
+    candidates_when_selected = st.session_state.get("last_candidate_count", 0)
     
     first_id = list(st.session_state.selected)[0]
     
@@ -215,28 +234,35 @@ def commit_selection():
         st.session_state.log_data.append({
             "query": st.session_state.query,
             "mode": st.session_state.mode,
-            "questions_answered": questions_answered,
+            "questions_asked": questions_asked,
+            "yes_count": yes_count,
+            "no_count": no_count,
+            "not_sure_count": not_sure_count,
+            "candidates_when_selected": candidates_when_selected,
             "seconds_to_success": elapsed,
             "photo_id": photo_id,
             "timestamp": time.strftime("%H:%M:%S"),
             "ai_on": st.session_state.get("ai_on", False),
             "ai_used": st.session_state.get("ai_used", False),
             "llm_latency_ms": st.session_state.get("last_latency", 0),
-            "agent_steps": len(st.session_state.get("agent_trace", [])),
             "anchor_used": bool(st.session_state.get("selected_anchor"))
         })
-    
-    st.session_state.success_msg = f"Found {first_id} in {elapsed}s with {questions_answered} clarifying question(s)."
+        
+    st.session_state.success_msg = f"You found the photo in {elapsed}s."
+    pd.DataFrame(st.session_state.log_data).to_csv("logs.csv", index=False)
     clear_selection()
 
-def answer_q(attr, value, observe, decide):
-    st.session_state.answers[attr] = value
-    if attr not in st.session_state.asked:
-        st.session_state.asked.append(attr)
-    cands, _, _ = get_candidates(library, st.session_state.query, st.session_state.mode)
-    evaluate = f"{len(cands)} candidates left"
-    act = value if value else "Not sure"
-    log_agent_step(observe, decide, act, evaluate)
+def answer_q(pred, val):
+    if "answers_list" not in st.session_state:
+        st.session_state.answers_list = []
+    
+    st.session_state.answers_list.append({
+        "attr": pred["attr"],
+        "key": pred["key"],
+        "val": val,
+        "fn": pred["fn"],
+        "label": pred["label"]
+    })
 
 def set_anchor(photo_id, observe, decide):
     st.session_state.selected_anchor = photo_id
@@ -248,7 +274,16 @@ def set_anchor(photo_id, observe, decide):
 def clear_anchor():
     st.session_state.selected_anchor = None
 
-def remove_answer(attr):
+def remove_answer(idx):
+    st.session_state.answers_list.pop(idx)
+
+def undo_answer():
+    if st.session_state.answers_list:
+        st.session_state.answers_list.pop()
+
+def start_over_answers():
+    st.session_state.answers_list = []
+def OLD_remove_answer(attr):
     if attr in st.session_state.answers:
         del st.session_state.answers[attr]
     if attr in st.session_state.asked:
@@ -918,7 +953,8 @@ def render_tile(p, observe=None, decide=None):
     is_anchor = p['id'] == st.session_state.get("selected_anchor")
     bg = p.get('palette', 'purple') if p.get('palette', 'purple') != 'purple' else 'rebeccapurple'
     svg = f'<svg viewBox="0 0 100 100" preserveAspectRatio="slice"><rect width="100" height="100" fill="{bg}" opacity="0.3"/><circle cx="50" cy="50" r="20" fill="white" opacity="0.5"/></svg>'
-    bg_style = f"background-image:url('https://picsum.photos/seed/{p['id']}/400/400'); background-size:cover;"
+    b64 = get_image_base64(p['id'], p['category'], p['shirt'], p['companion'])
+    bg_style = f"background-image:url('data:image/jpeg;base64,{b64}'); background-size:cover;"
 
     
     sel_html = f"""
@@ -1091,47 +1127,53 @@ with st.container(key="main_content"):
                 if dropped:
                     st.markdown(f'<div style="font-size: 12px; color: #D93025; margin-top: 4px;">I couldn\'t match {", ".join(dropped)}, so I ignored it.</div>', unsafe_allow_html=True)
                 
-                q_text_map = {
-                    "location_name": "Where were you?",
-                    "companions": "Who was with you?",
-                    "weather_vibe": "What was the vibe/weather?",
-                    "clothing_visuals": "What were you wearing?",
-                    "primary_object": "What is the main subject?"
-                }
                 
                 state = AgentState(
                     query=q, hints=current_hints, answered=st.session_state.answers, 
                     asked=st.session_state.asked, selected_anchor=st.session_state.get("selected_anchor"),
                     candidates=candidates, steps=st.session_state.get("agent_trace", []), ai_used=st.session_state.get("ai_used")
                 )
-                decision = agent_step(state)
                 
-                if decision["action"] == "show":
-                    st.markdown('<div style="font-size: 16px; color: #202124; margin-top: 16px;">Here are my best matches. Tap the photos you were looking for.</div>', unsafe_allow_html=True)
+                # New Yes/No Engine
+                answers_list = st.session_state.get("answers_list", [])
+                candidates, skipped_attrs = engine.apply_answers(candidates, answers_list)
+                
+                if len(candidates) <= 2 or len(st.session_state.get("answers_list", [])) >= 8:
+                    st.markdown('<div style="font-size: 16px; color: #202124; margin-top: 16px;">Here are my best matches. Tap the photo you were looking for.</div>', unsafe_allow_html=True)
                 else:
-                    best_attr = decision["attribute"]
-                    st.markdown(f'<div style="font-size: 28px; font-weight: 500; color: #202124; line-height: 36px; margin-top: 8px;">{q_text_map[best_attr]}</div>', unsafe_allow_html=True)
-                    st.markdown(f'<div style="font-size: 12px; color: #5F6368; margin-top: 4px;">Asking so I can narrow down {len(candidates)} photos. Tap \'Not sure\' to skip.</div>', unsafe_allow_html=True)
+                    preds = engine.build_predicates(candidates, skipped_attrs)
+                    best_pred = engine.pick_question(preds, len(candidates))
                     
-                    counts = Counter(p[best_attr] for p in candidates)
-                    top_vals = [val for val, count in counts.most_common(4)]
-                    
-                    st.markdown('<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top: 16px;">', unsafe_allow_html=True)
-                    cols = st.columns(len(top_vals) + 1)
-                    for i, val in enumerate(top_vals):
-                        with cols[i]:
-                            st.button(f"{val} ({counts[val]})", key=f"chip_{best_attr}_{val}_{len(st.session_state.asked)}", on_click=answer_q, args=(best_attr, val, decision["observe"], decision["reason"]))
-                    with cols[-1]:
-                        st.button("Not sure", key=f"chip_not_sure_{len(st.session_state.asked)}", on_click=answer_q, args=(best_attr, None, decision["observe"], decision["reason"]))
-                    st.markdown('</div>', unsafe_allow_html=True)
+                    if not best_pred:
+                        st.markdown('<div style="font-size: 16px; color: #202124; margin-top: 16px;">Here are my best matches. Tap the photo you were looking for.</div>', unsafe_allow_html=True)
+                    else:
+                        st.markdown(f'<div style="font-size: 28px; font-weight: 500; color: #202124; line-height: 36px; margin-top: 8px;">{best_pred["text"]}</div>', unsafe_allow_html=True)
+                        st.markdown(f'<div style="font-size: 12px; color: #5F6368; margin-top: 4px;">Asking so I can narrow down {len(candidates)} photos. Tap \'Not sure\' to skip.</div>', unsafe_allow_html=True)
                         
-            if st.session_state.answers or st.session_state.get("selected_anchor"):
-                st.markdown('<div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">', unsafe_allow_html=True)
-                for k, v in st.session_state.answers.items():
-                    if v:
-                        st.button(f"{v} ✕", key=f"applied_{k}", on_click=remove_answer, args=(k,))
+                        st.markdown('<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top: 16px;">', unsafe_allow_html=True)
+                        ans_idx = len(answers_list)
+                        st.button("Yes", key=f"ans_{ans_idx}_yes", type="primary", on_click=answer_q, args=(best_pred, True))
+                        st.button("No", key=f"ans_{ans_idx}_no", on_click=answer_q, args=(best_pred, False))
+                        st.button("Not sure", key=f"ans_{ans_idx}_notsure", on_click=answer_q, args=(best_pred, None))
+                        st.markdown('</div>', unsafe_allow_html=True)
+                        
+            if st.session_state.get("answers_list") or st.session_state.get("selected_anchor"):
+                st.markdown('<div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center;">', unsafe_allow_html=True)
+                for i, ans in enumerate(st.session_state.get("answers_list", [])):
+                    if ans["val"] is True:
+                        lbl = ans["label"]
+                    elif ans["val"] is False:
+                        lbl = f"Not {ans['label'].lower()}"
+                    else:
+                        lbl = "Skipped"
+                    st.button(f"{lbl} ✕", key=f"applied_{i}_{ans['key']}", on_click=remove_answer, args=(i,))
+                    
                 if st.session_state.get("selected_anchor"):
                     st.button(f"Similar to {st.session_state.selected_anchor} ✕", key="applied_anchor", on_click=clear_anchor)
+                    
+                if st.session_state.get("answers_list"):
+                    st.button("Undo last answer", key="undo_ans", on_click=undo_answer)
+                    st.button("Start over", key="reset_ans", on_click=start_over_answers)
                 st.markdown('</div>', unsafe_allow_html=True)
 
             st.markdown(f"""
