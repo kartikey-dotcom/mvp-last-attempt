@@ -726,7 +726,7 @@ with st.container(key="top_header"):
 
 with st.container(key="topbar"):
     with st.form(key="search_form", border=False, clear_on_submit=False):
-        c1, c2, c3 = st.columns([1, 12, 1], vertical_alignment="center", gap="collapse")
+        c1, c2, c3 = st.columns([1, 12, 1], vertical_alignment="center", gap="small")
         with c1:
             st.form_submit_button("🔍", on_click=do_search)
         with c2:
