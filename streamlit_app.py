@@ -2009,8 +2009,7 @@ with st.container(key="main_content"):
                 with cols[i % 6]:
                     with st.container(key=f"tile_{p['id']}"):
                         render_tile(p)
-            if len(library) > 24:
-                st.caption(f"+ {len(library)-24} more")
+
     else:
         candidates, current_hints, dropped = get_candidates(library, q, st.session_state.mode)
         
@@ -2037,8 +2036,7 @@ with st.container(key="main_content"):
                         with cols[i % 6]:
                             with st.container(key=f"tile_{p['id']}"):
                                 render_tile(p)
-                    if len(candidates) > 24:
-                        st.caption(f"+ {len(candidates)-24} more")
+
                         
         else:
             with st.container(key="assistant"):
@@ -2126,23 +2124,3 @@ with st.container(key="main_content"):
                             render_tile(p)
                 if len(candidates) > 24:
                     st.caption(f"+ {len(candidates)-24} more")
-
-    with st.expander("Researcher tools", expanded=False):
-        t1, t2, t3 = st.tabs(["Test log", "Agent trace", "Data"])
-        with t1:
-            if st.session_state.log_data:
-                df = pd.DataFrame(st.session_state.log_data)
-                st.dataframe(df, use_container_width=True)
-                st.download_button("Download CSV", data=df.to_csv(index=False).encode('utf-8'), file_name="test_log.csv", mime="text/csv")
-            else:
-                st.write("No data yet.")
-        with t2:
-            if st.session_state.get("agent_trace"):
-                st.markdown(f"**Step count:** {len(st.session_state.agent_trace)}")
-                st.dataframe(pd.DataFrame(st.session_state.agent_trace), use_container_width=True)
-            else:
-                st.write("No trace yet.")
-        with t3:
-            tags_status = "vision model" if PHOTO_TAGS else "simulated"
-            st.markdown(f"**Photo tags:** {tags_status}")
-            st.markdown(f"**LLM Latency:** {st.session_state.get('last_latency', 0)} ms")
