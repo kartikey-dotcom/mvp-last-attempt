@@ -150,7 +150,7 @@ class AgentState:
     ai_used: bool
 
 def agent_step(state: AgentState):
-    unasked = [a for a in ["location_name", "companion", "weather_vibe", "clothing_visuals", "primary_object", "foreground_vibe"] if a not in state.hints and a not in state.asked] if a not in state.hints and a not in state.asked]
+    unasked = [a for a in ["location_name", "companion", "weather_vibe", "clothing_visuals", "primary_object", "foreground_vibe"] if a not in state.hints and a not in state.asked]
     best_attr, entropy = calculate_entropy(state.candidates, unasked)
     
     observe = f"{len(state.candidates)} candidates"
