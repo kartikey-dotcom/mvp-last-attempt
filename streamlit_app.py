@@ -193,6 +193,7 @@ def log_agent_step(observe, decide, act, evaluate):
 def reset_search():
     st.session_state.query = ""
     st.session_state.answers = {}
+    st.session_state.answers_list = []
     st.session_state.asked = []
     st.session_state.selected = set()
     st.session_state.start_time = None
@@ -217,6 +218,7 @@ def do_search():
 def set_search_suggestion(sug):
     st.session_state.pending_query = sug
     st.session_state.answers = {}
+    st.session_state.answers_list = []
     st.session_state.asked = []
     st.session_state.selected = set()
     st.session_state.start_time = time.time()
@@ -281,7 +283,8 @@ def answer_q(pred, val):
         "key": pred["key"],
         "val": val,
         "fn": pred["fn"],
-        "label": pred["label"]
+        "label": pred["label"],
+        "text": pred["text"]
     })
 
 def set_anchor(photo_id, observe, decide):
@@ -1016,82 +1019,92 @@ with st.container(key="main_content"):
                         
         else:
             with st.container(key="assistant"):
-                st.markdown(f'''
-                <div style="display: flex; justify-content: flex-end; margin-bottom: 24px;">
-                    <div style="background: #E8F0FE; padding: 12px 16px; border-radius: 18px; border-bottom-right-radius: 4px; color: #202124; font-size: 14px; max-width: 80%; line-height: 1.4;">
-                        "{q}"
-                    </div>
-                </div>
-                ''', unsafe_allow_html=True)
+                # Initial User Query
+                with st.chat_message("user"):
+                    st.write(q)
                 
-                ai_label = ""
-                if st.session_state.get("ai_used"):
-                    ai_label = f'<span style="background: #E8F0FE; color: #5F6368; font-size: 11px; padding: 2px 8px; border-radius: 9999px; margin-left: 8px;">{SPARKLE_SVG} AI-assisted</span>'
-                    
-                st.markdown(f"""
-                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #444746; letter-spacing: 0.5px;">
-                    {SPARKLE_SVG} ASSISTANT {ai_label}
-                </div>
-                """, unsafe_allow_html=True)
+                # Generate the "Understood" text for the first assistant bubble
+                parts = []
+                for k, v in current_hints.items():
+                    parts.append(f"**{k.replace('_', ' ')}: {v}**")
                 
-                variations = []
-                for attr in ["companions", "location_name", "weather_vibe", "clothing_visuals"]:
-                    unique_vals = set(p[attr] for p in candidates if p.get(attr))
-                    if len(unique_vals) > 1:
-                        variations.append(attr.replace('_', ' ').title())
-
+                initial_understood = ""
                 if not current_hints:
-                    if variations:
-                        understood = f"I found **{len(candidates)}** matches. They differ by {', '.join(variations)}."
-                    else:
-                        understood = f"I found **{len(candidates)}** matches."
+                    initial_understood = f"I found **{len(candidates)}** matches for that query."
                 else:
-                    parts = []
-                    for k, v in current_hints.items():
-                        parts.append(f"**{k.replace('_', ' ')}: {v}**")
+                    initial_understood = f"Got it: {', '.join(parts)}. That leaves **{len(candidates)}** matches."
                     
-                    if variations:
-                        understood = f"Got it: {', '.join(parts)}. I still have **{len(candidates)}** matches that differ by {', '.join(variations)}."
-                    else:
-                        understood = f"Got it: {', '.join(parts)}. That leaves **{len(candidates)}** matches."
+                if st.session_state.get("mood_phrase"):
+                    initial_understood += f" {st.session_state.mood_phrase}"
+                    
+                with st.chat_message("assistant", avatar="✨"):
+                    st.markdown(initial_understood)
+                    if dropped:
+                        st.caption(f"I couldn't match {', '.join(dropped)}, so I ignored it.")
                         
-                    if st.session_state.get("mood_phrase"):
-                        understood += f" <span style='color: #5F6368;'>{st.session_state.mood_phrase}</span>"
-                    
-                st.markdown(f'<div style="font-size: 14px; color: #5F6368; margin-top: 8px;">{understood}</div>', unsafe_allow_html=True)
+                    # If we have no answers yet, show the first question here
+                    answers_list = st.session_state.get("answers_list", [])
+                    if not answers_list:
+                        if len(candidates) <= 2:
+                            st.write("Here are my best matches. Tap the photo you were looking for.")
+                        else:
+                            preds = engine.build_predicates(candidates, set())
+                            best_pred = engine.pick_question(preds, len(candidates))
+                            if best_pred:
+                                st.markdown(f"**{best_pred['text']}**")
+                                st.markdown('<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top: 8px;">', unsafe_allow_html=True)
+                                st.button("Yes", key="ans_0_yes", type="primary", on_click=answer_q, args=(best_pred, True))
+                                st.button("No", key="ans_0_no", on_click=answer_q, args=(best_pred, False))
+                                st.button("Not sure", key="ans_0_notsure", on_click=answer_q, args=(best_pred, None))
+                                st.markdown('</div>', unsafe_allow_html=True)
+                            else:
+                                st.write("Here are my best matches. Tap the photo you were looking for.")
                 
-                if dropped:
-                    st.markdown(f'<div style="font-size: 12px; color: #D93025; margin-top: 4px;">I couldn\'t match {", ".join(dropped)}, so I ignored it.</div>', unsafe_allow_html=True)
+                # Now replay the history of answers
+                cands = candidates
+                skipped_attrs = set()
                 
-                
-                state = AgentState(
-                    query=q, hints=current_hints, answered=st.session_state.answers, 
-                    asked=st.session_state.asked, selected_anchor=st.session_state.get("selected_anchor"),
-                    candidates=candidates, steps=st.session_state.get("agent_trace", []), ai_used=st.session_state.get("ai_used")
-                )
-                
-                # New Yes/No Engine
-                answers_list = st.session_state.get("answers_list", [])
-                candidates, skipped_attrs = engine.apply_answers(candidates, answers_list)
-                
-                if len(candidates) <= 2 or len(st.session_state.get("answers_list", [])) >= 8:
-                    st.markdown('<div style="font-size: 16px; color: #202124; margin-top: 16px;">Here are my best matches. Tap the photo you were looking for.</div>', unsafe_allow_html=True)
-                else:
-                    preds = engine.build_predicates(candidates, skipped_attrs)
-                    best_pred = engine.pick_question(preds, len(candidates))
-                    
-                    if not best_pred:
-                        st.markdown('<div style="font-size: 16px; color: #202124; margin-top: 16px;">Here are my best matches. Tap the photo you were looking for.</div>', unsafe_allow_html=True)
-                    else:
-                        st.markdown(f'<div style="font-size: 28px; font-weight: 500; color: #202124; line-height: 36px; margin-top: 8px;">{best_pred["text"]}</div>', unsafe_allow_html=True)
-                        st.markdown(f'<div style="font-size: 12px; color: #5F6368; margin-top: 4px;">Asking so I can narrow down {len(candidates)} photos. Tap \'Not sure\' to skip.</div>', unsafe_allow_html=True)
+                for i, ans in enumerate(answers_list):
+                    # Show the user's answer
+                    with st.chat_message("user"):
+                        val_str = "Yes" if ans["val"] is True else "No" if ans["val"] is False else "Not sure"
+                        st.write(val_str)
                         
-                        st.markdown('<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top: 16px;">', unsafe_allow_html=True)
-                        ans_idx = len(answers_list)
-                        st.button("Yes", key=f"ans_{ans_idx}_yes", type="primary", on_click=answer_q, args=(best_pred, True))
-                        st.button("No", key=f"ans_{ans_idx}_no", on_click=answer_q, args=(best_pred, False))
-                        st.button("Not sure", key=f"ans_{ans_idx}_notsure", on_click=answer_q, args=(best_pred, None))
-                        st.markdown('</div>', unsafe_allow_html=True)
+                    # Apply it
+                    if ans["val"] is None:
+                        skipped_attrs.add(ans["attr"])
+                    else:
+                        cands = [p for p in cands if ans["fn"](p) == ans["val"]]
+                        
+                    # Assistant's next message (either the NEXT question in history, or the CURRENT question to ask)
+                    with st.chat_message("assistant", avatar="✨"):
+                        if i < len(answers_list) - 1:
+                            # Not the last one, so just print the NEXT question from history
+                            next_ans = answers_list[i+1]
+                            st.markdown(f"Got it. **{len(cands)}** matches left.")
+                            st.markdown(f"**{next_ans['text']}**")
+                        else:
+                            # This is the latest state. Ask the NEXT question!
+                            if len(cands) <= 2 or len(answers_list) >= 8:
+                                st.write("Here are my best matches. Tap the photo you were looking for.")
+                            else:
+                                preds = engine.build_predicates(cands, skipped_attrs)
+                                best_pred = engine.pick_question(preds, len(cands))
+                                
+                                if best_pred:
+                                    st.markdown(f"Got it. **{len(cands)}** matches left.")
+                                    st.markdown(f"**{best_pred['text']}**")
+                                    st.markdown('<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top: 8px;">', unsafe_allow_html=True)
+                                    ans_idx = len(answers_list)
+                                    st.button("Yes", key=f"ans_{ans_idx}_yes", type="primary", on_click=answer_q, args=(best_pred, True))
+                                    st.button("No", key=f"ans_{ans_idx}_no", on_click=answer_q, args=(best_pred, False))
+                                    st.button("Not sure", key=f"ans_{ans_idx}_notsure", on_click=answer_q, args=(best_pred, None))
+                                    st.markdown('</div>', unsafe_allow_html=True)
+                                else:
+                                    st.write("Here are my best matches. Tap the photo you were looking for.")
+                
+                # Update candidates to the filtered ones for the photo grid below
+                candidates = cands
                         
             if st.session_state.get("answers_list") or st.session_state.get("selected_anchor"):
                 st.markdown('<div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center;">', unsafe_allow_html=True)
