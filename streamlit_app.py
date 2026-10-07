@@ -203,20 +203,17 @@ def reset_search():
 
 def do_search():
     if st.session_state.get("q_input"):
-        if st.session_state.get("query"):
-            st.session_state.pending_query = st.session_state.query + " " + st.session_state.q_input
+        val = st.session_state.q_input.strip().lower()
+        if not st.session_state.get("query") and val in ["mountain", "beach", "cafe", "concert", "street", "balcony"]:
+            st.session_state.query = st.session_state.q_input.strip()
+            st.session_state.mode = "With Contextual Disambiguation"
+            st.session_state.llm_res = None
+            st.session_state.ai_used = False
         else:
-            st.session_state.pending_query = st.session_state.q_input
-    st.session_state.answers = {}
-    st.session_state.asked = []
-    st.session_state.selected = set()
-    st.session_state.start_time = time.time()
-    st.session_state.success_msg = None
-    st.session_state.selected_anchor = None
-    st.session_state.agent_trace = []
-
-def set_search_suggestion(sug):
-    st.session_state.pending_query = sug
+            if st.session_state.get("query"):
+                st.session_state.pending_query = st.session_state.query + " " + st.session_state.q_input
+            else:
+                st.session_state.pending_query = st.session_state.q_input
     st.session_state.answers = {}
     st.session_state.answers_list = []
     st.session_state.asked = []
@@ -225,7 +222,19 @@ def set_search_suggestion(sug):
     st.session_state.success_msg = None
     st.session_state.selected_anchor = None
     st.session_state.agent_trace = []
-    # If using Contextual Disambiguation mode, ensure it's selected
+
+def set_search_suggestion(sug):
+    st.session_state.query = sug
+    st.session_state.llm_res = None
+    st.session_state.ai_used = False
+    st.session_state.answers = {}
+    st.session_state.answers_list = []
+    st.session_state.asked = []
+    st.session_state.selected = set()
+    st.session_state.start_time = time.time()
+    st.session_state.success_msg = None
+    st.session_state.selected_anchor = None
+    st.session_state.agent_trace = []
     st.session_state.mode = "With Contextual Disambiguation"
 
 def toggle_select(photo_id):
