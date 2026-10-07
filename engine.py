@@ -202,7 +202,7 @@ def build_predicates(candidates, skipped_attrs):
     # Shirt
     colors = ["black", "pink", "blue", "white", "red", "yellow", "green", "grey"]
     for c in colors:
-        add_pred("shirt", f"shirt={c}", f"Were you wearing a {c} shirt?", f"{c.capitalize()} shirt", lambda p, color=c: p["shirt"] == color)
+        add_pred("shirt", f"shirt={c}", f"Do you remember if you were wearing a {c} shirt?", f"{c.capitalize()} shirt", lambda p, color=c: p["shirt"] == color)
         
     # Extra
     extra_texts = {

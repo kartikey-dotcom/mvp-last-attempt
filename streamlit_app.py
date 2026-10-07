@@ -1050,7 +1050,7 @@ with st.container(key="main_content"):
                     # If we have no answers yet, show the first question here
                     answers_list = st.session_state.get("answers_list", [])
                     if not answers_list:
-                        if len(candidates) <= 2:
+                        if len(candidates) <= 1:
                             st.write("Here are my best matches. Tap the photo you were looking for.")
                         else:
                             preds = engine.build_predicates(candidates, set())
@@ -1092,7 +1092,7 @@ with st.container(key="main_content"):
                             st.markdown(f"**{next_ans['text']}**")
                         else:
                             # This is the latest state. Ask the NEXT question!
-                            if len(cands) <= 2 or len(answers_list) >= 8:
+                            if len(cands) <= 1 or len(answers_list) >= 8:
                                 st.write("Here are my best matches. Tap the photo you were looking for.")
                             else:
                                 preds = engine.build_predicates(cands, skipped_attrs)
