@@ -873,8 +873,32 @@ def calculate_entropy(candidates, unasked_attrs):
 
 
 
-@st.dialog("Photo Details", width="large")
+@st.dialog(" ", width="large")
 def view_photo_modal(p):
+    st.markdown("""
+    <style>
+    div[data-testid="stDialog"] div[role="dialog"] {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: rgba(0,0,0,0.95) !important;
+        border: none !important;
+        border-radius: 0 !important;
+    }
+    div[data-testid="stDialog"] header {
+        background: transparent !important;
+    }
+    div[data-testid="stDialog"] header button {
+        color: white !important;
+    }
+    div[data-testid="stDialog"] div[data-testid="stMarkdownContainer"] p {
+        color: white !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     c_cat = p['category'][0] if isinstance(p['category'], list) else p['category']
     c_shirt = p['shirt'][0] if isinstance(p['shirt'], list) else p['shirt']
     c_comp = p['companion'][0] if isinstance(p.get('companion'), list) else p.get('companion', 'alone')
@@ -882,7 +906,7 @@ def view_photo_modal(p):
     encoded = data_url.split(",")[1]
     import base64
     st.image(base64.b64decode(encoded), use_column_width=True)
-    st.write(f"**Category**: {p.get('category', '').capitalize()} | **Weather**: {p.get('weather','').capitalize()} | **Companion**: {p.get('companion', '').capitalize()}")
+    st.markdown(f"<div style='text-align: center; color: white; margin-top: 16px;'><b>Category</b>: {p.get('category', '').capitalize()} | <b>Weather</b>: {p.get('weather','').capitalize()} | <b>Companion</b>: {p.get('companion', '').capitalize()}</div>", unsafe_allow_html=True)
 
 def render_tile(p, observe=None, decide=None):
     is_sel = p['id'] in st.session_state.selected
@@ -912,7 +936,7 @@ def render_tile(p, observe=None, decide=None):
     </div>
     """
     st.markdown(sel_html, unsafe_allow_html=True)
-    st.markdown(f'<style>.st-key-view_{p["id"]} button {{ position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; z-index:9; cursor: pointer; }}</style>', unsafe_allow_html=True)
+    st.markdown(f'<style>.st-key-view_{p["id"]} {{ position: absolute; top:0; left:0; width:100%; height:100%; z-index:9; }} .st-key-view_{p["id"]} button {{ width:100%; height:100%; opacity:0; cursor: pointer; }}</style>', unsafe_allow_html=True)
     if st.button(" ", key=f"view_{p['id']}"):
         view_photo_modal(p)
     st.markdown(f'<style>.st-key-sel_{p["id"]} button {{ position: absolute; top:8px; left:8px; width:24px; height:24px; opacity:0; z-index:11; cursor: pointer; border-radius: 50%; }}</style>', unsafe_allow_html=True)
