@@ -744,7 +744,7 @@ with st.container(key="topbar"):
         with c1:
             st.form_submit_button("🔍", on_click=do_search)
         with c2:
-            ph_text = "Add details (e.g. 'with Nikhil')..." if st.session_state.get("query") else "Search your photos"
+            ph_text = "Add details (e.g. 'with Nikhil')..." if st.session_state.get("query") else "Search your photos using categories"
             st.text_input("Search", key="q_input", label_visibility="collapsed", placeholder=ph_text, autocomplete="off")
         with c3:
             if st.session_state.get("query"):
