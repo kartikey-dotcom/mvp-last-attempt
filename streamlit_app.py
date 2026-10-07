@@ -1125,7 +1125,8 @@ with st.container(key="main_content"):
                     
                 if st.session_state.get("answers_list"):
                     st.button("Undo last answer", key="undo_ans", on_click=undo_answer)
-                    st.button("Start over", key="reset_ans", on_click=start_over_answers)
+                    st.button("Clear answers", key="reset_ans", on_click=start_over_answers)
+                st.button("Home", key="home_btn", help="Go back to the home screen with all categories", on_click=reset_search)
                 st.markdown('</div>', unsafe_allow_html=True)
 
             st.markdown(f"""
