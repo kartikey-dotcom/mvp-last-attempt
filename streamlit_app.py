@@ -1110,24 +1110,35 @@ with st.container(key="main_content"):
                             st.write("Here are my best matches. Tap the photo you were looking for.")
                         
             if st.session_state.get("answers_list") or st.session_state.get("selected_anchor"):
-                st.markdown('<div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center;">', unsafe_allow_html=True)
-                for i, ans in enumerate(st.session_state.get("answers_list", [])):
-                    if ans["val"] is True:
-                        lbl = ans["label"]
-                    elif ans["val"] is False:
-                        lbl = f"Not {ans['label'].lower()}"
-                    else:
-                        lbl = "Skipped"
-                    st.button(f"{lbl} ✕", key=f"applied_{i}_{ans['key']}", on_click=remove_answer, args=(i,))
+                with st.container(key="selected_answers"):
+                    st.markdown("""<style>
+                    .st-key-selected_answers [data-testid="stVerticalBlock"] {
+                        flex-direction: row !important;
+                        flex-wrap: wrap !important;
+                        gap: 8px !important;
+                        align-items: center !important;
+                    }
+                    .st-key-selected_answers [data-testid="stVerticalBlock"] > div {
+                        width: auto !important;
+                    }
+                    </style>""", unsafe_allow_html=True)
                     
-                if st.session_state.get("selected_anchor"):
-                    st.button(f"Similar to {st.session_state.selected_anchor} ✕", key="applied_anchor", on_click=clear_anchor)
-                    
-                if st.session_state.get("answers_list"):
-                    st.button("Undo last answer", key="undo_ans", on_click=undo_answer)
-                    st.button("Clear answers", key="reset_ans", on_click=start_over_answers)
-                st.button("Home", key="home_btn", help="Go back to the home screen with all categories", on_click=reset_search)
-                st.markdown('</div>', unsafe_allow_html=True)
+                    for i, ans in enumerate(st.session_state.get("answers_list", [])):
+                        if ans["val"] is True:
+                            lbl = ans["label"]
+                        elif ans["val"] is False:
+                            lbl = f"Not {ans['label'].lower()}"
+                        else:
+                            lbl = "Skipped"
+                        st.button(f"{lbl} ✕", key=f"applied_{i}_{ans['key']}", on_click=remove_answer, args=(i,))
+                        
+                    if st.session_state.get("selected_anchor"):
+                        st.button(f"Similar to {st.session_state.selected_anchor} ✕", key="applied_anchor", on_click=clear_anchor)
+                        
+                    if st.session_state.get("answers_list"):
+                        st.button("Undo last answer", key="undo_ans", on_click=undo_answer)
+                        st.button("Clear answers", key="reset_ans", on_click=start_over_answers)
+                    st.button("Home", key="home_btn", help="Go back to the home screen with all categories", on_click=reset_search)
 
             st.markdown(f"""
             <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
