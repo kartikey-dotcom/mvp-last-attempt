@@ -592,6 +592,8 @@ div[data-baseweb="radio"] div[data-checked="true"], div[data-baseweb="checkbox"]
     max-width: 100%;
 }
 .st-key-assistant [data-testid="stVerticalBlock"] { gap: 0 !important; }
+.st-key-assistant [data-testid="stHorizontalBlock"] { flex-wrap: nowrap !important; flex-direction: row !important; gap: 8px !important; }
+.st-key-assistant [data-testid="column"] { min-width: 0 !important; width: auto !important; flex: 0 1 auto !important; }
 
 /* Chips */
 div[class*="st-key-chip_"] button {
@@ -1020,7 +1022,7 @@ with st.container(key="main_content"):
         else:
             with st.container(key="assistant"):
                 # Initial User Query
-                with st.chat_message("user"):
+                with st.chat_message("user", avatar="\U0001F464"):
                     st.write(q)
                 
                 # Generate the "Understood" text for the first assistant bubble
@@ -1052,11 +1054,13 @@ with st.container(key="main_content"):
                             best_pred = engine.pick_question(preds, len(candidates))
                             if best_pred:
                                 st.markdown(f"**{best_pred['text']}**")
-                                st.markdown('<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top: 8px;">', unsafe_allow_html=True)
-                                st.button("Yes", key="ans_0_yes", type="primary", on_click=answer_q, args=(best_pred, True))
-                                st.button("No", key="ans_0_no", on_click=answer_q, args=(best_pred, False))
-                                st.button("Not sure", key="ans_0_notsure", on_click=answer_q, args=(best_pred, None))
-                                st.markdown('</div>', unsafe_allow_html=True)
+                                btn_cols = st.columns([1, 1, 2, 5])
+                                with btn_cols[0]:
+                                    st.button("Yes", key="chip_ans_0_yes", on_click=answer_q, args=(best_pred, True), use_container_width=True)
+                                with btn_cols[1]:
+                                    st.button("No", key="chip_ans_0_no", on_click=answer_q, args=(best_pred, False), use_container_width=True)
+                                with btn_cols[2]:
+                                    st.button("Not sure", key="chip_ans_0_notsure", on_click=answer_q, args=(best_pred, None), use_container_width=True)
                             else:
                                 st.write("Here are my best matches. Tap the photo you were looking for.")
                 
@@ -1066,7 +1070,7 @@ with st.container(key="main_content"):
                 
                 for i, ans in enumerate(answers_list):
                     # Show the user's answer
-                    with st.chat_message("user"):
+                    with st.chat_message("user", avatar="\U0001F464"):
                         val_str = "Yes" if ans["val"] is True else "No" if ans["val"] is False else "Not sure"
                         st.write(val_str)
                         
@@ -1094,12 +1098,14 @@ with st.container(key="main_content"):
                                 if best_pred:
                                     st.markdown(f"Got it. **{len(cands)}** matches left.")
                                     st.markdown(f"**{best_pred['text']}**")
-                                    st.markdown('<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top: 8px;">', unsafe_allow_html=True)
                                     ans_idx = len(answers_list)
-                                    st.button("Yes", key=f"ans_{ans_idx}_yes", type="primary", on_click=answer_q, args=(best_pred, True))
-                                    st.button("No", key=f"ans_{ans_idx}_no", on_click=answer_q, args=(best_pred, False))
-                                    st.button("Not sure", key=f"ans_{ans_idx}_notsure", on_click=answer_q, args=(best_pred, None))
-                                    st.markdown('</div>', unsafe_allow_html=True)
+                                    btn_cols = st.columns([1, 1, 2, 5])
+                                    with btn_cols[0]:
+                                        st.button("Yes", key=f"chip_ans_{ans_idx}_yes", on_click=answer_q, args=(best_pred, True), use_container_width=True)
+                                    with btn_cols[1]:
+                                        st.button("No", key=f"chip_ans_{ans_idx}_no", on_click=answer_q, args=(best_pred, False), use_container_width=True)
+                                    with btn_cols[2]:
+                                        st.button("Not sure", key=f"chip_ans_{ans_idx}_notsure", on_click=answer_q, args=(best_pred, None), use_container_width=True)
                                 else:
                                     st.write("Here are my best matches. Tap the photo you were looking for.")
                 
