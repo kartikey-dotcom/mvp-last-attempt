@@ -1112,17 +1112,18 @@ with st.container(key="main_content"):
             if st.session_state.get("answers_list") or st.session_state.get("selected_anchor"):
                 with st.container(key="selected_answers"):
                     st.markdown("""<style>
-                    .st-key-selected_answers [data-testid="stVerticalBlock"] {
-                        flex-direction: row !important;
+                    .st-key-selected_answers [data-testid="stHorizontalBlock"] {
                         flex-wrap: wrap !important;
                         gap: 8px !important;
-                        align-items: center !important;
                     }
-                    .st-key-selected_answers [data-testid="stVerticalBlock"] > div {
+                    .st-key-selected_answers [data-testid="column"] {
+                        min-width: 0 !important;
                         width: auto !important;
+                        flex: 0 1 auto !important;
                     }
                     </style>""", unsafe_allow_html=True)
                     
+                    buttons = []
                     for i, ans in enumerate(st.session_state.get("answers_list", [])):
                         if ans["val"] is True:
                             lbl = ans["label"]
@@ -1130,15 +1131,24 @@ with st.container(key="main_content"):
                             lbl = f"Not {ans['label'].lower()}"
                         else:
                             lbl = "Skipped"
-                        st.button(f"{lbl} ✕", key=f"applied_{i}_{ans['key']}", on_click=remove_answer, args=(i,))
+                        buttons.append({"label": f"{lbl} ✕", "key": f"applied_{i}_{ans['key']}", "cb": remove_answer, "args": (i,)})
                         
                     if st.session_state.get("selected_anchor"):
-                        st.button(f"Similar to {st.session_state.selected_anchor} ✕", key="applied_anchor", on_click=clear_anchor)
+                        buttons.append({"label": f"Similar to {st.session_state.selected_anchor} ✕", "key": "applied_anchor", "cb": clear_anchor})
                         
                     if st.session_state.get("answers_list"):
-                        st.button("Undo last answer", key="undo_ans", on_click=undo_answer)
-                        st.button("Clear answers", key="reset_ans", on_click=start_over_answers)
-                    st.button("Home", key="home_btn", help="Go back to the home screen with all categories", on_click=reset_search)
+                        buttons.append({"label": "Undo last answer", "key": "undo_ans", "cb": undo_answer})
+                        buttons.append({"label": "Clear answers", "key": "reset_ans", "cb": start_over_answers})
+                    buttons.append({"label": "Home", "key": "home_btn", "cb": reset_search})
+                    
+                    if buttons:
+                        cols = st.columns(len(buttons))
+                        for idx, btn in enumerate(buttons):
+                            with cols[idx]:
+                                if "args" in btn:
+                                    st.button(btn["label"], key=btn["key"], on_click=btn["cb"], args=btn["args"])
+                                else:
+                                    st.button(btn["label"], key=btn["key"], on_click=btn["cb"])
 
             st.markdown(f"""
             <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
