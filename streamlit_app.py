@@ -328,8 +328,10 @@ footer,
     display: none !important;
 }
 
-.stApp, .stApp p, .stApp label, .stApp span, [data-testid="stMarkdownContainer"] {
+.stApp {
     background-color: #FFFFFF !important;
+}
+.stApp p, .stApp label, [data-testid="stMarkdownContainer"] {
     font-family: Roboto, Inter, 'Google Sans', 'Google Sans Text', system-ui, sans-serif !important;
     color: #202124 !important;
     font-size: 14px;
@@ -1022,7 +1024,7 @@ with st.container(key="main_content"):
         else:
             with st.container(key="assistant"):
                 # Initial User Query
-                with st.chat_message("user", avatar="\U0001F464"):
+                with st.chat_message("user", avatar="face"):
                     st.write(q)
                 
                 # Generate the "Understood" text for the first assistant bubble
@@ -1056,11 +1058,11 @@ with st.container(key="main_content"):
                                 st.markdown(f"**{best_pred['text']}**")
                                 btn_cols = st.columns([1, 1, 2, 5])
                                 with btn_cols[0]:
-                                    st.button("Yes", key="chip_ans_0_yes", on_click=answer_q, args=(best_pred, True), use_container_width=True)
+                                    st.button("Yes", key="chip_ans_0_yes", on_click=answer_q, args=(best_pred, True))
                                 with btn_cols[1]:
-                                    st.button("No", key="chip_ans_0_no", on_click=answer_q, args=(best_pred, False), use_container_width=True)
+                                    st.button("No", key="chip_ans_0_no", on_click=answer_q, args=(best_pred, False))
                                 with btn_cols[2]:
-                                    st.button("Not sure", key="chip_ans_0_notsure", on_click=answer_q, args=(best_pred, None), use_container_width=True)
+                                    st.button("Not sure", key="chip_ans_0_notsure", on_click=answer_q, args=(best_pred, None))
                             else:
                                 st.write("Here are my best matches. Tap the photo you were looking for.")
                 
@@ -1070,7 +1072,7 @@ with st.container(key="main_content"):
                 
                 for i, ans in enumerate(answers_list):
                     # Show the user's answer
-                    with st.chat_message("user", avatar="\U0001F464"):
+                    with st.chat_message("user", avatar="face"):
                         val_str = "Yes" if ans["val"] is True else "No" if ans["val"] is False else "Not sure"
                         st.write(val_str)
                         
@@ -1101,11 +1103,11 @@ with st.container(key="main_content"):
                                     ans_idx = len(answers_list)
                                     btn_cols = st.columns([1, 1, 2, 5])
                                     with btn_cols[0]:
-                                        st.button("Yes", key=f"chip_ans_{ans_idx}_yes", on_click=answer_q, args=(best_pred, True), use_container_width=True)
+                                        st.button("Yes", key=f"chip_ans_{ans_idx}_yes", on_click=answer_q, args=(best_pred, True))
                                     with btn_cols[1]:
-                                        st.button("No", key=f"chip_ans_{ans_idx}_no", on_click=answer_q, args=(best_pred, False), use_container_width=True)
+                                        st.button("No", key=f"chip_ans_{ans_idx}_no", on_click=answer_q, args=(best_pred, False))
                                     with btn_cols[2]:
-                                        st.button("Not sure", key=f"chip_ans_{ans_idx}_notsure", on_click=answer_q, args=(best_pred, None), use_container_width=True)
+                                        st.button("Not sure", key=f"chip_ans_{ans_idx}_notsure", on_click=answer_q, args=(best_pred, None))
                                 else:
                                     st.write("Here are my best matches. Tap the photo you were looking for.")
                 
