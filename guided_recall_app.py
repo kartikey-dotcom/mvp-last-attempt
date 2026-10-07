@@ -153,8 +153,7 @@ def main():
             
             # Print prior user selections as chat history (adds to the conversational feel)
             for message in st.session_state.chat_history:
-                avatar = "\U0001F464" if message["role"] == "user" else None
-                with st.chat_message(message["role"], avatar=avatar):
+                with st.chat_message(message["role"]):
                     st.write(message["content"])
 
             # Display the current AI question

@@ -1024,7 +1024,7 @@ with st.container(key="main_content"):
         else:
             with st.container(key="assistant"):
                 # Initial User Query
-                with st.chat_message("user", avatar="face"):
+                with st.chat_message("user"):
                     st.write(q)
                 
                 # Generate the "Understood" text for the first assistant bubble
@@ -1072,7 +1072,7 @@ with st.container(key="main_content"):
                 
                 for i, ans in enumerate(answers_list):
                     # Show the user's answer
-                    with st.chat_message("user", avatar="face"):
+                    with st.chat_message("user"):
                         val_str = "Yes" if ans["val"] is True else "No" if ans["val"] is False else "Not sure"
                         st.write(val_str)
                         
