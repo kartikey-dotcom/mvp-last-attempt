@@ -593,7 +593,8 @@ div[data-baseweb="radio"] div[data-checked="true"], div[data-baseweb="checkbox"]
     margin-bottom: 24px;
     max-width: 100%;
 }
-.st-key-assistant [data-testid="stVerticalBlock"] { gap: 0 !important; }
+[data-testid="stChatMessage"] { align-items: flex-start !important; }
+.st-key-assistant [data-testid="stVerticalBlock"] { gap: 16px !important; }
 .st-key-assistant [data-testid="stHorizontalBlock"] { flex-wrap: nowrap !important; flex-direction: row !important; gap: 8px !important; }
 .st-key-assistant [data-testid="column"] { min-width: 0 !important; width: auto !important; flex: 0 1 auto !important; }
 
