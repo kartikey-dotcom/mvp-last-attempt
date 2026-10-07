@@ -873,14 +873,16 @@ def calculate_entropy(candidates, unasked_attrs):
 
 
 
-@st.dialog("Photo Details")
+@st.dialog("Photo Details", width="large")
 def view_photo_modal(p):
     c_cat = p['category'][0] if isinstance(p['category'], list) else p['category']
     c_shirt = p['shirt'][0] if isinstance(p['shirt'], list) else p['shirt']
     c_comp = p['companion'][0] if isinstance(p.get('companion'), list) else p.get('companion', 'alone')
     data_url = get_image_base64(p['id'], c_cat, c_shirt, c_comp)
-    st.markdown(f'<img src="{data_url}" style="width:100%; border-radius:8px;">', unsafe_allow_html=True)
-    st.write(f"**Location**: {p['location_name']} | **Weather**: {p.get('weather_vibe','')} | **Companions**: {', '.join(p.get('companions',[]))}")
+    encoded = data_url.split(",")[1]
+    import base64
+    st.image(base64.b64decode(encoded), use_column_width=True)
+    st.write(f"**Category**: {p.get('category', '').capitalize()} | **Weather**: {p.get('weather','').capitalize()} | **Companion**: {p.get('companion', '').capitalize()}")
 
 def render_tile(p, observe=None, decide=None):
     is_sel = p['id'] in st.session_state.selected
@@ -1047,73 +1049,41 @@ with st.container(key="main_content"):
                     if dropped:
                         st.caption(f"I couldn't match {', '.join(dropped)}, so I ignored it.")
                         
-                    # If we have no answers yet, show the first question here
                     answers_list = st.session_state.get("answers_list", [])
-                    if not answers_list:
-                        if len(candidates) <= 1:
-                            st.write("Here are my best matches. Tap the photo you were looking for.")
+                    cands = candidates
+                    skipped_attrs = set()
+                    
+                    for ans in answers_list:
+                        if ans["val"] is None:
+                            skipped_attrs.add(ans["attr"])
                         else:
-                            preds = engine.build_predicates(candidates, set())
-                            best_pred = engine.pick_question(preds, len(candidates))
-                            if best_pred:
-                                st.markdown(f"**{best_pred['text']}**")
-                                btn_cols = st.columns([1, 1, 2, 5])
-                                with btn_cols[0]:
-                                    st.button("Yes", key="chip_ans_0_yes", on_click=answer_q, args=(best_pred, True))
-                                with btn_cols[1]:
-                                    st.button("No", key="chip_ans_0_no", on_click=answer_q, args=(best_pred, False))
-                                with btn_cols[2]:
-                                    st.button("Not sure", key="chip_ans_0_notsure", on_click=answer_q, args=(best_pred, None))
-                            else:
-                                st.write("Here are my best matches. Tap the photo you were looking for.")
-                
-                # Now replay the history of answers
-                cands = candidates
-                skipped_attrs = set()
-                
-                for i, ans in enumerate(answers_list):
-                    # Show the user's answer
-                    with st.chat_message("user"):
-                        val_str = "Yes" if ans["val"] is True else "No" if ans["val"] is False else "Not sure"
-                        st.write(val_str)
-                        
-                    # Apply it
-                    if ans["val"] is None:
-                        skipped_attrs.add(ans["attr"])
-                    else:
-                        cands = [p for p in cands if ans["fn"](p) == ans["val"]]
-                        
-                    # Assistant's next message (either the NEXT question in history, or the CURRENT question to ask)
-                    with st.chat_message("assistant", avatar="✨"):
-                        if i < len(answers_list) - 1:
-                            # Not the last one, so just print the NEXT question from history
-                            next_ans = answers_list[i+1]
+                            cands = [p for p in cands if ans["fn"](p) == ans["val"]]
+                    
+                    candidates = cands
+
+                    if len(cands) <= 1 or len(answers_list) >= 8:
+                        if answers_list:
                             st.markdown(f"Got it. **{len(cands)}** matches left.")
-                            st.markdown(f"**{next_ans['text']}**")
+                        st.write("Here are my best matches. Tap the photo you were looking for.")
+                    else:
+                        preds = engine.build_predicates(cands, skipped_attrs)
+                        best_pred = engine.pick_question(preds, len(cands))
+                        if best_pred:
+                            if answers_list:
+                                st.markdown(f"Got it. **{len(cands)}** matches left.")
+                            st.markdown(f"**{best_pred['text']}**")
+                            ans_idx = len(answers_list)
+                            btn_cols = st.columns([1, 1, 2, 5])
+                            with btn_cols[0]:
+                                st.button("Yes", key=f"chip_ans_{ans_idx}_yes", on_click=answer_q, args=(best_pred, True))
+                            with btn_cols[1]:
+                                st.button("No", key=f"chip_ans_{ans_idx}_no", on_click=answer_q, args=(best_pred, False))
+                            with btn_cols[2]:
+                                st.button("Not sure", key=f"chip_ans_{ans_idx}_notsure", on_click=answer_q, args=(best_pred, None))
                         else:
-                            # This is the latest state. Ask the NEXT question!
-                            if len(cands) <= 1 or len(answers_list) >= 8:
-                                st.write("Here are my best matches. Tap the photo you were looking for.")
-                            else:
-                                preds = engine.build_predicates(cands, skipped_attrs)
-                                best_pred = engine.pick_question(preds, len(cands))
-                                
-                                if best_pred:
-                                    st.markdown(f"Got it. **{len(cands)}** matches left.")
-                                    st.markdown(f"**{best_pred['text']}**")
-                                    ans_idx = len(answers_list)
-                                    btn_cols = st.columns([1, 1, 2, 5])
-                                    with btn_cols[0]:
-                                        st.button("Yes", key=f"chip_ans_{ans_idx}_yes", on_click=answer_q, args=(best_pred, True))
-                                    with btn_cols[1]:
-                                        st.button("No", key=f"chip_ans_{ans_idx}_no", on_click=answer_q, args=(best_pred, False))
-                                    with btn_cols[2]:
-                                        st.button("Not sure", key=f"chip_ans_{ans_idx}_notsure", on_click=answer_q, args=(best_pred, None))
-                                else:
-                                    st.write("Here are my best matches. Tap the photo you were looking for.")
-                
-                # Update candidates to the filtered ones for the photo grid below
-                candidates = cands
+                            if answers_list:
+                                st.markdown(f"Got it. **{len(cands)}** matches left.")
+                            st.write("Here are my best matches. Tap the photo you were looking for.")
                         
             if st.session_state.get("answers_list") or st.session_state.get("selected_anchor"):
                 st.markdown('<div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center;">', unsafe_allow_html=True)
